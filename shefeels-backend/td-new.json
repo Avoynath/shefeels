@@ -1,0 +1,133 @@
+{
+  "containerDefinitions": [
+    {
+      "name": "honeylove-backend",
+      "image": "672911155558.dkr.ecr.us-east-1.amazonaws.com/honeylove-backend:793bfc5-20260217094204",
+      "cpu": 0,
+      "portMappings": [
+        {
+          "containerPort": 8000,
+          "hostPort": 8000,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "mountPoints": [],
+      "volumesFrom": [],
+      "secrets": [
+        {
+          "name": "DATABASE_URL",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/DATABASE_URL"
+        },
+        {
+          "name": "JWT_SECRET",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/JWT_SECRET"
+        },
+        {
+          "name": "JWT_ALGORITHM",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/JWT_ALGORITHM"
+        },
+        {
+          "name": "SMTP_HOST",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/SMTP_HOST"
+        },
+        {
+          "name": "SMTP_PORT",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/SMTP_PORT"
+        },
+        {
+          "name": "SMTP_USER",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/SMTP_USER"
+        },
+        {
+          "name": "SMTP_PASSWORD",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/SMTP_PASSWORD"
+        },
+        {
+          "name": "AWS_ACCESS_KEY_ID",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/AWS_ACCESS_KEY_ID"
+        },
+        {
+          "name": "AWS_SECRET_ACCESS_KEY",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/AWS_SECRET_ACCESS_KEY"
+        },
+        {
+          "name": "TOGETHER_AI_API_KEY",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/TOGETHER_AI_API_KEY"
+        },
+        {
+          "name": "AETHERLAB_API_KEY",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/AETHERLAB_API_KEY"
+        },
+        {
+          "name": "SUGARLAB_API_KEY",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/SUGARLAB_API_KEY"
+        },
+        {
+          "name": "ELEVENLABS_API_KEY",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/ELEVENLABS_API_KEY"
+        },
+        {
+          "name": "OPENAI_API_KEY",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/OPENAI_API_KEY"
+        },
+        {
+          "name": "FAL_KEY",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/FAL_KEY"
+        },
+        {
+          "name": "GOOGLE_CLIENT_ID",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/GOOGLE_CLIENT_ID"
+        },
+        {
+          "name": "GOOGLE_CLIENT_SECRET",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/GOOGLE_CLIENT_SECRET"
+        },
+        {
+          "name": "GOOGLE_OAUTH_REDIRECT_URL",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/GOOGLE_OAUTH_REDIRECT_URL"
+        },
+        {
+          "name": "ONESIGNAL_APP_ID",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/ONESIGNAL_APP_ID"
+        },
+        {
+          "name": "ONESIGNAL_API_KEY",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/ONESIGNAL_API_KEY"
+        },
+        {
+          "name": "REDIS_URL",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/REDIS_URL"
+        },
+        {
+          "name": "KIE_API_KEY",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/KIE_API_KEY"
+        },
+        {
+          "name": "TAGADA_STORE_ID",
+          "valueFrom": "arn:aws:ssm:us-east-1:672911155558:parameter/honeylove/backend/prod/TAGADA_STORE_ID"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/honeylove-backend",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "systemControls": []
+    }
+  ],
+  "family": "honeylove-backend",
+  "taskRoleArn": "arn:aws:iam::672911155558:role/honeylove-backend-ecsTaskRole",
+  "executionRoleArn": "arn:aws:iam::672911155558:role/honeylove-backend-ecsTaskExecutionRole",
+  "networkMode": "awsvpc",
+  "volumes": [],
+  "placementConstraints": [],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "512",
+  "memory": "1024"
+}

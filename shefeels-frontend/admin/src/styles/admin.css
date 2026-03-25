@@ -1,0 +1,156 @@
+/* Scoped admin styles. The project uses Tailwind — keep this minimal.
+   Import this file where needed (or rely on global Tailwind). */
+
+[data-admin-root] {
+  --tm-bg: #f8fafc;
+  --tm-surface: #ffffff;
+  --tm-foreground: #0f172a;
+  --tm-muted: #6b7280;
+}
+
+/* small helper to avoid conflicting with main site */
+.admin-page-root {
+  padding: 24px;
+}
+
+/* Custom, subtle scrollbar for admin area (WebKit + Firefox) */
+[data-admin-root] .overflow-y-auto {
+  scrollbar-width: thin;
+  /* Firefox */
+  scrollbar-color: rgba(15, 23, 42, 0.16) transparent;
+}
+
+[data-admin-root] .overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+[data-admin-root] .overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-admin-root] .overflow-y-auto::-webkit-scrollbar-thumb {
+  background-color: rgba(15, 23, 42, 0.16);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  /* keeps thumb from touching edges */
+  background-clip: padding-box;
+}
+
+[data-admin-root] .overflow-y-auto:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(15, 23, 42, 0.24);
+}
+
+/* Apply same subtle scrollbar to the whole admin root (covers main page scrollbar) */
+[data-admin-root] {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(15, 23, 42, 0.16) transparent;
+}
+
+/* Prevent horizontal layout shift when vertical scrollbar appears/disappears
+   (keeps sidebar and content from 'moving' when switching pages). */
+[data-admin-root] {
+  /* request the browser reserve space for the scrollbar */
+  scrollbar-gutter: stable;
+}
+
+[data-admin-root] .admin-main {
+  scrollbar-gutter: stable;
+}
+
+[data-admin-root]::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+[data-admin-root]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-admin-root]::-webkit-scrollbar-thumb {
+  background-color: rgba(15, 23, 42, 0.16);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+[data-admin-root]:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(15, 23, 42, 0.24);
+}
+
+/* DatePicker Styles */
+[data-admin-root] .rdp-custom {
+  --rdp-cell-size: 36px;
+  --rdp-accent-color: #3b82f6;
+  --rdp-background-color: #eff6ff;
+  font-size: 14px;
+}
+
+[data-admin-root] .rdp-custom .rdp-caption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin-bottom: 12px;
+}
+
+[data-admin-root] .rdp-custom .rdp-caption_label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+[data-admin-root] .rdp-custom .rdp-head_cell {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+[data-admin-root] .rdp-custom .rdp-day {
+  width: var(--rdp-cell-size);
+  height: var(--rdp-cell-size);
+  border-radius: 6px;
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+
+[data-admin-root] .rdp-custom .rdp-day:hover:not(.rdp-day_selected):not(.rdp-day_disabled) {
+  background-color: #f3f4f6;
+}
+
+[data-admin-root] .rdp-custom .rdp-day_selected {
+  background-color: var(--rdp-accent-color) !important;
+  color: white;
+  font-weight: 600;
+}
+
+[data-admin-root] .rdp-custom .rdp-day_today:not(.rdp-day_selected) {
+  font-weight: 600;
+  color: var(--rdp-accent-color);
+  background-color: transparent;
+}
+
+[data-admin-root] .rdp-custom .rdp-day_outside {
+  color: #d1d5db;
+}
+
+[data-admin-root] .rdp-custom .rdp-day_disabled {
+  color: #d1d5db;
+  cursor: not-allowed;
+}
+
+[data-admin-root] .rdp-custom .rdp-nav_button {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+[data-admin-root] .rdp-custom .rdp-nav_button:hover {
+  background-color: #f3f4f6;
+}
+
+[data-admin-root] .rdp-custom .rdp-months {
+  justify-content: center;
+}

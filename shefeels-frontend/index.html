@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MJW49JGK');</script>
+    <!-- End Google Tag Manager -->
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="src/assets/Branding.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <!-- DNS Prefetch and Preconnect for faster loading -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet" />
+    
+    <!-- SEO Meta Tags -->
+    <title>HoneyLove AI - Create & Chat with AI Characters | NSFW AI Companions</title>
+    <meta name="description" content="Experience the ultimate AI companion with HoneyLove AI. Create custom AI characters, chat with realistic AI girlfriends and boyfriends. Premium NSFW AI chat experience with unlimited conversations." />
+    <meta name="keywords" content="AI girlfriend, AI boyfriend, AI chat, NSFW AI, AI companion, character AI, virtual girlfriend, virtual boyfriend, AI roleplay, custom AI characters" />
+    <meta name="author" content="HoneyLove AI" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="HoneyLove AI - Create & Chat with AI Characters | NSFW AI Companions" />
+    <meta property="og:description" content="Experience the ultimate AI companion with HoneyLove AI. Create custom AI characters, chat with realistic AI girlfriends and boyfriends. Premium NSFW AI chat experience with unlimited conversations." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://honeylove.ai" />
+    <meta property="og:site_name" content="HoneyLove AI" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HoneyLove AI - Create & Chat with AI Characters | NSFW AI Companions" />
+    <meta name="twitter:description" content="Experience the ultimate AI companion with HoneyLove AI. Create custom AI characters, chat with realistic AI girlfriends and boyfriends. Premium NSFW AI chat experience with unlimited conversations." />
+    
+    <!-- Additional SEO -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <link rel="canonical" href="https://honeylove.ai" />
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "HoneyLove AI",
+      "description": "AI companion platform for creating and chatting with custom AI characters",
+      "url": "https://honeylove.ai",
+      "applicationCategory": "Entertainment",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "HoneyLove AI"
+      }
+    }
+    </script>
+    <script>
+      // Only load OneSignal SDK and initialize on the official production hostname(s).
+      // Prevents errors and storage access attempts during local development.
+      (function() {
+        try {
+          const host = (typeof location !== 'undefined' && location.hostname) ? location.hostname : '';
+          const prodHosts = new Set(['honeylove.ai', 'www.honeylove.ai']);
+          if (!prodHosts.has(host)) {
+            // Development or other host — skip loading OneSignal to avoid storage/access errors
+            return;
+          }
+
+          // Inject the OneSignal SDK script dynamically so we only load it in production
+          const script = document.createElement('script');
+          script.src = 'https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';
+          script.defer = true;
+          script.onload = function() {
+            try {
+              window.OneSignalDeferred = window.OneSignalDeferred || [];
+              OneSignalDeferred.push(async function(OneSignal) {
+                try {
+                  await OneSignal.init({ appId: '5cce6d5e-d17a-4011-a943-aaea7e59380c' });
+                } catch (err) {
+                  // Fail quietly in case OneSignal is restricted by browser settings
+                  console.warn('OneSignal init skipped or failed:', err);
+                }
+              });
+            } catch (e) {}
+          };
+          document.head.appendChild(script);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MJW49JGK"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

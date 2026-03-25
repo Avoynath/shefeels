@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your One-Time Code</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #F4F4F4;
+            margin: 0;
+            padding: 0;
+            color: #0F172A;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #FFFFFF;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+        .header {
+            background-color: #FFFFFF;
+            padding: 32px 0 24px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .logo {
+            height: 48px;
+            margin-bottom: 0px;
+        }
+        .content {
+            padding: 40px 32px;
+            text-align: center;
+        }
+        h1 {
+            color: #0F172A;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 16px;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #475569;
+            margin-bottom: 24px;
+        }
+        .code-box {
+            background-color: #F7F7F8;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px 32px;
+            margin: 24px auto;
+            font-family: 'SF Mono', 'Courier New', Courier, monospace;
+            font-size: 28px;
+            font-weight: 700;
+            color: #0F172A;
+            letter-spacing: 4px;
+            width: fit-content;
+        }
+        .footer {
+            background-color: #F7F7F8;
+            padding: 24px;
+            text-align: center;
+            font-size: 14px;
+            color: #64748b;
+            border-top: 1px solid rgba(0,0,0,0.08);
+        }
+        .footer a {
+            color: #C19B4A;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="{{ backend_url }}/static/branding_with_text.svg" alt="HoneyLove" class="logo" onerror="this.onerror=null; this.src='{{ dashboard_url }}/branding_with_text.svg'">
+            <h2 style="display:none; color:#C19B4A; margin:0;">HoneyLove</h2>
+        </div>
+        <div class="content">
+            <h1>System Generated Password</h1>
+            <p>
+                Hi {{ full_name | default("User")}},<br>
+                Use this one-time code to access your account:
+            </p>
+            
+            <div class="code-box">
+                {{ password }}
+            </div>
+            
+            <p style="font-size: 14px; color: #EF4444; margin-top: 24px;">
+                <strong>Security Alert:</strong> Please change this password immediately in your Profile Settings after logging in.
+            </p>
+            
+            <p style="font-size: 14px; color: #94a3b8; margin-top: 8px;">
+                This code expires in {{ otp_ttl_minutes|default('10') }} minutes.
+            </p>
+        </div>
+        <div class="footer">
+            <p>&copy; {{ year }} {{ app_name }}. All rights reserved.</p>
+            <p>{{ company_address }}</p>
+            <p>
+                <a href="mailto:{{ support_email }}">Contact Support</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

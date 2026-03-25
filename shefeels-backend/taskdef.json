@@ -1,0 +1,30 @@
+{
+  "family": "honeylove-backend",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::672911155558:role/honeylove-backend-ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::672911155558:role/honeylove-backend-ecsTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "honeylove-backend",
+      "image": "672911155558.dkr.ecr.us-east-1.amazonaws.com/honeylove-backend:latest",
+      "essential": true,
+      "portMappings": [
+        { "containerPort": 8000, "protocol": "tcp" }
+      ],
+      "environment": [
+        { "name": "DATABASE_URL", "value": "postgresql+asyncpg://postgres:HlDeployment_2025!@honeylove-backend-pg.c0l4qmw26fyn.us-east-1.rds.amazonaws.com:5432/honeylove" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/honeylove-backend",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

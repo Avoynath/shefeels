@@ -1,0 +1,706 @@
+@import "tailwindcss";
+@import "./styles/performance.css";
+
+/* Theme variables and responsive design foundation */
+:root {
+  --header-h: 100px;
+  font-family: "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Light theme variables - improved for better contrast */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e1;
+  --accent-primary: var(--hl-gold-strong);
+  --accent-secondary: #A67C00;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  /* Figma design tokens (updated to match HoneyLove UI) */
+  --hl-bg: #0f0e16;
+  --hl-surface: #F4F4F4;
+  --hl-surface-2: #F0F0F0;
+  /* Make component borders subtly golden to match Figma */
+  --hl-border: rgba(0,0,0,0.08);
+  /* brand gold and black, taken from spec */
+  --hl-gold: #C19B4A; /* HoneyLove Gold */
+  --hl-gold-strong: #B78E3F; /* darker gold for depth */
+  --hl-gold-weak: rgba(193,155,74,0.12);
+  --hl-ring: rgba(193,155,74,0.18);
+  /* Centralized brand palette (primary = HoneyLove accent used across the app) */
+  --primary: #FFC54D; /* brighter primary gold used in CTAs */
+  --primary-2: #FFD784; /* lighter primary stop */
+  --primary-3: #FFD98D; /* tertiary primary stop (used in some gradients) */
+  --primary-gradient: linear-gradient(90deg, var(--primary) 0%, var(--primary-2) 100%);
+  /* backwards-compatible (typo used in some components) */
+  --gradiant: linear-gradient(126deg, #000 28.96%, rgba(255, 197, 77, 0.00) 262.7%);
+  /* common neutrals aliased to variables so components can reference them */
+  --white: #FAFAFA;
+  --white-pure: #FFFFFF;
+  --muted-dark: #3a3a3a;
+  --muted-darker: #2b2b2b;
+  --gold-accent: #C89F4E;
+  --muted-2: #B8B8B8;
+  /* requested base colors */
+  --hl-black: #0F0F0F; /* deep neutral black */
+  --hl-grey: #0f0e16;
+
+  /* Light theme surface overrides (kept but explicit) */
+  --hl-bg--light: #ffffff;
+  --hl-surface--light: #F7F7F8;
+  --hl-surface-2--light: #F1F1F2;
+  --hl-border--light: rgba(15,23,42,0.06);
+  --hl-ring--light: rgba(255,197,77,0.12);
+  --r-hero: 20px;
+  --r-card: 16px;
+    --hl-text: #0F172A;
+    --hl-text-dim: rgba(15,23,42,0.72);
+    --hl-text-mute: rgba(15,23,42,0.56);
+  --r-chip: 16px;
+  --r-input: 12px;
+  
+  /* Shadows / glow */
+  /* shadows using the new gold hue where appropriate */
+  --sh-hero: 0 24px 80px rgba(255,197,77,0.15);
+  --sh-card: 0 10px 40px rgba(0,0,0,0.35);
+  --sh-lift: 0 8px 24px rgba(255,197,77,0.20);
+  
+  /* Motion */
+  --easing: cubic-bezier(.2,.8,.2,1);
+  --dur: 180ms;
+}
+
+/* Explicit Light theme variables
+   NOTE: :root historically contained a mixture of tokens that leaned
+   toward the dark theme. Some components reference --hl-* tokens
+   expecting light-mode values when [data-theme="light"] is set on
+   <html>. Adding this block guarantees a correct light appearance
+   without changing component code. */
+[data-theme="light"] {
+  color-scheme: light;
+  /* Surface and background */
+  --hl-bg: var(--hl-bg--light);
+  --hl-surface: var(--hl-surface--light);
+  --hl-surface-2: var(--hl-surface-2--light);
+  /* Borders / rings */
+  --hl-border: var(--hl-border--light);
+  --hl-ring: var(--hl-ring--light);
+  /* Text */
+  --hl-text: var(--hl-text);
+  --hl-text-dim: var(--hl-text-dim);
+  --hl-text-mute: var(--hl-text-mute);
+  /* Primary app/background tokens (used by many components) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e1;
+  --accent-primary: var(--hl-gold-strong);
+  --accent-secondary: #A67C00;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* Ensure components relying on hl-gold tokens keep brand color */
+  --hl-gold: #C19B4A;
+  --hl-gold-strong: #B78E3F;
+  --hl-gold-weak: rgba(193,155,74,0.12);
+  /* helper neutrals used across components */
+  --hl-grey: #f1f5f9;
+  --hl-black: #0f0f0f;
+  /* light-mode neutral for muted borders/icons used previously as --muted-404 */
+  --muted-404: #cbd5e1;
+}
+
+/* Auto-generated: centralized tokens created during color sweep
+   These map literal hex colors found across the codebase to variables
+   so components can reference them centrally. */
+:root {
+  /* dark/neutral aliases */
+  --bg-dark-0c: #0c0c0e;
+  --bg-141414: #141414;
+  --bg-181818: #181818;
+  --bg-2a2a2a: #2a2a2a;
+  --bg-0b0b0b: #0b0b0b;
+  --muted-404: #404040;
+  --muted-3c3c3c: #3C3C3C;
+
+  /* warm / brown tones used in various gradients */
+  --brown-431417: #431417;
+  --brown-1a0b0c: #1a0b0c;
+  --brown-3b2b14: #3b2b14;
+  --brown-6b4e28: #6b4e28;
+  --brown-6a2a2a: #6a2a2a;
+
+  /* cream / mobile bar */
+  --mobile-cream: #FFF7ED;
+
+  /* footer / site gradient */
+  --footer-from: #2b1a0f;
+  --footer-to: #1a1209;
+
+  /* accents and social colors */
+  --accent-danger: #ff6b6b;
+  --accent-deep: #7A171B;
+  --accent-strong: #C0272D;
+  --accent-onlyfans: #00AEEF;
+  --accent-fanvue: #7C4DFF;
+  --accent-tiktok: #25F4EE;
+  --accent-instagram: #E1306C;
+
+  /* promo gradient used in banners */
+  --promo-pink: #FF69B4;
+  --promo-orange: #FFA07A;
+  --promo-gradient: linear-gradient(90deg, var(--promo-pink) 17.02%, var(--promo-orange) 100%);
+
+  /* small helpers */
+  --transparent-gold-025: rgba(255,197,77,0.25);
+}
+
+/* Added single literal used in chat/mobile bar */
+:root {
+  --bg-2b2418: #2b2418;
+}
+
+/* Dark theme variables */
+[data-theme="dark"] {
+  color-scheme: dark;
+  /* requested dark color tokens */
+  --bg-primary: #0f0e16;
+  --bg-secondary: #171422;
+  --bg-tertiary: #221c35;
+  --text-primary: #f7f7f8;
+  --text-secondary: #d1d1d1;
+  --text-muted: #9aa4b2;
+  --border-primary: rgba(255, 255, 255, 0.08);
+  --border-secondary: rgba(255, 255, 255, 0.04);
+  --accent-primary: var(--hl-gold);
+  --accent-secondary: var(--hl-gold-strong);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --shadow-md: 0 6px 12px -2px rgb(0 0 0 / 0.6), 0 3px 6px -3px rgb(0 0 0 / 0.6);
+  --shadow-lg: 0 14px 30px -6px rgb(0 0 0 / 0.65), 0 6px 12px -6px rgb(0 0 0 / 0.6);
+
+  /* Ensure component tokens used throughout the app switch to appropriate dark values.
+     Previously --hl-surface and related tokens were left as light values in :root which
+     caused cards and inputs to appear light even when the app was in dark mode. */
+  --hl-surface: #171422;
+  --hl-surface-2: #110f1a;
+  --hl-border: rgba(127, 90, 240, 0.24);
+  --hl-ring: rgba(127, 90, 240, 0.28);
+  --hl-text: var(--text-primary);
+  --hl-text-dim: rgba(247,247,248,0.85);
+  --hl-text-mute: rgba(247,247,248,0.6);
+  /* dark-mode neutral for muted borders/icons */
+  --muted-404: #404040;
+}
+
+/* Base styles with theme support */
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  height: 100%;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Ensure root fills viewport for proper sizing */
+html, #root { 
+  height: 100%; 
+}
+
+/* Mobile-first responsive design utilities */
+@media (max-width: 640px) {
+  :root {
+    --header-h: 72px;
+  }
+}
+
+
+
+/* Safe area support for mobile devices */
+.safe-area-inset {
+  padding-top: max(var(--header-h), env(safe-area-inset-top));
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Enhanced scrollbar styling for both themes */
+.theme-scrollbar {
+  scrollbar-width: thin;
+}
+
+[data-theme="light"] .theme-scrollbar {
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+[data-theme="dark"] .theme-scrollbar {
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+
+.theme-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.theme-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-theme="light"] .theme-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 6px;
+}
+
+[data-theme="dark"] .theme-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 6px;
+}
+
+.theme-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--border-secondary);
+}
+
+/* Skeleton loading placeholders */
+.skeleton {
+  border-radius: 8px;
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  animation: hl-shimmer 1.2s linear infinite;
+}
+
+@keyframes hl-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+[data-theme="light"] .skeleton {
+  background-image: linear-gradient(90deg, #f3f4f6 25%, #e6eef6 50%, #f3f4f6 75%);
+}
+
+[data-theme="dark"] .skeleton {
+  background-image: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%);
+}
+
+/* Utility: hide scrollbars but keep scroll functionality (for collapsed sidebars) */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Chat-specific scrollbar */
+.chat-scroll { 
+  scrollbar-width: thin; 
+  /* Reserve space for the scrollbar to avoid overlaying adjacent panels
+     in browsers that support it. This keeps the scrollbar visually inside
+     the chat area instead of overlapping the right panel. */
+  scrollbar-gutter: stable;
+}
+
+[data-theme="light"] .chat-scroll {
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+[data-theme="dark"] .chat-scroll {
+  scrollbar-color: rgba(255,255,255,0.12) transparent;
+}
+
+.chat-scroll::-webkit-scrollbar { 
+  width: 8px; 
+}
+
+.chat-scroll::-webkit-scrollbar-track { 
+  /* Use the center-panel background so the scrollbar track visually
+     stays inside the chat area and doesn't appear to overlap adjacent
+     panels. The variable adapts to light/dark themes. */
+  background: var(--bg-secondary);
+}
+
+[data-theme="light"] .chat-scroll::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 6px;
+}
+
+[data-theme="dark"] .chat-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.08);
+  border-radius: 6px;
+}
+
+.chat-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: var(--border-secondary);
+}
+
+/* Generator thumbnail scrollbar */
+.gen-scrollbar { 
+  scrollbar-width: thin;
+}
+
+[data-theme="light"] .gen-scrollbar {
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+[data-theme="dark"] .gen-scrollbar {
+  scrollbar-color: rgba(255,255,255,0.12) transparent;
+}
+
+.gen-scrollbar::-webkit-scrollbar { 
+  height: 8px; 
+}
+
+.gen-scrollbar::-webkit-scrollbar-track { 
+  background: transparent; 
+}
+
+[data-theme="light"] .gen-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+[data-theme="dark"] .gen-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.12);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.gen-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--border-secondary);
+}
+
+/* Typography improvements */
+/* Leave headings to use Tailwind utility classes — do not force inheritance here. */
+
+/* Link styling with theme support */
+a { 
+  text-decoration: inherit; 
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--hl-gold);
+}
+
+/* Button improvements with better focus states */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+button:focus { 
+  outline: none; 
+}
+
+button:focus-visible {
+  outline: 2px solid var(--hl-gold);
+  outline-offset: 2px;
+}
+
+/* Header and aside background support */
+header, aside { 
+  background-clip: padding-box; 
+}
+
+/* Responsive grid utilities */
+.responsive-grid {
+  display: grid;
+  gap: 0.5rem;
+  /* 2 columns on mobile to match Figma */
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 640px) {
+  .responsive-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .responsive-grid {
+    grid-template-columns: repeat(3, 1fr);
+    --header-h: 64px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* Theme transition classes */
+.theme-transition {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Glass morphism effect for both themes */
+.glass-effect {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+[data-theme="light"] .glass-effect {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .glass-effect {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile touch improvements */
+@media (hover: none) and (pointer: coarse) {
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Put this below the existing touch rule */
+@media (hover: none) and (pointer: coarse) {
+  .cta-compact {
+    min-height: 28px !important;   /* or 32px if you prefer */
+  }
+}
+
+/* Prevent iOS/Android auto-zoom when focusing single-line form controls on small devices.
+   Mobile Safari will often zoom to enlarge text inputs if their font-size is less than 16px.
+   We'll increase the font-size for single-line inputs and controls to avoid that behavior
+   while allowing multi-line textareas to keep smaller font-sizes set via Tailwind classes.
+*/
+@media (max-width: 420px) {
+  /* Apply the anti-zoom rule to inputs, selects and buttons only. Leave textareas to
+     be sized via their component classes (so components can opt into smaller fonts). */
+  input:not(.allow-custom-text),
+  select:not(.allow-custom-text),
+  button:not(.allow-custom-text) {
+    font-size: 16px !important;
+    -webkit-text-size-adjust: 100%;
+  }
+  /* Keep the textarea compact while allowing the larger tap font-size for inputs */
+  textarea { line-height: 1.2; }
+}
+
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border-primary: #000000;
+    --border-secondary: #333333;
+  }
+  
+  [data-theme="dark"] {
+    --border-primary: #ffffff;
+    --border-secondary: #cccccc;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Figma-matching component utilities */
+@layer components {
+  .pill {
+    @apply inline-flex items-center h-7 px-2 rounded-lg text-xs border;
+    border-color: var(--hl-border);
+    background: var(--hl-surface);
+    color: var(--hl-text);
+    transition: all var(--dur) var(--easing);
+    min-height: 28px;
+  }
+
+  .pill:hover {
+    box-shadow: 0 0 0 2px var(--hl-ring) inset;
+  }
+
+  /* Ensure icons inside pills stay visually balanced when we reduce pill size */
+  .pill > svg, .pill .icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Make pill icons turn black on hover (covers both <img> and inline <svg>) */
+  .pill img, .pill svg {
+    transition: filter 160ms var(--easing), color 160ms var(--easing), fill 160ms var(--easing);
+    -webkit-transition: filter 160ms var(--easing), color 160ms var(--easing), fill 160ms var(--easing);
+  }
+
+  .pill:hover img {
+    filter: brightness(0) saturate(100%);
+  }
+
+  .pill:hover svg,
+  .pill:hover svg * {
+    color: #000 !important;
+    fill: #000 !important;
+  }
+  
+  .pill--active {
+    background: linear-gradient(180deg, var(--hl-gold), var(--hl-gold-strong));
+    color: #111;
+    border-color: transparent;
+    box-shadow: 0 6px 22px rgba(246,185,75,0.35);
+  }
+
+  /* Mobile: enforce exact pill sizing to avoid browser text-resize differences */
+  @media (max-width: 767px) {
+    .pill {
+      height: 28px !important;
+      min-height: 28px !important;
+      line-height: 1 !important;
+      box-sizing: border-box !important;
+      -webkit-text-size-adjust: 100% !important;
+      -moz-text-size-adjust: 100% !important;
+      text-size-adjust: 100% !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    .pill > span, .pill .text-xs {
+      font-size: .75rem !important; /* enforce text-xs */
+      line-height: 1 !important;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .pill > img, .pill > svg {
+      width: 14px !important;
+      height: 14px !important;
+      vertical-align: middle;
+    }
+  }
+  
+  .btn-gold {
+    @apply inline-flex items-center justify-center font-medium;
+    height: 48px;
+    padding: 0 18px;
+    border-radius: 16px;
+    color: #111;
+    border: 1px solid transparent;
+    background: linear-gradient(180deg, var(--hl-gold), var(--hl-gold-strong));
+    box-shadow: var(--sh-lift);
+    transition: transform var(--dur) var(--easing), box-shadow var(--dur) var(--easing);
+  }
+  
+  .btn-gold:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 30px rgba(246,185,75,0.35);
+  }
+  
+  .btn-gold:focus-visible {
+    outline: 2px solid var(--hl-gold);
+    outline-offset: 2px;
+  }
+  
+  .card {
+    @apply overflow-hidden border;
+    border-color: var(--hl-border);
+    border-radius: var(--r-card);
+    background: var(--hl-surface-2);
+    box-shadow: var(--sh-card);
+    position: relative;
+    transition: transform var(--dur) var(--easing), box-shadow var(--dur) var(--easing);
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 50px rgba(0,0,0,.45);
+  }
+
+  /* Subtle dark overlay to improve text contrast against bright images
+     Overlay is pointer-events:none so it doesn't affect interactions. */
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0.82) 100%);
+    transition: background 0.25s ease;
+  }
+
+  /* Specific overlay for CharacterCard image container so it sits above the image
+     but below the text/actions that are z-20 in the component markup. */
+  .character-media::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 70%;
+    z-index: 15; /* above image (z-10) and below text (z-20) */
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.45) 75%, rgba(0,0,0,0.85) 100%);
+    transition: opacity 180ms ease, background 180ms ease;
+  }
+  
+  .hero {
+    border: 1px solid var(--hl-border);
+    border-radius: var(--r-hero);
+    box-shadow: var(--sh-hero);
+    background: radial-gradient(120% 120% at 0% 0%, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 60%), var(--hl-surface-2);
+  }
+  
+  .chip {
+    @apply inline-flex items-center h-8 px-2 rounded-xl text-sm border;
+    border-color: var(--hl-border);
+    color: var(--hl-text-dim);
+    background: var(--hl-surface);
+    transition: all var(--dur) var(--easing);
+    min-height: 32px;
+  }
+  
+  .chip:hover {
+    border-color: var(--hl-ring);
+    color: var(--hl-text);
+  }
+  
+  .nameplate {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    padding: 12px 12px 14px;
+    /* stronger bottom gradient to ensure text is readable on bright images */
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.7) 75%, rgba(0,0,0,0.85) 100%);
+    color: var(--white-pure);
+    font-weight: 600;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  }
+  
+}

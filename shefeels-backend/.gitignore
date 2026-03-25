@@ -1,0 +1,44 @@
+.env
+venv/
+.venv/
+
+# Alembic
+alembic
+
+# Python caches and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# pytest
+.pytest_cache/
+
+# virtualenvs
+env/
+ENV/
+env.bak/
+
+# pipenv
+Pipfile.lock
+
+# distribution/build
+build/
+dist/
+*.egg-info/
+
+# coverage
+.coverage
+htmlcov/
+
+# mypy
+.mypy_cache/
+
+# VSCode
+.vscode/
+
+*.md
+
+# Local/sensitive deployment and data artifacts
+app/aws_deployment.txt
+data/*.mmdb
+honeylove*.sql

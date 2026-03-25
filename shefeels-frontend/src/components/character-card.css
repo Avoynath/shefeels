@@ -1,0 +1,76 @@
+/* Outer gradient ring for CharacterCard
+   - Uses ::before to draw a radial/conic warm-gold ring outside the card border
+   - Configurable via CSS variables at the top for spread, thickness, blur and opacity
+   - Uses masking to keep only the outside ring visible where supported.
+   - Activates on parent .group hover or focus-within for accessibility.
+*/
+
+:root {
+  /* sensible defaults; tweak these in the component or globally if desired */
+  --chr-ring-spread: 10px;    /* how far outside the border the glow spreads (inset: -Xpx) */
+  --chr-ring-thickness: 10px; /* how thick the ring is (padding on pseudo) */
+  --chr-ring-blur: 12px;      /* blur for softness */
+  --chr-ring-opacity: 0.95;   /* visible opacity on hover (0-1) */
+}
+
+.outer-gradient-ring {
+  position: relative; /* create positioning context for the pseudo-element */
+  /* ensure the wrapper doesn't clip the ring */
+  overflow: visible;
+}
+
+.outer-gradient-ring::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--chr-ring-spread) * -1);
+  border-radius: calc(18px + var(--chr-ring-spread)); /* match card radius + spread */
+  padding: var(--chr-ring-thickness);
+  pointer-events: none;
+  z-index: -1; /* sit behind the wrapper but above the page background */
+
+  /* radial/conic warm gold gradient; tuned for a subtle ring */
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 216, 140, 0.00) 0deg,
+    rgba(255, 216, 140, 0.45) 60deg,
+    rgba(255, 170, 63, 0.55) 140deg,
+    rgba(255, 216, 140, 0.45) 220deg,
+    rgba(255, 216, 140, 0.00) 360deg
+  );
+
+  /* Keep only the ring area (outside the element). Works in WebKit and modern browsers. */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; /* Safari */
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude; /* spec for other browsers */
+
+  /* visual style */
+  filter: blur(var(--chr-ring-blur));
+  opacity: 0; /* hidden by default */
+  transform: scale(0.98) translateZ(0); /* promote to own layer */
+  transition: opacity 300ms ease, transform 300ms ease, filter 300ms ease;
+  will-change: opacity, transform, filter;
+}
+
+/* Activate on hover and keyboard focus within the parent group */
+.group:hover .outer-gradient-ring::before,
+.group:focus-within .outer-gradient-ring::before,
+.outer-gradient-ring:focus-within::before {
+  opacity: var(--chr-ring-opacity);
+  transform: scale(1) translateZ(0);
+  filter: blur(calc(var(--chr-ring-blur) - 2px));
+}
+
+/* Slightly different stops for dark theme so it reads on dark backgrounds */
+.dark .outer-gradient-ring::before {
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 214, 143, 0.00) 0deg,
+    rgba(255, 214, 143, 0.55) 70deg,
+    rgba(255, 170, 63, 0.60) 160deg,
+    rgba(255, 214, 143, 0.55) 250deg,
+    rgba(255, 214, 143, 0.00) 360deg
+  );
+}
+
+/* Fallback: if masking isn't supported the ring will still appear as a blurred halo. */
