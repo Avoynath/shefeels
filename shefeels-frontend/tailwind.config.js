@@ -8,7 +8,7 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
+					sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
 			},
 			colors: {
 				// Light theme colors

@@ -181,11 +181,11 @@ export const PromotionsPerformance: React.FC = () => {
                     type="category" 
                     dataKey="code" 
                     width={100} 
-                    tick={{ fontSize: 11, fontFamily: 'monospace' }}
+                    tick={{ fontSize: 11, fontFamily: '"Plus Jakarta Sans", sans-serif' }}
                   />
                   <Tooltip 
                     formatter={(v: any) => [currency(Number(v)), 'Revenue']}
-                    labelStyle={{ fontFamily: 'monospace', fontWeight: 'bold' }}
+                    labelStyle={{ fontFamily: '"Plus Jakarta Sans", sans-serif', fontWeight: 'bold' }}
                     contentStyle={{ 
                       backgroundColor: '#f8fafc', 
                       border: '1px solid #e2e8f0',

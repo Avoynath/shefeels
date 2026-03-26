@@ -1,9 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import footerLogo from "../assets/figma/home/footer/footer-logo.svg";
-import socialInstagramOutline from "../assets/figma/home/footer/social-instagram-outline.svg";
-import socialInstagramBase from "../assets/figma/home/footer/social-instagram-base.svg";
-import socialInstagramDot from "../assets/figma/home/footer/social-instagram-dot.svg";
+import socialInstagram from "../assets/figma/home/footer/social-instagram-custom.svg";
 import socialFacebook from "../assets/figma/home/footer/social-facebook.svg";
 import socialX from "../assets/figma/home/footer/social-x.svg";
 import dmcaBadge from "../assets/figma/home/footer/dmca.png";
@@ -33,14 +31,6 @@ const FOOTER_LEGAL_LINKS = [
   { label: "Privacy Policy", to: "/privacy-policy" },
 ];
 
-const InstagramIcon = () => (
-  <span className="relative h-[14px] w-[14px] shrink-0">
-    <img src={socialInstagramOutline} alt="" className="absolute inset-0 h-full w-full" />
-    <img src={socialInstagramBase} alt="" className="absolute inset-0 h-full w-full" />
-    <img src={socialInstagramDot} alt="" className="absolute inset-0 h-full w-full" />
-  </span>
-);
-
 const SocialIconButton = ({ children }: { children: React.ReactNode }) => (
   <span className="inline-flex h-7 w-7 items-center justify-center rounded-[16px] bg-white/10">
     {children}
@@ -48,16 +38,16 @@ const SocialIconButton = ({ children }: { children: React.ReactNode }) => (
 );
 
 const SOCIAL_LINKS = [
-  { label: "Instagram", icon: <InstagramIcon /> },
+  { label: "Instagram", icon: <img src={socialInstagram} alt="" className="h-[14px] w-[14px]" /> },
   { label: "Facebook", icon: <img src={socialFacebook} alt="" className="h-[14px] w-[14px]" /> },
   { label: "Twiter", icon: <img src={socialX} alt="" className="h-[14px] w-[14px]" /> },
-  { label: "Instagram", icon: <InstagramIcon /> },
+  { label: "Instagram", icon: <img src={socialInstagram} alt="" className="h-[14px] w-[14px]" /> },
 ];
 
 const SiteFooter: React.FC<{ gender?: string }> = () => {
   return (
     <footer className="w-full border-t border-[#815cf0] bg-[radial-gradient(86%_128%_at_50%_0%,rgba(149,113,255,0.2)_0%,rgba(11,8,19,0.98)_28%,rgba(0,0,0,1)_42%,rgba(86,18,42,0.94)_100%)] pb-20 md:pb-0">
-      <div className="mx-auto w-full max-w-[1670px] px-4 pt-10 sm:px-6 md:px-[34px] md:pt-[50px]">
+      <div className="w-full px-4 pt-10 sm:px-6 md:px-[34px] md:pt-[50px]">
         <div className="flex flex-col gap-10 md:gap-12">
           <div className="grid grid-cols-1 gap-10 md:grid-cols-[311px_1fr] md:gap-[178px]">
             <div className="flex flex-col gap-5">

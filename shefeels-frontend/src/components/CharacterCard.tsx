@@ -115,7 +115,7 @@ export default function CharacterCard({
   const chatButtonBackground = 'rgba(255, 255, 255, 0.08)';
   const chatButtonClass = `allow-custom-text inline-flex items-center justify-center h-[36px] px-3 text-[14px] font-normal text-white backdrop-blur-[7.5px] rounded-[6px] transition-all duration-200 border border-transparent hover:bg-white/18`;
   const chatButtonStyle = { background: chatButtonBackground };
-  const typographyStyle = { fontFamily: '"Plus Jakarta Sans", Inter, system-ui, sans-serif' };
+  const typographyStyle = { fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif' };
   const actionLabel = (() => {
     const seed = String(bio || '').trim();
     if (!seed) return 'Chat';

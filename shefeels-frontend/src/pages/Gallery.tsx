@@ -481,7 +481,6 @@ export default function Gallery() {
 		}`}>
 			<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
 				<div className="flex items-center gap-3">
-					{/* Back button styled similar to the fullscreen page back button */}
 					<button
 						onClick={() => navigate(-1)}
 						aria-label="Back"
@@ -494,7 +493,6 @@ export default function Gallery() {
 				</div>
 
 				<div className="flex gap-2">
-					{/* Generate New Image button - left of Refresh Gallery */}
 					<button
 						onClick={() => { try { navigate('/generate-image'); } catch { window.location.href = '/generate-image'; } }}
 						className={`rounded-xl px-4 py-2.5 text-sm font-medium transition-transform hover:scale-[1.01]`}
@@ -503,7 +501,6 @@ export default function Gallery() {
 						Generate New Image
 					</button>
 
-					{/* Refresh Gallery button - apply same styling as Generate */}
 					<button
 						onClick={() => { setItems([]); setLoading(true); setError(null); const ev = new Event('gallery:reload'); window.dispatchEvent(ev); }}
 						className={`rounded-xl px-4 py-2.5 text-sm font-medium transition-transform hover:scale-[1.01]`}
@@ -541,7 +538,7 @@ export default function Gallery() {
 								<button
 									onClick={() => navigate('/generate-image')}
 									className="inline-flex items-center rounded-[60px] px-4 py-3 text-sm font-semibold transition-shadow"
-									style={{ border: '1px solid rgba(255,255,255,0.50)', background: 'linear-gradient(90deg, #FFC54D 0%, #FFD784 100%)', borderRadius: '60px', color: '#000' }}
+									style={{ ...galleryActionStyle, borderRadius: '60px' }}
 								>
 									<img src={GenerateImageNowIcon} alt="" className="w-4 h-4 mr-2" />
 									Generate Image

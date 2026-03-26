@@ -2,6 +2,7 @@ import React from "react";
 import { createPortal } from "react-dom";
 import { Hamburger, ChevronDown } from "./icons";
 import { HambergerMenu } from 'iconsax-react';
+import { Crown, LogOut, Settings } from "lucide-react";
 // removed mobile search icon per design request
 import headerLogo from "../assets/header-logo.svg";
 // compact branding not used on mobile anymore
@@ -153,7 +154,7 @@ export const Header: React.FC<Props> = ({
       const anchor = tokenToggleRef?.current as HTMLElement | null;
       if (!anchor) return setCoinMenuStyle(null);
       const rect = anchor.getBoundingClientRect();
-      const menuWidth = 180;
+      const menuWidth = 227;
       const margin = 12;
       const viewportWidth = window?.innerWidth || document?.documentElement?.clientWidth || menuWidth;
       let left = rect.left + window.scrollX;
@@ -259,6 +260,11 @@ export const Header: React.FC<Props> = ({
   const headerBg = isDark ? "bg-[#0f0e16]/95" : "bg-white/95";
   const hasActiveSubscription = !!(user as any)?.hasActiveSubscription;
   const tokenBalance = Number((user as any)?.tokenBalance || 0);
+  const coinCostItems = [
+    { label: 'Voice Cost', value: coinCosts?.voice_cost ?? '2' },
+    { label: 'Image Cost', value: coinCosts?.image_cost ?? '2' },
+    { label: 'Call Cost', value: coinCosts?.call_cost ? `${coinCosts.call_cost}/min` : '2/min' },
+  ];
 
   // Debug log to help troubleshoot subscription status
   React.useEffect(() => {
@@ -638,22 +644,21 @@ export const Header: React.FC<Props> = ({
                           }
                         } catch { }
                       }}
-                      className="inline-flex items-center gap-1.5 sm:gap-3 px-2 sm:px-4 h-8 sm:h-9 text-[13px] sm:text-sm font-semibold transition shrink-0"
+                      className="inline-flex h-[38px] shrink-0 items-center gap-[6px] rounded-[12px] px-[10px] py-[7px] text-[16px] font-normal leading-[20px] text-white transition"
                       title={`Tokens left: ${tokenBalance}`}
                       style={{
-                        borderRadius: 30,
-                        background: 'rgba(255, 255, 255, 0.16)',
-                        WebkitBackdropFilter: 'blur(6px)'
+                        background: 'rgba(255, 255, 255, 0.12)',
+                        backdropFilter: 'blur(6px)',
+                        WebkitBackdropFilter: 'blur(6px)',
                       }}
                     >
-                      <img src={tokenIcon} alt="token" className="h-4 w-4 sm:h-5 sm:w-5" />
-                      <span className="leading-none text-white whitespace-nowrap">
-                        <span className="hidden xs:inline">Tokens </span>
+                      <img src={tokenIcon} alt="token" className="h-5 w-5 shrink-0" />
+                      <span className="whitespace-nowrap text-white">
                         {tokenBalance}
                       </span>
-                      <span className="hidden sm:inline-flex items-center justify-center h-5 w-5 rounded-full" style={{ background: 'transparent' }}>
-                        <svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                          <path d="M10 4v12M4 10h12" stroke="#FFC54D" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      <span className="inline-flex h-5 w-5 items-center justify-center text-white/90" aria-hidden>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M10 5V15M5 10H15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </span>
                     </button>
@@ -664,88 +669,34 @@ export const Header: React.FC<Props> = ({
                         style={coinMenuStyle || undefined}
                         onMouseDown={(e) => e.stopPropagation()}
                         onClick={(e) => e.stopPropagation()}
-                        className={`z-9999 mt-2 overflow-hidden rounded-[14px] border theme-transition`}
+                        className="z-9999 mt-2 overflow-hidden"
                         aria-hidden
                       >
-                        <div style={{
-                          borderRadius: 14,
-                          border: '0.5px solid var(--secondary, #C09B62)',
-                          background: 'rgba(255,255,255,0.10)',
-                          backdropFilter: 'blur(30px)',
-                          padding: '14px'
-                        }}>
-                          <div className="flex flex-col gap-3 text-sm">
-                            <div className="flex items-center justify-between group/item">
-                              <span className="text-white/70 group-hover/item:text-white transition-colors">Chat Cost</span>
-                              <span className="inline-flex items-center gap-2">
-                                <img src={tokenIcon} alt="coin" className="h-3.5 w-3.5 opacity-80" />
-                                <span className="font-bold text-white">{(coinCosts && coinCosts.chat_cost) ?? '-'}</span>
-                              </span>
-                            </div>
-                            <div className="flex items-center justify-between group/item">
-                              <span className="text-white/70 group-hover/item:text-white transition-colors">Image Cost</span>
-                              <span className="inline-flex items-center gap-2">
-                                <img src={tokenIcon} alt="coin" className="h-3.5 w-3.5 opacity-80" />
-                                <span className="font-bold text-white">{(coinCosts && coinCosts.image_cost) ?? '-'}</span>
-                              </span>
-                            </div>
-                            <div className="flex items-center justify-between group/item">
-                              <span className="text-white/70 group-hover/item:text-white transition-colors">Character Cost</span>
-                              <span className="inline-flex items-center gap-2">
-                                <img src={tokenIcon} alt="coin" className="h-3.5 w-3.5 opacity-80" />
-                                <span className="font-bold text-white">{(coinCosts && coinCosts.character_cost) ?? '-'}</span>
-                              </span>
-                            </div>
-                            <div className="flex items-center justify-between group/item">
-                              <span className="text-white/70 group-hover/item:text-white transition-colors">Voice Cost</span>
-                              <span className="inline-flex items-center gap-2">
-                                <img src={tokenIcon} alt="coin" className="h-3.5 w-3.5 opacity-80" />
-                                <span className="font-bold text-white">{(coinCosts && coinCosts.voice_cost) ?? '-'}</span>
-                              </span>
-                            </div>
-                            <div className="flex items-center justify-between group/item">
-                              <span className="text-white/70 group-hover/item:text-white transition-colors">Call (min)</span>
-                              <span className="inline-flex items-center gap-2">
-                                <img src={tokenIcon} alt="coin" className="h-3.5 w-3.5 opacity-80" />
-                                <span className="font-bold text-white">{(coinCosts && coinCosts.call_cost) ?? '-'}</span>
-                              </span>
-                            </div>
-                            <div className="flex items-center justify-between group/item">
-                              <span className="text-white/70 group-hover/item:text-white transition-colors">Video Call (min)</span>
-                              <span className="inline-flex items-center gap-2">
-                                <img src={tokenIcon} alt="coin" className="h-3.5 w-3.5 opacity-80" />
-                                <span className="font-bold text-white">{(coinCosts && coinCosts.video_call_cost) ?? '-'}</span>
-                              </span>
-                            </div>
-                            <div className="flex items-center justify-between group/item">
-                              <span className="text-white/70 group-hover/item:text-white transition-colors">Roleplay (hour)</span>
-                              <span className="inline-flex items-center gap-2">
-                                <img src={tokenIcon} alt="coin" className="h-3.5 w-3.5 opacity-80" />
-                                <span className="font-bold text-white">{(coinCosts && coinCosts.roleplay_cost) ?? '-'}</span>
-                              </span>
-                            </div>
-                            <div className="flex items-center justify-between group/item">
-                              <span className="text-white/70 group-hover/item:text-white transition-colors">Custom Scene</span>
-                              <span className="inline-flex items-center gap-2">
-                                <img src={tokenIcon} alt="coin" className="h-3.5 w-3.5 opacity-80" />
-                                <span className="font-bold text-white">{(coinCosts && coinCosts.custom_scene_cost) ?? '-'}</span>
-                              </span>
-                            </div>
+                        <div
+                          className="w-[227px] rounded-[14px] border border-[rgba(251,254,252,0.3)] bg-black p-[19px_21px] shadow-[0_18px_48px_rgba(0,0,0,0.45)] backdrop-blur-[20px]"
+                        >
+                          <div className="flex flex-col gap-3">
+                            {coinCostItems.map((item) => (
+                              <div key={item.label} className="flex items-center justify-between gap-4">
+                                <span className="whitespace-nowrap text-[18px] font-normal leading-7 text-white/88">
+                                  {item.label}
+                                </span>
+                                <span className="inline-flex shrink-0 items-center gap-1 text-white">
+                                  <img src={tokenIcon} alt="coin" className="h-4 w-4 shrink-0" />
+                                  <span className="text-[18px] font-normal leading-5">
+                                    {item.value}
+                                  </span>
+                                </span>
+                              </div>
+                            ))}
 
-                            <div className="pt-2">
-                              <button
-                                onClick={() => { setCoinCostOpen(false); window.requestAnimationFrame(() => navigate('/buy-tokens')); }}
-                                className="w-full inline-flex items-center justify-center gap-2 h-10 text-sm font-semibold"
-                                style={{
-                                  borderRadius: 50,
-                                  background: 'rgb(255, 193, 90)',
-                                  color: '#000'
-                                }}
-                              >
-                                <span style={{ fontSize: 20 }}>+</span>
-                                <span>Buy more</span>
-                              </button>
-                            </div>
+                            <button
+                              onClick={() => { setCoinCostOpen(false); window.requestAnimationFrame(() => navigate('/buy-tokens')); }}
+                              className="mt-1 inline-flex h-[46px] w-full items-center justify-center gap-[6px] rounded-[8px] bg-[#7F5AF0] px-[15px] py-[7px] text-[14px] font-normal text-white transition hover:brightness-110"
+                            >
+                              <span className="text-[22px] font-normal leading-none">+</span>
+                              <span>Buy more</span>
+                            </button>
                           </div>
                         </div>
                       </div>,
@@ -763,34 +714,43 @@ export const Header: React.FC<Props> = ({
                     <span className="text-xs sm:text-sm hidden sm:inline">{user?.name || user?.email?.split('@')[0] || 'Profile'}</span>
                   </button>
                   {showProfile && (
-                    <div ref={profileMenuRef} className={`absolute right-0 mt-2 w-48 rounded-md ring-1 p-2 shadow-xl theme-transition ${isDark
-                        ? "bg-[#000000] ring-white/5"
-                        : "bg-white ring-gray-200"
-                      }`}>
-                      <button onClick={() => { setShowProfile(false); navigate('/profile'); }} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${isDark ? "hover:bg-white/5" : "hover:bg-gray-50"
-                        }`}>Profile</button>
-                      <button onClick={() => { setShowProfile(false); navigate('/my-ai'); }} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${isDark ? "hover:bg-white/5" : "hover:bg-gray-50"
-                        }`}>My AI</button>
-                      <button onClick={() => { setShowProfile(false); navigate('/buy-tokens'); }} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${isDark ? "hover:bg-white/5" : "hover:bg-gray-50"
-                        }`}>Buy Tokens</button>
-                      <button onClick={() => { setShowProfile(false); navigate('/order-history'); }} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${isDark ? "hover:bg-white/5" : "hover:bg-gray-50"
-                        }`}>Order History</button>
-                      {/* Admin Dashboard - visible only to admin users */}
-                      {user && (((user as any).role === 'admin') || ((user as any).role === 'super_admin')) && (
-                        <a
-                          href="/admin/dashboard"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={() => { setShowProfile(false); syncAdminTokens(); }}
-                          className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${isDark ? "hover:bg-white/5" : "hover:bg-gray-50"
-                            }`}
-                        >
-                          Admin Dashboard
-                        </a>
-                      )}
-                      <div className={`border-t my-1 ${isDark ? "border-white/5" : "border-gray-200"}`} />
-                      <button onClick={() => { setShowProfile(false); logout(); }} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${isDark ? "text-red-400 hover:bg-white/5" : "text-red-600 hover:bg-gray-50"
-                        }`}>Logout</button>
+                    <div
+                      ref={profileMenuRef}
+                      className={`absolute right-0 mt-[14px] w-[324px] rounded-[14px] border p-[18px] shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-[20px] theme-transition ${
+                        isDark
+                          ? "border-[rgba(158,130,243,0.3)] bg-[#0F0E16]"
+                          : "border-[#d7d0f4] bg-white"
+                      }`}
+                    >
+                      <button
+                        onClick={() => { setShowProfile(false); navigate('/premium'); }}
+                        className={`flex h-16 w-full items-center gap-3 rounded-[8px] px-4 text-left text-[20px] font-medium transition-colors ${
+                          isDark ? "text-white hover:bg-white/[0.03]" : "text-slate-900 hover:bg-slate-100"
+                        }`}
+                      >
+                        <Crown className="h-7 w-7 shrink-0" strokeWidth={2.2} />
+                        <span>Subscription</span>
+                      </button>
+
+                      <button
+                        onClick={() => { setShowProfile(false); navigate('/profile'); }}
+                        className={`mt-1 flex h-16 w-full items-center gap-3 rounded-[8px] px-4 text-left text-[20px] font-medium transition-colors ${
+                          isDark ? "text-white hover:bg-white/[0.03]" : "text-slate-900 hover:bg-slate-100"
+                        }`}
+                      >
+                        <Settings className="h-7 w-7 shrink-0" strokeWidth={2.2} />
+                        <span>Setting</span>
+                      </button>
+
+                      <button
+                        onClick={() => { setShowProfile(false); logout(); }}
+                        className={`mt-1 flex h-16 w-full items-center gap-3 rounded-[8px] px-4 text-left text-[20px] font-medium transition-colors ${
+                          isDark ? "text-[#FF3B30] hover:bg-white/[0.03]" : "text-[#FF3B30] hover:bg-slate-100"
+                        }`}
+                      >
+                        <LogOut className="h-7 w-7 shrink-0" strokeWidth={2.2} />
+                        <span>Logout</span>
+                      </button>
                     </div>
                   )}
                 </div>

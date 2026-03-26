@@ -1,296 +1,338 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Button from '../components/Button';
+import tokenIcon from '../assets/token.svg';
+import upiIcon from '../assets/payments/UPI.svg';
+import tokenBenefitCheck from '../assets/payments/token-benefit-check.svg';
 import { buildApiUrl } from '../utils/apiBase';
 import fetchWithAuth from '../utils/fetchWithAuth';
-import tokenIcon from "../assets/token.svg";
-import priceIcon from "../assets/payments/DollarCurrency.svg";
-import Button from "../components/Button";
-import backgroundImage from "../assets/payments/BuyTokenBackground.webp";
-// TopUpModal temporarily disabled to remove the billing page/modal
-// import TopUpModal from '../components/TopUpModal';
 import apiClient from '../utils/api';
 import { useAuth } from '../contexts/AuthContext';
 
-function OptionTile({ amount, price, badge, onSelect, disabled, isSelected }: { amount: string; price: string; badge?: string; onSelect?: () => void; disabled?: boolean; isSelected?: boolean }) {
+type PricingPlan = {
+  id?: string | number;
+  pricing_id?: string;
+  pricingId?: string;
+  price?: number | string;
+  currency?: string;
+  discount?: number | string;
+  billing_cycle?: string;
+  billingCycle?: string;
+  coin_reward?: number | string;
+  coinReward?: number | string;
+};
+
+const FIGMA_PACKS = [
+  { amount: 200, price: 799, badge: undefined },
+  { amount: 400, price: 1999, badge: undefined },
+  { amount: 550, price: 2999, badge: '10% Bonus' },
+  { amount: 1100, price: 6999, badge: '10% Bonus' },
+] as const;
+
+type OptionTileProps = {
+  amount: number;
+  priceLabel: string;
+  badge?: string;
+  isSelected?: boolean;
+  disabled?: boolean;
+  onSelect?: () => void;
+};
+
+function formatAmount(value: number) {
+  return value.toLocaleString('en-IN');
+}
+
+function formatPrice(price: number, currency = 'USD') {
+  const normalized = String(currency || 'USD').toUpperCase();
+  if (normalized === 'INR') return `₹ ${price.toLocaleString('en-IN')}`;
+  if (normalized === 'USD') return `$ ${price.toLocaleString('en-US')}`;
+  return `${normalized} ${price.toLocaleString()}`;
+}
+
+function OptionTile({ amount, priceLabel, badge, isSelected, disabled, onSelect }: OptionTileProps) {
   const handleClick = () => {
     if (disabled) return;
     onSelect?.();
   };
 
-  const handleKey = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (disabled) return;
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
       onSelect?.();
     }
   };
 
   return (
     <div
-      className={`relative flex flex-col justify-center items-center w-full max-w-[180px] min-h-[150px] p-6 transition-all ${
-        onSelect && !disabled ? 'cursor-pointer' : ''
-      } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-      style={{
-        borderRadius: '16px',
-        border: isSelected ? '0.6px solid #FFC54D' : '0.6px solid #C09B62',
-        background: 'linear-gradient(124deg, #000000 37.56%, rgba(255, 183, 3, 0.15) 203.74%)',
-        boxShadow: isSelected 
-          ? '0 0 30px rgba(255, 197, 77, 0.4), 0 4px 20px rgba(0, 0, 0, 0.2)' 
-          : '0 0 20px rgba(192, 155, 98, 0.2), 0 4px 15px rgba(0, 0, 0, 0.15)',
-        overflow: 'hidden',
-      }}
-      onClick={handleClick}
       role={onSelect ? 'button' : undefined}
       tabIndex={onSelect && !disabled ? 0 : undefined}
-      onKeyDown={handleKey}
       aria-disabled={disabled}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      className={`relative flex min-h-[160px] w-full flex-col justify-between overflow-hidden rounded-2xl border px-5 pb-7 pt-6 transition-all ${
+        disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+      }`}
+      style={{
+        borderColor: isSelected ? 'rgba(166, 130, 255, 0.95)' : 'rgba(158, 130, 243, 0.35)',
+        background: `
+          radial-gradient(120% 120% at 100% 0%, rgba(127, 90, 240, 0.32) 0%, rgba(127, 90, 240, 0) 38%),
+          radial-gradient(120% 120% at 0% 100%, rgba(229, 49, 112, 0.18) 0%, rgba(229, 49, 112, 0) 42%),
+          linear-gradient(180deg, rgba(18, 15, 28, 0.94) 0%, rgba(12, 10, 19, 0.96) 100%)
+        `,
+        boxShadow: isSelected
+          ? '0 0 0 1px rgba(166, 130, 255, 0.2), 0 18px 40px rgba(0, 0, 0, 0.28)'
+          : '0 16px 36px rgba(0, 0, 0, 0.18)',
+      }}
     >
-      {badge && (
-        <div 
-          className="absolute top-0 right-0 px-3 py-1 text-[#000] text-xs font-semibold"
+      {badge ? (
+        <div
+          className="absolute right-0 top-0 flex h-[34px] min-w-[118px] items-center justify-center rounded-bl-2xl rounded-tr-2xl px-4 text-[13px] font-medium tracking-[0.2px] text-white/85"
           style={{
-            background: '#FFC54D',
-            borderRadius: '0 16px 0 12px',
+            background: 'linear-gradient(180deg, #7F5AF0 0%, #E53170 100%)',
           }}
         >
           {badge}
         </div>
-      )}
+      ) : null}
 
-      <div className="flex items-center justify-center gap-2 mb-3">
-        <img src={tokenIcon} alt="token" className="h-6 w-6" />
-        <div className="text-4xl font-bold text-white">{amount}</div>
+      <div className="flex items-center gap-[10px]">
+        <img src={tokenIcon} alt="token" className="h-[34px] w-[34px] shrink-0" />
+        <span className="text-[34px] font-bold leading-10 tracking-[0.68px] text-white">
+          {formatAmount(amount)}
+        </span>
       </div>
 
-      <div className="flex items-center gap-2 mt-2">
-        <img src={priceIcon} alt="price" className="h-5 w-5" />
-        <div className="text-lg font-semibold text-white/90">{price}</div>
+      <div className="flex items-center gap-1 text-white">
+        <img src={upiIcon} alt="" aria-hidden className="h-6 w-6 shrink-0 rounded-[6px] bg-white object-contain p-[2px]" />
+        <span className="text-[26px] font-normal leading-9 tracking-[0.52px]">
+          {priceLabel}
+        </span>
       </div>
     </div>
   );
 }
 
 export default function BuyTokens() {
-  // Top-up modal is disabled for now — keep selectedTokens for future use
-  const [selectedTokens, setSelectedTokens] = React.useState<number | undefined>(undefined);
-  const [plans, setPlans] = React.useState<any[]>([]);
+  const [selectedTokens, setSelectedTokens] = React.useState<number | undefined>(FIGMA_PACKS[0].amount);
+  const [plans, setPlans] = React.useState<PricingPlan[]>([]);
+  const [payLoading, setPayLoading] = React.useState(false);
   const { user, token } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [payLoading, setPayLoading] = React.useState(false);
 
   React.useEffect(() => {
     let mounted = true;
+
     async function load() {
       try {
         const data = await apiClient.getCoinPricing();
         if (!mounted) return;
-        const arr = Array.isArray(data) ? data : [];
-        setPlans(arr);
-        // If no selection yet, default to the first recurring plan (or first plan)
-        if (!selectedTokens) {
-          try {
-            const recurring = arr.filter((p: any) => String(p.billing_cycle || p.billingCycle || '').toLowerCase().includes('one'));
-            const first = recurring.length ? recurring[0] : arr[0];
-            if (first) {
-              const amt = Number(first.coin_reward || (first as any).coinReward || 0);
-              if (amt) setSelectedTokens(amt);
-            }
-          } catch (e) {}
-        }
-      } catch (err) {
-        console.error('Failed to load coin pricing', err);
+        setPlans(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error('Failed to load coin pricing', error);
       }
     }
-    load();
-    return () => { mounted = false; };
+
+    void load();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
-  // Show only recurring plans (exclude one-time packs)
-  const recurringPlans = plans.filter((p) => {
-    try {
-      return String(p.billing_cycle || p.billingCycle || '')
-        .toLowerCase()
-        .includes('one');
-    } catch {
-      return true;
+
+  const displayedPlans = React.useMemo(() => {
+    const normalizedPlans = plans
+      .map((plan) => ({
+        raw: plan,
+        amount: Number(plan.coin_reward || plan.coinReward || 0),
+        pricingId: plan.pricing_id || plan.pricingId || plan.id,
+        currency: String(plan.currency || 'INR'),
+      }))
+      .filter((plan) => plan.amount > 0 && plan.pricingId)
+      .sort((a, b) => a.amount - b.amount)
+      .slice(0, 4);
+
+    return FIGMA_PACKS.map((pack, index) => {
+      const matchedPlan = normalizedPlans[index] || null;
+      return {
+        raw: matchedPlan?.raw ?? null,
+        amount: pack.amount,
+        price: pack.price,
+        badge: pack.badge,
+        currency: matchedPlan?.currency || 'INR',
+        pricingId: matchedPlan?.pricingId || null,
+      };
+    });
+  }, [plans]);
+
+  const selectedPlan = displayedPlans.find((plan) => plan.amount === selectedTokens) || displayedPlans[0] || null;
+  const canPurchase = Boolean((user as any)?.hasActiveSubscription);
+
+  const handlePay = async () => {
+    if (!selectedPlan) {
+      try { window.alert('Please select a token pack first'); } catch {}
+      return;
     }
-  });
-  
+
+    if (!selectedPlan.pricingId) {
+      try { window.alert('This pack is unavailable right now. Please refresh and try again.'); } catch {}
+      return;
+    }
+
+    if (!user || !token) {
+      navigate('/login', { state: { background: location } });
+      return;
+    }
+
+    setPayLoading(true);
+    try {
+      const url = buildApiUrl('/api/v1/tagada/checkout/create-session');
+      const tokenOnly = String(token).replace(/^bearer\s+/i, '').trim();
+
+      const payload = {
+        price_id: selectedPlan.pricingId,
+        currency: selectedPlan.currency || 'USD',
+      };
+
+      const res = await fetchWithAuth(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `bearer ${tokenOnly}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const text = await res.text().catch(() => '');
+      let data: any = {};
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch {
+        throw new Error('Invalid JSON from server');
+      }
+
+      if (!res.ok) {
+        throw new Error(data?.message || data?.detail || data?.error || `HTTP ${res.status}`);
+      }
+
+      if (!data.checkout_url) {
+        throw new Error('No checkout URL returned');
+      }
+
+      window.location.href = data.checkout_url;
+    } catch (error: any) {
+      console.error('Token checkout failed', error);
+      try { window.alert(error?.message || 'Failed to create checkout session'); } catch {}
+    } finally {
+      setPayLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen w-full relative overflow-hidden bg-[#000]">
+    <div className="min-h-screen bg-[#0F0E16] px-4 pb-10 pt-6 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-[1480px]">
+        <h1 className="mb-8 text-[32px] font-bold leading-[1.15] text-white sm:text-[40px]">
+          Buy Tokens
+        </h1>
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-start pt-6 pb-10 px-2 sm:px-6">
-        <div className="w-full max-w-6xl">
-          <h1 className="text-4xl font-bold text-white mb-8">Buy Tokens</h1>
-        </div>
-
-        {/* Main Container */}
-        <div 
-          className="w-full max-w-6xl py-6 px-2 sm:py-8 sm:px-4"
+        <section
+          className="relative overflow-hidden rounded-[26px] border px-8 py-8 sm:px-10 sm:py-10 lg:px-[32px] lg:py-[32px]"
           style={{
-            borderRadius: '26px',
-            border: '1px solid rgba(192, 155, 98, 0.60)',
-            background: 'rgba(255, 255, 255, 0.06)',
-            boxShadow: '0 0 30px 0 rgba(0, 0, 0, 0.05)',
+            borderColor: 'rgba(158, 130, 243, 0.3)',
+            background: `
+              radial-gradient(95% 80% at 22% 18%, rgba(127, 90, 240, 0.22) 0%, rgba(127, 90, 240, 0) 46%),
+              radial-gradient(90% 90% at 18% 100%, rgba(229, 49, 112, 0.18) 0%, rgba(229, 49, 112, 0) 48%),
+              linear-gradient(180deg, rgba(20, 16, 31, 0.98) 0%, rgba(19, 14, 28, 0.98) 100%)
+            `,
+            boxShadow: '0 30px 80px rgba(0, 0, 0, 0.18)',
           }}
         >
-          {/* Banner Section */}
-          <div className="w-full mb-8">
-            <div 
-              className="relative rounded-[20px] overflow-hidden p-8 sm:p-12 text-center bg-black/30"
-              style={{
-                backgroundImage: `url(${backgroundImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backdropFilter: 'blur(6px)',
-              }}
-            >
-              {/* Dark overlay to improve text readability */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
-              <div className="relative">
-                <h2
-                  className="text-2xl sm:text-4xl mb-4"
-                  style={{
-                    color: 'var(--Grays-White, var(--Grays-White, #FFF))',
-                    textAlign: 'center',
-                    fontStyle: 'normal',
-                    fontWeight: 600,
-                    lineHeight: '42px',
-                  }}
-                >
-                  Get an exclusive Package discount <br />only now!
-                </h2>
-                <p
-                  className="text-sm sm:text-base max-w-2xl mx-auto"
-                  style={{
-                    color: 'rgba(255, 255, 255, 0.80)',
-                    textAlign: 'center',
-                    fontStyle: 'normal',
-                    fontWeight: 400,
-                    lineHeight: '28px',
-                  }}
-                >
-                  Purchase token packs at discounted rates and enjoy uninterrupted access to our premium features. Hurry, these offers are for a limited time only!
-                </p>
+          <div
+            className="pointer-events-none absolute inset-0 opacity-70"
+            style={{
+              background: `
+                radial-gradient(40% 45% at 71% 14%, rgba(127, 90, 240, 0.34) 0%, rgba(127, 90, 240, 0) 52%),
+                radial-gradient(32% 30% at 78% 68%, rgba(229, 49, 112, 0.18) 0%, rgba(229, 49, 112, 0) 58%)
+              `,
+            }}
+          />
+
+          <div className="relative grid gap-10 lg:grid-cols-[minmax(320px,1fr)_minmax(520px,674px)] lg:items-start lg:gap-12">
+            <div className="max-w-[520px]">
+              <h2 className="max-w-[648px] text-[32px] font-semibold leading-[1.15] text-white sm:text-[38px] sm:leading-[46px]">
+                Get an <span className="text-[#7F5AF0]">exclusive Package</span> discount only now!
+              </h2>
+
+              <div
+                className="mt-10 max-w-[451px] rounded-2xl border border-white/[0.03] bg-white/[0.04] px-7 py-6"
+                style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)' }}
+              >
+                <h3 className="text-[26px] font-medium leading-[34px] tracking-[0.52px] text-[#7F5AF0]">
+                  Token Benefits
+                </h3>
+
+                <div className="mt-[18px] space-y-[6px]">
+                  {['Create AI Girlfriend', 'Voice Messages', 'AI Image generation'].map((benefit) => (
+                    <div key={benefit} className="flex items-center gap-3">
+                      <img src={tokenBenefitCheck} alt="" aria-hidden className="h-5 w-5 shrink-0" />
+                      <span className="text-[18px] font-normal leading-[34px] tracking-[0.36px] text-white">
+                        {benefit}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
+
+            <div className="w-full">
+              {displayedPlans.length === 0 ? (
+                <div className="rounded-2xl border border-white/10 bg-black/20 px-6 py-8 text-white/60">
+                  Loading packs...
+                </div>
+              ) : (
+                <>
+                  <div className="grid gap-[26px] sm:grid-cols-2">
+                    {displayedPlans.map((plan) => (
+                      <OptionTile
+                        key={`${plan.amount}-${plan.price}`}
+                        amount={plan.amount}
+                        priceLabel={formatPrice(plan.price, 'INR')}
+                        badge={plan.badge}
+                        isSelected={selectedPlan?.amount === plan.amount}
+                        disabled={!plan.pricingId}
+                        onSelect={() => setSelectedTokens(plan.amount)}
+                      />
+                    ))}
+                  </div>
+
+                  <div className="mt-[26px]">
+                    <Button
+                      onClick={handlePay}
+                      disabled={!selectedPlan || !selectedPlan.pricingId || !canPurchase || payLoading}
+                      className="flex h-[70px] w-full items-center justify-center rounded-xl border-0 px-6 text-[18px] font-semibold text-white shadow-none transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
+                      style={{
+                        background: 'linear-gradient(90deg, rgba(215,184,255,0.95) 0%, rgba(127,90,240,0.95) 58%, rgba(200,162,255,0.95) 100%)',
+                      }}
+                    >
+                      <span className="inline-flex items-center gap-3">
+                        <span>{payLoading ? 'Processing...' : 'Pay with UPI'}</span>
+                        <img src={upiIcon} alt="UPI" className="h-[30px] w-[74px] rounded-[7px] bg-white px-[9px] py-[5px]" />
+                      </span>
+                    </Button>
+
+                    {!canPurchase ? (
+                      <p className="mt-3 text-sm text-white/55">
+                        Activate Premium first to purchase token packs.
+                      </p>
+                    ) : null}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
-
-          {/* Token Options */}
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-8">
-            {plans.length === 0 ? (
-              <div className="text-sm text-white/50">Loading packs...</div>
-            ) : (
-              recurringPlans.map((p) => {
-                const amount = String(p.coin_reward || p.coinReward || 0);
-                const price = Number(p.price || 0);
-                const badge = p.discount ? `${Number(p.discount)}% Bonus` : undefined;
-                const isSelected = selectedTokens === Number(amount);
-                return (
-                  <OptionTile
-                    key={p.pricing_id || p.id}
-                    amount={amount}
-                    price={`${price.toLocaleString()}`}
-                    badge={badge}
-                    onSelect={() => { setSelectedTokens(Number(amount)); }}
-                    disabled={!((user as any)?.hasActiveSubscription)}
-                    isSelected={isSelected}
-                  />
-                );
-              })
-            )}
-          </div>
-
-          {/* Pay Button */}
-          <div className="w-full max-w-md mx-auto px-4">
-            <Button
-              onClick={async () => {
-              if (!selectedTokens) {
-                // no selection
-                try { window?.alert('Please select a token pack first'); } catch {}
-                return;
-              }
-              if (!user) {
-                // redirect to login
-                navigate('/login', { state: { background: location } });
-                return;
-              }
-
-              const plan = plans.find((pp: any) => Number(pp.coin_reward || pp.coinReward || 0) === Number(selectedTokens));
-              if (!plan) {
-                try { window?.alert('Selected pack not found. Please reload and try again.'); } catch {}
-                return;
-              }
-
-              setPayLoading(true);
-              try {
-                const url = buildApiUrl('/api/v1/tagada/checkout/create-session');
-                if (!token) {
-                  navigate('/login', { state: { background: location } });
-                  return;
-                }
-                const tokenOnly = String(token).replace(/^bearer\s+/i, '').trim();
-
-                  const payload = {
-                    price_id: plan.pricing_id || plan.pricingId || plan.id,
-                    currency: plan.currency || 'USD',
-                  };
-
-                  const res = await fetchWithAuth(url, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'Authorization': `bearer ${tokenOnly}`,
-                    },
-                    body: JSON.stringify(payload),
-                  });
-
-                  const txt = await res.text().catch(() => '');
-                  let data: any = {};
-                  try { data = txt ? JSON.parse(txt) : {}; } catch (err) { throw new Error('Invalid JSON from server'); }
-                  if (!res.ok) {
-                    const msg = data?.message || data?.detail || data?.error || `HTTP ${res.status}`;
-                    throw new Error(msg);
-                  }
-
-                  if (data.checkout_url) {
-                    window.location.href = data.checkout_url;
-                  } else {
-                    throw new Error('No checkout URL returned');
-                  }
-                } catch (err: any) {
-                  console.error('Token checkout failed', err);
-                  try { window?.alert(err?.message || 'Failed to create checkout session'); } catch {}
-              } finally {
-                setPayLoading(false);
-              }
-            }}
-            disabled={!selectedTokens || !(user as any)?.hasActiveSubscription || payLoading}
-            className="w-full py-3 text-[#000] font-bold text-lg shadow-lg transition-all hover:shadow-xl"
-            style={{
-              borderRadius: '60px',
-              background: 'linear-gradient(90deg, #FFC54D 0%, #FFD784 100%)',
-            }}
-          >
-              <span className="inline-flex items-center justify-center gap-2">
-                {payLoading ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Processing...
-                  </>
-                ) : (
-                  "Pay"
-                )}
-              </span>
-          </Button>
-          </div>
-        </div>
+        </section>
       </div>
-      {/* Top up modal disabled: billing/payment page removed temporarily */}
     </div>
   );
 }

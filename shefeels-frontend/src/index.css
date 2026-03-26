@@ -4,7 +4,8 @@
 /* Theme variables and responsive design foundation */
 :root {
   --header-h: 100px;
-  font-family: "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --app-font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--app-font-family);
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
@@ -215,10 +216,29 @@ body {
   min-width: 320px;
   min-height: 100vh;
   height: 100%;
+  font-family: var(--app-font-family);
   background-color: var(--bg-primary);
   color: var(--text-primary);
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html,
+#root,
+button,
+input,
+textarea,
+select,
+option,
+label,
+code,
+pre,
+kbd,
+samp,
+.font-mono,
+.font-serif,
+.font-sans {
+  font-family: var(--app-font-family) !important;
 }
 
 /* Ensure root fills viewport for proper sizing */

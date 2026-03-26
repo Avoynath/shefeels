@@ -53,6 +53,15 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
   const { theme } = useTheme();
   const isDark = theme === "dark";
   const location = useLocation();
+  const footerVisibleRoutes = new Set([
+    "/",
+    "/ai-girlfriend",
+    "/ai-boyfriend",
+    "/ai-transgender",
+    "/contact-center",
+    "/help-center",
+  ]);
+  const shouldShowFooter = footerVisibleRoutes.has(location.pathname);
 
   // Fixed header height for consistency across all pages (match Figma header)
   const HEADER_H = 100; // px
@@ -1071,16 +1080,10 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
               <FAQSection gender={gender} />
             </>
           )}
+
+          {shouldShowFooter && <SiteFooter gender={gender} />}
         </div>
       </div>
-
-      {/* consistent footer for all pages that use this layout (except /chat) */}
-      {!isChatRoute && !location.pathname.startsWith("/create-character") && (
-        <div className={`transition-all duration-300 ${sidebarCollapsed ? 'md:pl-[72px]' : 'md:pl-[250px]'
-          }`}>
-          <SiteFooter gender={gender} />
-        </div>
-      )}
 
       {/* Mobile Tab Bar */}
       {showMobileTabBar && <MobileTabBar />}

@@ -157,6 +157,9 @@ export default function Premium() {
 
   const [plans, setPlans] = useState<Plan[]>([]);
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [cvv, setCvv] = useState("");
   const [agree, setAgree] = useState(true);
   const [payLoading, setPayLoading] = useState(false);
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
@@ -171,6 +174,23 @@ export default function Premium() {
   const canContinue = useMemo(() => {
     return !!agree && !hasActiveSubscription && !!planToUse;
   }, [agree, hasActiveSubscription, planToUse]);
+
+  const handleCardNumberChange = (value: string) => {
+    const digits = value.replace(/\D/g, "").slice(0, 16);
+    const formatted = digits.replace(/(.{4})/g, "$1 ").trim();
+    setCardNumber(formatted);
+  };
+
+  const handleExpiryDateChange = (value: string) => {
+    const digits = value.replace(/\D/g, "").slice(0, 4);
+    const formatted =
+      digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
+    setExpiryDate(formatted);
+  };
+
+  const handleCvvChange = (value: string) => {
+    setCvv(value.replace(/\D/g, "").slice(0, 4));
+  };
 
   const handleContinue = async () => {
     if (!user) {
@@ -346,9 +366,13 @@ export default function Premium() {
                     <div>
                       <label className="block text-[16px] leading-[26px] text-white">Credit or Debit Card Number</label>
                       <input
-                        readOnly
-                        value="XXXX XXXX XXXX XXXX"
-                        className="mt-2 h-16 w-full rounded-[14px] border border-[rgba(255,255,255,0.16)] bg-[rgba(255,255,255,0.04)] px-5 text-[16px] text-[rgba(255,255,255,0.3)] outline-none"
+                        type="text"
+                        inputMode="numeric"
+                        autoComplete="cc-number"
+                        placeholder="XXXX XXXX XXXX XXXX"
+                        value={cardNumber}
+                        onChange={(e) => handleCardNumberChange(e.target.value)}
+                        className="mt-2 h-16 w-full rounded-[14px] border border-[rgba(255,255,255,0.16)] bg-[rgba(255,255,255,0.04)] px-5 text-[16px] text-white outline-none placeholder:text-[rgba(255,255,255,0.3)] focus:border-[#815CF0]/70"
                       />
                     </div>
 
@@ -356,17 +380,25 @@ export default function Premium() {
                       <div>
                         <label className="block text-[16px] leading-[26px] text-white">Expiry Date</label>
                         <input
-                          readOnly
-                          value="MM/YY"
-                          className="mt-2 h-16 w-full rounded-[14px] border border-[rgba(255,255,255,0.16)] bg-[rgba(255,255,255,0.04)] px-5 text-[16px] text-[rgba(255,255,255,0.3)] outline-none"
+                          type="text"
+                          inputMode="numeric"
+                          autoComplete="cc-exp"
+                          placeholder="MM/YY"
+                          value={expiryDate}
+                          onChange={(e) => handleExpiryDateChange(e.target.value)}
+                          className="mt-2 h-16 w-full rounded-[14px] border border-[rgba(255,255,255,0.16)] bg-[rgba(255,255,255,0.04)] px-5 text-[16px] text-white outline-none placeholder:text-[rgba(255,255,255,0.3)] focus:border-[#815CF0]/70"
                         />
                       </div>
                       <div>
                         <label className="block text-[16px] leading-[26px] text-white">CVV/CVC</label>
                         <input
-                          readOnly
-                          value="CVV"
-                          className="mt-2 h-16 w-full rounded-[14px] border border-[rgba(255,255,255,0.16)] bg-[rgba(255,255,255,0.04)] px-5 text-[16px] text-[rgba(255,255,255,0.3)] outline-none"
+                          type="password"
+                          inputMode="numeric"
+                          autoComplete="cc-csc"
+                          placeholder="CVV"
+                          value={cvv}
+                          onChange={(e) => handleCvvChange(e.target.value)}
+                          className="mt-2 h-16 w-full rounded-[14px] border border-[rgba(255,255,255,0.16)] bg-[rgba(255,255,255,0.04)] px-5 text-[16px] text-white outline-none placeholder:text-[rgba(255,255,255,0.3)] focus:border-[#815CF0]/70"
                         />
                       </div>
                     </div>

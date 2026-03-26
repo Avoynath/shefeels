@@ -29,7 +29,7 @@ type Props = {
 };
 
 export const Sidebar: React.FC<Props> = ({ sidebarOpen, sidebarCollapsed, setSidebarCollapsed, setSidebarOpen, selectedItem, setSelectedItem }) => {
-	const expandedSidebarWidth = 220;
+	const expandedSidebarWidth = 250;
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { theme } = useTheme();
@@ -182,7 +182,7 @@ export const Sidebar: React.FC<Props> = ({ sidebarOpen, sidebarCollapsed, setSid
 			<aside
 				onDoubleClick={() => setSidebarCollapsed((v) => !v)}
 				style={{ ...shellStyle, top: "var(--header-h)", height: "calc(100vh - var(--header-h))" } as React.CSSProperties}
-				className={`hidden md:fixed md:left-0 md:z-50 md:block overflow-hidden transition-all duration-300 ease-in-out ${sidebarCollapsed ? "w-[72px]" : "w-[220px]"} theme-transition`}
+				className={`hidden md:fixed md:left-0 md:z-50 md:block overflow-hidden transition-all duration-300 ease-in-out ${sidebarCollapsed ? "w-[72px]" : "w-[250px]"} theme-transition`}
 			>
 				<div className="flex h-full w-full flex-col">
 					<div className="pt-5">

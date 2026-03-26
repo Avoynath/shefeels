@@ -1,189 +1,145 @@
-import type { ReactNode } from "react";
-import { Link } from 'react-router-dom';
-import { useThemeStyles } from "../utils/theme";
-import { useTheme } from "../contexts/ThemeContext";
-import Card from "../components/Card";
+import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { Search, Sparkles } from "lucide-react";
 
-function H2({ id, children }: { id: string; children: ReactNode }) {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-  
-  return (
-    <h2
-      id={id}
-      className={`text-lg sm:text-xl font-semibold tracking-tight ${
-        isDark ? "text-[var(--primary,#FFC54D)]" : "text-[var(--primary,#FFC54D)]"
-      }`}
-    >
-      {children}
-    </h2>
-  );
-}
-
-function Bullet({ children }: { children: ReactNode }) {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-  
-  return <li className={`pl-2 text-sm leading-relaxed ${
-    isDark ? "text-white/70" : "text-gray-700"
-  }`}>{children}</li>;
-}
-
-type Section = {
+type HelpCard = {
   id: string;
   title: string;
-  body?: ReactNode;
-  bullets?: string[];
+  description: string;
+  to: string;
+  featured?: boolean;
 };
 
-const sections: Section[] = [
+const helpCards: HelpCard[] = [
   {
     id: "getting-started",
-    title: "Getting started",
-    body: (
-      <p className="text-sm text-white/70 leading-relaxed">
-        Welcome to Honey Love — here's a quick guide to get you started. Create an account,
-        verify your age, then explore features like Generate Image and Create Character.
-      </p>
-    ),
+    title: "Get Started",
+    description: "Create an account, verify your profile, and start building your first AI companion.",
+    to: "/help-center/get-started",
+    featured: true,
   },
   {
-    id: "account-and-billing",
-    title: "Account & billing",
-    bullets: [
-      "Update your profile and payment method in Profile → Settings.",
-      "Subscription billing is charged in advance; cancel anytime from the Premium page.",
-      "See Refund Policy for refund eligibility and steps.",
-    ],
+    id: "generate-images",
+    title: "Generate Images",
+    description: "Learn how prompts, styles, and credits work when creating AI images.",
+    to: "/generate-image",
   },
   {
-    id: "safety-and-content",
-    title: "Content & safety",
-    bullets: [
-      "Do not upload illegal or abusive content.",
-      "Model outputs may be similar between users; exclusivity is not guaranteed.",
-      "If you see a terms violation, contact support via Contact Center.",
-    ],
+    id: "billing",
+    title: "Account & Billing",
+    description: "Manage subscriptions, billing cycles, token purchases, and payment questions.",
+    to: "/premium",
   },
   {
-    id: "troubleshooting",
-    title: "Troubleshooting",
-    body: (
-      <>
-        <p className="text-sm text-white/70 leading-relaxed">
-          If something's not working, try clearing cache, checking your connection, or
-          logging out and back in. For persistent issues, reach out through the <Link to="/contact-center" className="underline">Contact Center</Link>.
-        </p>
-      </>
-    ),
+    id: "my-ai",
+    title: "My AI",
+    description: "Organize your characters, revisit conversations, and manage saved companions.",
+    to: "/my-ai",
+  },
+  {
+    id: "gallery",
+    title: "Gallery & Content",
+    description: "Browse creations, review content guidelines, and understand moderation rules.",
+    to: "/gallery",
+  },
+  {
+    id: "support",
+    title: "Contact Support",
+    description: "Reach our support team if you need help with account access or technical issues.",
+    to: "/contact-center",
   },
 ];
 
-export default function HelpCenter() {
-  const { colors } = useThemeStyles();
-  const heading = "text-2xl font-semibold " + colors.text;
-  
+function HelpCardTile({ card }: { card: HelpCard }) {
   return (
-  <div className="max-w-7xl mx-auto px-0 sm:px-7 pt-4 pb-10">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className={heading}>Help Center</h1>
-          {/* <p className={sub}>Find answers, guides, and support resources.</p> */}
-        </div>
+    <Link
+      to={card.to}
+      className={`group relative flex min-h-[168px] flex-col items-center justify-center overflow-hidden rounded-2xl border px-6 py-7 text-center transition duration-200 ${
+        card.featured
+          ? "border-[#8D67FF]/70 bg-[linear-gradient(180deg,rgba(138,100,255,0.95)_0%,rgba(227,47,137,0.88)_100%)] shadow-[0_18px_70px_rgba(129,92,240,0.22)]"
+          : "border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0.08)_100%)] hover:border-[#8D67FF]/35 hover:bg-[linear-gradient(180deg,rgba(255,255,255,0.15)_0%,rgba(255,255,255,0.1)_100%)]"
+      }`}
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.16),transparent_55%)] opacity-80" />
+      <div className="relative flex h-11 w-11 items-center justify-center rounded-full bg-[rgba(255,197,77,0.18)] text-[#FFB260]">
+        <Sparkles className="h-5 w-5" />
       </div>
+      <h2 className="relative mt-5 text-[28px] font-medium leading-8 text-white">{card.title}</h2>
+      <p className="relative mt-3 max-w-[295px] text-[17px] leading-[25px] tracking-[0.02em] text-white/70">
+        {card.description}
+      </p>
+    </Link>
+  );
+}
 
-  <div className="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-y-4 gap-x-6">
-        {/* Main content */}
-        <main className="lg:col-span-8 space-y-6">
-          <Card noBase className="rounded-2xl border border-[var(--secondary,#C09B62)] bg-[var(--gradiant,linear-gradient(126deg,#000_28.96%,rgba(255,197,77,0)_262.7%))] p-6">
-            <div className="flex flex-col items-center gap-4">
-              <div className="text-center">
-                <h3 className="text-2xl font-semibold text-white">Looking for help?</h3>
-                {/* <p className="text-sm text-white/70 mt-1">Search FAQs or browse topics below.</p> */}
-              </div>
+export default function HelpCenter() {
+  const [query, setQuery] = useState("");
 
-              <div className="flex items-center gap-2 w-full max-w-[640px]">
-                <label htmlFor="hc-search" className="sr-only">Search help</label>
+  const filteredCards = useMemo(() => {
+    const search = query.trim().toLowerCase();
+    if (!search) return helpCards;
+
+    return helpCards.filter((card) => {
+      const haystack = `${card.title} ${card.description}`.toLowerCase();
+      return haystack.includes(search);
+    });
+  }, [query]);
+
+  return (
+    <div className="mx-auto w-full max-w-[1670px] px-0 pb-12 pt-5 md:pt-8">
+      <div className="rounded-[28px] border border-white/6 bg-[linear-gradient(180deg,#15131F_0%,#120F19_100%)] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] md:p-8">
+        <h1 className="text-[34px] font-semibold leading-[1.15] text-white md:text-[48px]">Help Center</h1>
+
+        <section className="relative mt-7 overflow-hidden rounded-[24px] border border-white/5 bg-[linear-gradient(180deg,rgba(20,17,29,0.98)_0%,rgba(16,13,24,0.98)_55%,rgba(58,15,41,0.62)_100%)] px-5 py-8 md:px-12 md:py-12">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_28%,rgba(127,90,240,0.32),transparent_34%)]" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(180deg,transparent_0%,rgba(132,29,83,0.18)_100%)]" />
+
+          <div className="relative mx-auto max-w-[1160px]">
+            <div className="text-center">
+              <h2 className="text-[34px] font-semibold leading-[1.15] text-white md:text-[54px]">
+                Looking for help?
+              </h2>
+            </div>
+
+            <div className="mx-auto mt-8 flex max-w-[520px] flex-col gap-3 sm:flex-row sm:items-center">
+              <label htmlFor="help-center-search" className="sr-only">
+                Search help articles
+              </label>
+              <div className="relative flex-1">
+                <Search className="pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/25" />
                 <input
-                  id="hc-search"
-                  placeholder="Search help articles"
-                  className="flex-1 min-w-0 text-white/80 px-4 py-2.5 rounded-full border border-white/20 bg-[rgba(255,255,255,0.03)] focus:outline-none focus:border-[var(--secondary,#C09B62)] transition-colors placeholder:text-white/40"
+                  id="help-center-search"
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search here"
+                  className="h-14 w-full rounded-full border border-white/10 bg-[rgba(255,255,255,0.06)] pl-12 pr-4 text-[15px] text-white outline-none transition placeholder:text-white/25 focus:border-[#8D67FF]/65 focus:bg-[rgba(255,255,255,0.08)]"
                 />
-                <button
-                  className="flex-none !text-black px-6 py-2.5 rounded-full border border-white/50 bg-[linear-gradient(90deg,#FFC54D_0%,#FFD784_100%)] whitespace-nowrap font-medium hover:opacity-90 transition-opacity"
-                >
-                  Search
-                </button>
               </div>
-            </div>
-
-            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Card noBase className="rounded-2xl border border-[var(--secondary,#C09B62)] bg-[var(--gradiant,linear-gradient(126deg,#000_28.96%,rgba(255,197,77,0)_262.7%))] p-6">
-                <h4 className="text-white font-semibold">Get started</h4>
-                <p className="text-white/70 text-sm mt-2">How to create your first character and generate images.</p>
-              </Card>
-              <Card noBase className="rounded-2xl border border-[var(--secondary,#C09B62)] bg-[var(--gradiant,linear-gradient(126deg,#000_28.96%,rgba(255,197,77,0)_262.7%))] p-6">
-                <h4 className="text-white font-semibold">Account & billing</h4>
-                <p className="text-white/70 text-sm mt-2">Manage subscriptions, payments, and invoices.</p>
-              </Card>
-              <Card noBase className="rounded-2xl border border-[var(--secondary,#C09B62)] bg-[var(--gradiant,linear-gradient(126deg,#000_28.96%,rgba(255,197,77,0)_262.7%))] p-6">
-                <h4 className="text-white font-semibold">Safety & content</h4>
-                <p className="text-white/70 text-sm mt-2">Rules and how to report violations.</p>
-              </Card>
-              <Card noBase className="rounded-2xl border border-[var(--secondary,#C09B62)] bg-[var(--gradiant,linear-gradient(126deg,#000_28.96%,rgba(255,197,77,0)_262.7%))] p-6">
-                <h4 className="text-white font-semibold">Contact support</h4>
-                <p className="text-white/70 text-sm mt-2">Reach us via Contact Center for live help.</p>
-              </Card>
-            </div>
-          </Card>
-
-          {sections.map((s) => (
-            <Card key={s.id}>
-              <H2 id={s.id}>{s.title}</H2>
-              <div className="mt-1">
-                {s.body}
-                {s.bullets && (
-                  <ul className="mt-2 list-disc pl-4 space-y-0">
-                    {s.bullets.map((b, i) => (
-                      <Bullet key={i}>{b}</Bullet>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </Card>
-          ))}
-        </main>
-
-        {/* Right rail – helpful links / toc */}
-        <aside className="lg:col-span-4 space-y-3">
-          <Card noBase className="rounded-2xl border border-[var(--secondary,#C09B62)] bg-[var(--gradiant,linear-gradient(126deg,#000_28.96%,rgba(255,197,77,0)_262.7%))] p-3">
-            <h3 className="text-white font-semibold">Topics</h3>
-            <nav className="mt-3 grid gap-1">
-              {sections.map((s) => (
-                <a
-                  key={s.id}
-                  href={`#${s.id}`}
-                  className="text-sm text-white/70 rounded-md px-2 py-1 transition hover:bg-[var(--primary,#FFC54D)] hover:text-black active:bg-[var(--primary,#FFC54D)] active:text-black focus:outline-none focus:bg-[var(--primary,#FFC54D)] focus:text-black"
-                >
-                  {s.title}
-                </a>
-              ))}
-            </nav>
-          </Card>
-
-          <Card>
-            <h3 className="text-white font-semibold">Need more help?</h3>
-            <p className="text-white/70 text-sm mt-2">If you can't find an answer, contact our support team.</p>
-            <div className="mt-4">
-              <Link
-                to="/contact-center"
-                className="inline-block !text-black font-normal px-4 py-2 rounded-[60px] border border-white/50 bg-[linear-gradient(90deg,#FFC54D_0%,#FFD784_100%)]"
+              <button
+                type="button"
+                className="h-14 rounded-full bg-[linear-gradient(90deg,#7F5AF0_0%,#8D67FF_100%)] px-8 text-[15px] font-semibold text-white shadow-[0_10px_30px_rgba(127,90,240,0.28)] transition hover:brightness-110"
               >
-                Contact Center
-              </Link>
+                Search Now
+              </button>
             </div>
-          </Card>
-        </aside>
+
+            <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3 xl:gap-5">
+              {filteredCards.map((card) => (
+                <HelpCardTile key={card.id} card={card} />
+              ))}
+            </div>
+
+            {filteredCards.length === 0 && (
+              <div className="mt-12 rounded-2xl border border-white/8 bg-[rgba(255,255,255,0.06)] px-6 py-12 text-center">
+                <p className="text-lg font-medium text-white">No help articles matched that search.</p>
+                <p className="mt-2 text-sm text-white/60">
+                  Try a broader keyword or open the Contact Support article for direct help.
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
       </div>
     </div>
   );

@@ -35,6 +35,7 @@ const RefundPolicy = lazy(() => import("./pages/RefundPolicy"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const ContactCenter = lazy(() => import("./pages/ContactCenter"));
 const HelpCenter = lazy(() => import("./pages/HelpCenter"));
+const HelpCenterGettingStarted = lazy(() => import("./pages/HelpCenterGettingStarted"));
 const AdminHost = lazy(() => import("./admin/AdminHost"));
 
 // Legal hub + additional policies - lazy loaded
@@ -193,6 +194,7 @@ export default function App() {
             <Route path="/kyc-policy" element={<AppLayout><KycPolicy /></AppLayout>} />
             <Route path="/contact-center" element={<AppLayout><ContactCenter /></AppLayout>} />
             <Route path="/help-center" element={<AppLayout><HelpCenter /></AppLayout>} />
+            <Route path="/help-center/get-started" element={<AppLayout><HelpCenterGettingStarted /></AppLayout>} />
             <Route path="/admin/*" element={<AdminHost />} />
           </Routes>
           </Suspense>

@@ -1645,7 +1645,7 @@ export default function CreateCharacter() {
         <MobileGenderPills value={gender} onChange={(g) => setGender(g)} />
         <h1 className={heading}>
           <span style={{ color: 'var(--Grays-White, var(--Grays-White, #FFF))' }}>Create Your </span>
-          <span style={{ color: 'var(--primary)' }}>
+                    <span style={{ color: 'var(--Grays-White, var(--Grays-White, #FFF))' }}>
             {`own AI ${gender === 'Male' ? 'Boy' : gender === 'Female' ? 'Girl' : 'Companion'}`}
           </span>
         </h1>

@@ -1,23 +1,21 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+﻿import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useThemeStyles } from "../utils/theme";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
+import Modal from "../components/Modal";
 import ChangePasswordIcon from "../assets/auth/ChangePasswordIcon.svg";
 import DeleteIcon from "../assets/DeleteIcon.svg";
+import DeleteAccountCardIcon from "../assets/delete-account-card.svg";
+import PasswordBannerStar from "../assets/password-banner-star.svg";
 import SubscriptionIcon from "../assets/SubscriptionIcon.svg";
 import PremiumIcon from "../assets/PremiumIcon.svg";
 import tokenIcon from "../assets/token.svg";
-import Modal from "../components/Modal";
-import { buildApiUrl } from '../utils/apiBase';
-import fetchWithAuth from '../utils/fetchWithAuth';
-import { useToastActions } from '../contexts/ToastContext';
-import { getErrorMessage } from '../utils/api';
-import { IconSpinner } from '../utils/chatUtils';
+import { buildApiUrl } from "../utils/apiBase";
+import fetchWithAuth from "../utils/fetchWithAuth";
+import { useToastActions } from "../contexts/ToastContext";
+import { getErrorMessage } from "../utils/api";
+import { IconSpinner } from "../utils/chatUtils";
 
-// ------------------------------------------------------------
-// Small SVG icons
-// ------------------------------------------------------------
 const Eye = ({ open }: { open?: boolean }) => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="opacity-80">
     {open ? (
@@ -30,35 +28,30 @@ const Eye = ({ open }: { open?: boolean }) => (
     )}
   </svg>
 );
+
 const CalendarIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="opacity-80">
     <rect x="3" y="5" width="18" height="16" rx="2.5" stroke="currentColor" strokeWidth="1.6" />
     <path d="M7 3v4M17 3v4M3 10h18" stroke="currentColor" strokeWidth="1.6" />
   </svg>
 );
-const CameraIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="opacity-80">
-    <path d="M9 7l1.5-2h3L15 7h3.5A2.5 2.5 0 0 1 21 9.5V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9.5A2.5 2.5 0 0 1 5.5 7H9Z" stroke="currentColor" strokeWidth="1.6" />
-    <circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="1.6" />
+
+const ChevronDownIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+    <path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
+
 const TrashIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="opacity-90">
-  <rect x="5" y="7" width="14" height="14" rx="2.2" stroke="var(--accent-danger)" strokeWidth="1.6" />
-  <path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7" stroke="var(--accent-danger)" strokeWidth="1.6" />
+    <rect x="5" y="7" width="14" height="14" rx="2.2" stroke="#ff6b6b" strokeWidth="1.6" />
+    <path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7" stroke="#ff6b6b" strokeWidth="1.6" />
     <path d="M4 7h16" stroke="#ff6b6b" strokeWidth="1.6" />
   </svg>
 );
 
-// NOTE: The design now uses an SVG asset at src/assets/DeleteIcon.svg.
-// We import and render that image inside a wrapper with the requested
-// styling (border-radius:6px and background rgba(255,56,45,0.15)).
-
-// ------------------------------------------------------------
-// Small shared inputs
-// ------------------------------------------------------------
 function Label({ children }: { children: React.ReactNode }) {
-  return <div className="text-sm text-white/80 mb-2">{children}</div>;
+  return <div className="mb-2 text-[18px] leading-7 text-white">{children}</div>;
 }
 
 function Input({
@@ -84,8 +77,7 @@ function Input({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-xl bg-black/40 px-4 py-3 pr-10 placeholder-white/40 ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-(--hl-gold)"
-        style={{ color: 'var(--primary, #FFC54D)' }}
+        className="h-[70px] w-full rounded-[14px] border border-white/20 bg-[rgba(255,255,255,0.10)] px-5 py-4 pr-12 text-[18px] text-white placeholder:text-[#8E8E93] focus:border-[#7F5AF0] focus:bg-[rgba(255,255,255,0.12)] focus:outline-none disabled:cursor-not-allowed disabled:opacity-90"
       />
       {right && <div className="absolute inset-y-0 right-3 flex items-center text-white/70">{right}</div>}
     </div>
@@ -113,9 +105,7 @@ function PasswordInput({
           <Eye open={show} />
         </button>
       }
-    >
-      {/* children unused intentionally */}
-    </Input>
+    />
   );
 }
 
@@ -126,15 +116,19 @@ function Select({ value, onChange, options }: { value: string; onChange: (v: str
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="w-full rounded-xl bg-black/40 px-4 py-3 text-left text-white ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-(--hl-gold)"
+        className="h-[70px] w-full rounded-[14px] border border-white/20 bg-[rgba(255,255,255,0.10)] px-5 py-4 pr-14 text-left text-[18px] text-white transition focus:border-[#7F5AF0] focus:outline-none"
+        aria-haspopup="listbox"
+        aria-expanded={open}
       >
         <div className="flex items-center justify-between">
-          <span style={{ color: 'var(--primary, #FFC54D)' }}>{value}</span>
-          <span className="text-white/60">▾</span>
+          <span>{value}</span>
+          <span className={`absolute right-5 top-1/2 -translate-y-1/2 text-white/60 transition-transform ${open ? "rotate-180" : ""}`}>
+            <ChevronDownIcon />
+          </span>
         </div>
       </button>
       {open && (
-        <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-xl ring-1 ring-white/10" style={{ background: 'var(--bg-0b0b0b)' }}>
+        <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-[14px] border border-white/10 bg-[#17141F] shadow-[0_18px_48px_rgba(0,0,0,0.35)]">
           {options.map((opt, i) => (
             <button
               key={opt}
@@ -143,10 +137,9 @@ function Select({ value, onChange, options }: { value: string; onChange: (v: str
                 onChange(opt);
                 setOpen(false);
               }}
-              className={`w-full text-left px-4 py-2.5 ${
-                opt === value ? "bg-yellow-900/40" : ""
-              } ${i !== 0 ? "border-t border-white/5" : ""}`}
-              style={{ color: opt === value ? 'var(--primary, #FFC54D)' : 'rgba(255, 255, 255, 0.8)' }}
+              className={`w-full px-5 py-3 text-left text-[18px] text-white transition ${opt === value ? "bg-white/8" : "hover:bg-white/6"} ${i !== 0 ? "border-t border-white/5" : ""}`}
+              role="option"
+              aria-selected={opt === value}
             >
               {opt}
             </button>
@@ -157,13 +150,14 @@ function Select({ value, onChange, options }: { value: string; onChange: (v: str
   );
 }
 
-// Basic date picker (no deps)
 function startOfMonth(d: Date) {
   return new Date(d.getFullYear(), d.getMonth(), 1);
 }
+
 function endOfMonth(d: Date) {
   return new Date(d.getFullYear(), d.getMonth() + 1, 0);
 }
+
 function formatDate(d?: Date | null) {
   if (!d) return "";
   const dd = String(d.getDate()).padStart(2, "0");
@@ -175,20 +169,25 @@ function formatDate(d?: Date | null) {
 function DatePicker({ value, onChange }: { value: Date | null; onChange: (d: Date) => void }) {
   const [open, setOpen] = useState(false);
   const [cursor, setCursor] = useState<Date>(value ?? new Date(2000, 0, 1));
-
-  // year selector state
-  const [yearOpen, setYearOpen] = useState(false);
+  const [view, setView] = useState<"calendar" | "year" | "month">("calendar");
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const years = useMemo(() => Array.from({ length: 120 }).map((_, i) => new Date().getFullYear() - i), []);
 
   const days = useMemo(() => {
     const s = startOfMonth(cursor);
+    const firstDay = new Date(s);
+    firstDay.setDate(s.getDate() - ((s.getDay() + 6) % 7));
     const e = endOfMonth(cursor);
-    const firstIdx = (s.getDay() + 6) % 7; // Monday-first
+    const firstIdx = (s.getDay() + 6) % 7;
     const total = firstIdx + e.getDate();
     return Array.from({ length: Math.ceil(total / 7) * 7 }).map((_, i) => {
-      const dayNum = i - firstIdx + 1;
-      const inMonth = dayNum >= 1 && dayNum <= e.getDate();
-      const date = inMonth ? new Date(cursor.getFullYear(), cursor.getMonth(), dayNum) : null;
-      return { label: inMonth ? String(dayNum) : "", date } as { label: string; date: Date | null };
+      const date = new Date(firstDay);
+      date.setDate(firstDay.getDate() + i);
+      return {
+        label: String(date.getDate()),
+        date,
+        inMonth: date.getMonth() === cursor.getMonth() && date.getFullYear() === cursor.getFullYear(),
+      } as { label: string; date: Date; inMonth: boolean };
     });
   }, [cursor]);
 
@@ -199,89 +198,142 @@ function DatePicker({ value, onChange }: { value: Date | null; onChange: (d: Dat
         onChange={() => {}}
         placeholder="DD-MM-YYYY"
         right={
-          <button type="button" onClick={() => setOpen((o) => !o)} className="p-1">
+          <button
+            type="button"
+            onClick={() => {
+              setOpen((o) => !o);
+              setView("calendar");
+            }}
+            className="p-1"
+          >
             <CalendarIcon />
           </button>
         }
       />
       {open && (
-        <div className="absolute z-20 mt-2 w-75 rounded-xl ring-1 ring-white/10 bg-[#0f0f0f] p-4">
-          <div className="flex items-center justify-between text-white mb-3">
-            <button className="px-2" onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1))}>◀</button>
-            <div className="font-semibold flex items-center gap-2">
-              <button type="button" onClick={() => setYearOpen((y) => !y)} className="px-2 py-1 rounded hover:bg-white/5">{cursor.getFullYear()}</button>
-              <div className="px-2">{cursor.toLocaleString(undefined, { month: "long" })}</div>
-            </div>
-            <button className="px-2" onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1))}>▶</button>
-          </div>
-          {yearOpen && (
-            <div className="mb-2 max-h-40 overflow-auto">
-              <div className="grid grid-cols-4 gap-1">
-                {Array.from({ length: 120 }).map((_, i) => {
-                  const y = new Date().getFullYear() - i;
+        <div className="absolute z-20 mt-2 w-[320px] rounded-[18px] border border-white/10 bg-[#17141F] p-4 shadow-[0_30px_84px_rgba(19,10,46,0.08),0_8px_32px_rgba(19,10,46,0.07),0_3px_14px_rgba(19,10,46,0.03),0_1px_3px_rgba(19,10,46,0.13)]">
+          {view === "calendar" && (
+            <>
+              <div className="mb-3 flex items-center justify-between text-white">
+                <button
+                  className="px-2 text-lg text-white/90 transition hover:text-white"
+                  onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1))}
+                  aria-label="Previous month"
+                >
+                  ‹
+                </button>
+                <div className="flex items-center gap-2 font-semibold">
+                  <button
+                    type="button"
+                    onClick={() => setView("year")}
+                    className="rounded px-2 py-1 text-[14px] leading-6 text-white hover:bg-white/5"
+                  >
+                    {cursor.getFullYear()}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setView("month")}
+                    className="rounded px-2 py-1 text-[14px] leading-6 text-white hover:bg-white/5"
+                  >
+                    {cursor.toLocaleString(undefined, { month: "long" })}
+                  </button>
+                </div>
+                <button
+                  className="px-2 text-lg text-white/90 transition hover:text-white"
+                  onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1))}
+                  aria-label="Next month"
+                >
+                  ›
+                </button>
+              </div>
+              <div className="mb-1 grid grid-cols-7 gap-1 text-center text-[11px] text-white/60">
+                {"Mon Tue Wed Thu Fri Sat Sun".split(" ").map((d) => (
+                  <div key={d} className="py-1">
+                    {d}
+                  </div>
+                ))}
+              </div>
+              <div className="grid grid-cols-7 gap-1">
+                {days.map((d, i) => {
+                  const isSelected = formatDate(d.date) === formatDate(value);
                   return (
                     <button
-                      key={y}
+                      key={i}
                       type="button"
                       onClick={() => {
-                        setCursor(new Date(y, cursor.getMonth(), 1));
-                        setYearOpen(false);
+                        onChange(d.date);
+                        setOpen(false);
+                        setView("calendar");
                       }}
-                      className={`py-1 text-left px-2 rounded ${y === cursor.getFullYear() ? "bg-(--hl-gold) text-black" : "hover:bg-white/5 text-white/80"}`}
+                      className={`h-8 rounded-md text-sm transition ${
+                        isSelected
+                          ? "bg-[#7F5AF0] font-semibold text-white"
+                          : d.inMonth
+                            ? "bg-transparent text-white hover:bg-white/10"
+                            : "bg-transparent text-white/35 hover:bg-transparent hover:text-white/50"
+                      }`}
                     >
-                      {y}
+                      {d.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          )}
+
+          {view === "year" && (
+            <div className="overflow-hidden rounded-[8px] bg-black py-2">
+              <div className="max-h-[392px] overflow-y-auto">
+                {years.map((year) => {
+                  const selected = year === cursor.getFullYear();
+                  return (
+                    <button
+                      key={year}
+                      type="button"
+                      onClick={() => {
+                        setCursor(new Date(year, cursor.getMonth(), 1));
+                        setView("month");
+                      }}
+                      className={`block w-full px-4 py-1 text-left leading-6 ${
+                        selected ? "bg-[#7F5AF0] text-[14px] font-semibold text-white" : "text-[14px] font-normal text-white hover:bg-white/6"
+                      }`}
+                    >
+                      {year}
                     </button>
                   );
                 })}
               </div>
             </div>
           )}
-          <div className="grid grid-cols-7 gap-1 text-center text-[11px] text-white/60 mb-1">
-            {"Mon Tue Wed Thu Fri Sat Sun".split(" ").map((d) => (
-              <div key={d} className="py-1">{d}</div>
-            ))}
-          </div>
-          <div className="grid grid-cols-7 gap-1">
-            {days.map((d, i) => (
-              <button
-                key={i}
-                disabled={!d.date}
-                onClick={() => {
-                  if (d.date) {
-                    onChange(d.date);
-                    setOpen(false);
-                  }
-                }}
-                className={`h-8 rounded-md text-sm ${
-                  d.date ? "hover:bg-white/10 text-white" : "text-transparent cursor-default"
-                } ${formatDate(d.date) === formatDate(value) ? "bg-(--hl-gold)-black" : ""}`}
-              >
-                {d.label}
-              </button>
-            ))}
-          </div>
+
+          {view === "month" && (
+            <div className="overflow-hidden rounded-[8px] bg-black py-2">
+              {months.map((month, index) => {
+                const selected = index === cursor.getMonth();
+                return (
+                  <button
+                    key={month}
+                    type="button"
+                    onClick={() => {
+                      setCursor(new Date(cursor.getFullYear(), index, 1));
+                      setView("calendar");
+                    }}
+                    className={`block w-full px-4 py-1 text-left leading-6 ${
+                      selected ? "bg-[#7F5AF0] text-[14px] font-semibold text-white" : "text-[14px] font-normal text-[#F2F2F2] hover:bg-white/6"
+                    }`}
+                  >
+                    {month}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
     </div>
   );
 }
-
-
-
-// ------------------------------------------------------------
-// Page component
-// ------------------------------------------------------------
 export default function Profile() {
-  const { colors, components } = useThemeStyles();
-  const cardBase = components.cardBase;
-  // make the main title larger to match figma
-  const heading = "text-4xl font-normal " + colors.text;
-  // smaller gap and styling for the sub header (uppercase) - color applied inline so we can use var(--primary)
-  const sub = "mt-1 text-base font-semibold uppercase tracking-wide";
-  // prefer Button primitive instead of raw token strings
-  const badge = "inline-flex items-center gap-1 rounded-lg bg-[var(--hl-gold)] text-black px-2 py-0.5 text-xs font-medium";
-  
-  // Personal info
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
@@ -296,60 +348,37 @@ export default function Profile() {
   const [avatarHue, setAvatarHue] = useState(30);
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
   const [profileId, setProfileId] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedPreview, setSelectedPreview] = useState<string | null>(null);
   const [successOpen, setSuccessOpen] = useState(false);
   const [passSuccessOpen, setPassSuccessOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [subscriptionDetails, setSubscriptionDetails] = useState<any>(null);
-  const [subscriptionLoading, setSubscriptionLoading] = useState<boolean>(false);
+  const [subscriptionLoading, setSubscriptionLoading] = useState(false);
   const [tokensAvailable, setTokensAvailable] = useState<number | null>(null);
   const [passLoading, setPassLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [birthError, setBirthError] = useState<string | null>(null);
-
-  // Password
   const [oldPass, setOldPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
-
-  // Dialogs
   const [confirmOpen, setConfirmOpen] = useState(false);
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { showError, showSuccess } = useToastActions();
+  const { token, user, setUser } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // password validation: 8-15 chars, letters/numbers/common specials, no spaces
   const PASS_REGEX = /^[A-Za-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]{8,15}$/;
-  const canChange = useMemo(() => {
-    const oldOk = oldPass.length >= 8; // backend requires min 8
-    const newOk = PASS_REGEX.test(newPass);
-    const confirmOk = PASS_REGEX.test(confirmPass) && newPass === confirmPass;
-    return oldOk && newOk && confirmOk;
-  }, [oldPass, newPass, confirmPass]);
 
-  const handleUpdateProfile = () => {
-    // placeholder kept for backward compatibility
-    try {
-      localStorage.setItem("hl_gender", gender);
-    } catch {}
-    try { showSuccess('Profile updated'); } catch {}
-  };
-
-  // Reference otherwise-unused state setters/values to avoid TS unused errors in builds
   useEffect(() => {
-    void setAvatarHue;
+    void fullName;
     void profileId;
     void setProfileId;
-    void handleUpdateProfile;
-    void badge;
-    void CameraIcon;
-    // referenced to avoid unused variable/type errors when buttons don't read them
-    void loading;
-    void passLoading;
-    void canChange;
-  }, []);
+    void setAvatarHue;
+  }, [fullName, profileId]);
 
-  // helper: parse ISO date string to Date
   function parseIso(d?: string | null) {
     if (!d) return null;
     const t = Date.parse(d);
@@ -357,53 +386,110 @@ export default function Profile() {
     return new Date(t);
   }
 
-  // validate birth (min 18)
   useEffect(() => {
     if (!birth) {
       setBirthError(null);
       return;
     }
     const now = new Date();
-    const age = now.getFullYear() - birth.getFullYear() - (now.getMonth() < birth.getMonth() || (now.getMonth() === birth.getMonth() && now.getDate() < birth.getDate()) ? 1 : 0);
-    if (age < 18) {
-      setBirthError("You must be at least 18 years old.");
-    } else {
-      setBirthError(null);
-    }
+    const age =
+      now.getFullYear() -
+      birth.getFullYear() -
+      (now.getMonth() < birth.getMonth() || (now.getMonth() === birth.getMonth() && now.getDate() < birth.getDate()) ? 1 : 0);
+    setBirthError(age < 18 ? "You must be at least 18 years old." : null);
   }, [birth]);
 
-  // fetch profile on mount
-  const { token, user, setUser } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  // redirect to login if not authenticated
   useEffect(() => {
     if (!token) {
       navigate("/login", { state: { from: location } });
     }
   }, [token, navigate, location]);
 
+  async function fetchSubscriptionDetails() {
+    const url = buildApiUrl("/api/v1/tagada/subscription/me");
+    setSubscriptionLoading(true);
+    try {
+      const res = await fetchWithAuth(url, {
+        credentials: "include",
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      setSubscriptionDetails(data);
+    } catch (err) {
+      console.error("fetchSubscriptionDetails", err);
+    } finally {
+      setSubscriptionLoading(false);
+    }
+  }
+
+  async function fetchProfile() {
+    const url = buildApiUrl("/user/get-profile");
+    try {
+      setLoading(true);
+      const res = await fetchWithAuth(url, {
+        credentials: "include",
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.message || "Failed to fetch profile");
+
+      setEmail(data.email ?? "");
+      setUsername(data.username ?? "");
+      setFullName(data.full_name ?? "");
+      setGender(data.gender ?? gender);
+      setBirth(parseIso(data.birth_date));
+      setProfileImageUrl(data.profile_image_url ?? null);
+      setProfileId(data.profile_id ?? null);
+
+      const tokens = data.total_coins ?? data.coins ?? data.tokens ?? data.wallet?.coins ?? data.wallet?.balance ?? data.available_coins ?? null;
+      setTokensAvailable(typeof tokens === "number" ? tokens : tokens ? Number(tokens) : null);
+
+      try {
+        if (typeof setUser === "function") {
+          (setUser as any)((prev: any) => ({
+            ...(prev || {}),
+            name: data.full_name || data.name || prev?.name,
+            email: data.email ?? prev?.email,
+            avatar: data.profile_image_url || data.profile_image || prev?.avatar || null,
+            role: data.user_role || data.role || prev?.role,
+            hasActiveSubscription: data.hasActiveSubscription ?? prev?.hasActiveSubscription ?? false,
+            tokenBalance: Number((data.tokenBalance ?? data.coins ?? data.tokens ?? prev?.tokenBalance) || 0),
+          }));
+        }
+      } catch {}
+
+      await fetchSubscriptionDetails();
+    } catch (err) {
+      console.error("fetchProfile", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
-    // fetch profile (defined below) on mount and always fetch subscription details
     fetchProfile();
     fetchSubscriptionDetails();
-    // polling: refresh profile + subscription details periodically
-    const pollInterval = 15000; // 15s
     const id = setInterval(() => {
       fetchProfile();
       fetchSubscriptionDetails();
-    }, pollInterval);
+    }, 15000);
     return () => clearInterval(id);
   }, [token]);
 
-  // submit updated profile
+  useEffect(() => {
+    try {
+      fetchSubscriptionDetails();
+    } catch {}
+  }, [(user as any)?.hasActiveSubscription, token]);
+
   async function submitProfileUpdate() {
     if (birthError) {
       try { showError(birthError); } catch {}
       return;
     }
-    const url = buildApiUrl('/user/add-update-profile');
+
+    const url = buildApiUrl("/user/add-update-profile");
     const fd = new FormData();
     if (fullName) fd.append("full_name", fullName);
     if (email) fd.append("email", email);
@@ -414,121 +500,50 @@ export default function Profile() {
 
     try {
       setLoading(true);
-      const res = await fetchWithAuth(url, { method: "POST", body: fd, credentials: "include", headers: token ? { Authorization: `Bearer ${token}` } : undefined });
+      const res = await fetchWithAuth(url, {
+        method: "POST",
+        body: fd,
+        credentials: "include",
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+      });
       const json = await res.json().catch(() => null);
       if (!res.ok) {
         const body = json ?? null;
-        const message = body ? (typeof body === 'string' ? body : JSON.stringify(body)) : (res.statusText || `HTTP ${res.status}`);
+        const message = body ? (typeof body === "string" ? body : JSON.stringify(body)) : res.statusText || `HTTP ${res.status}`;
         const e: any = new Error(message);
         e.status = res.status;
         e.body = body;
         throw e;
       }
 
-      // success — refresh profile from backend and show success modal
       await fetchProfile();
       setSuccessOpen(true);
       setTimeout(() => setSuccessOpen(false), 2000);
-
       setSelectedFile(null);
       if (selectedPreview) {
         try { URL.revokeObjectURL(selectedPreview); } catch {}
         setSelectedPreview(null);
       }
+      try { localStorage.setItem("hl_gender", gender); } catch {}
     } catch (err: any) {
       console.error(err);
       try {
-        const status = (err && typeof err.status === 'number') ? err.status : (err?.status || 0);
+        const status = typeof err.status === "number" ? err.status : err?.status || 0;
         if (status >= 400 && status < 500) {
           const detail = err?.body?.detail ?? err?.body?.message ?? err?.detail ?? err?.message ?? getErrorMessage(err);
-          showError('Failed to update profile', detail);
+          showError("Failed to update profile", detail);
         } else if (status >= 500) {
-          try { console.warn('Profile: server error', status, err?.body ?? err); } catch {}
-          showError('Failed to update profile', 'Unable to update your profile right now.');
+          showError("Failed to update profile", "Unable to update your profile right now.");
         } else {
-          showError('Failed to update profile', getErrorMessage(err));
+          showError("Failed to update profile", getErrorMessage(err));
         }
-      } catch (e) {
-        try { showError('Failed to update profile', getErrorMessage(err)); } catch {}
-      }
+      } catch {}
     } finally {
       setLoading(false);
     }
   }
 
-  // reusable fetch profile helper
-  async function fetchProfile() {
-    const url = buildApiUrl('/user/get-profile');
-    try {
-      setLoading(true);
-      const res = await fetchWithAuth(url, { credentials: "include", headers: token ? { Authorization: `Bearer ${token}` } : undefined });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.message || "Failed to fetch profile");
-      setEmail(data.email ?? "");
-      setUsername(data.username ?? "");
-      setFullName(data.full_name ?? "");
-      setGender(data.gender ?? gender);
-      setBirth(parseIso(data.birth_date));
-      setProfileImageUrl(data.profile_image_url ?? null);
-      setProfileId(data.profile_id ?? null);
-      try {
-        if (typeof setUser === 'function') {
-          try {
-            (setUser as any)((prev: any) => ({
-              ...(prev || {}),
-              name: data.full_name || data.name || prev?.name,
-              email: data.email ?? prev?.email,
-              avatar: data.profile_image_url || data.profile_image || prev?.avatar || null,
-              role: data.user_role || data.role || prev?.role,
-              hasActiveSubscription: data.hasActiveSubscription ?? prev?.hasActiveSubscription ?? false,
-              tokenBalance: Number((data.tokenBalance ?? data.coins ?? data.tokens ?? prev?.tokenBalance) || 0),
-              subscription_coin_reward: Number(data.subscription_coin_reward ?? prev?.subscription_coin_reward ?? 0),
-              subscription_plan_name: data.subscription_plan_name ?? prev?.subscription_plan_name,
-            }));
-          } catch (e) {
-            // ignore
-          }
-        }
-      } catch (e) {}
-      // tokens/coins: try common response fields from backend
-      const tokens = data.total_coins ?? data.coins ?? data.tokens ?? data.wallet?.coins ?? data.wallet?.balance ?? data.available_coins ?? null;
-      setTokensAvailable(typeof tokens === 'number' ? tokens : (tokens ? Number(tokens) : null));
-      // Always fetch subscription details for authenticated users so we can
-      // show explicit expired/renew messaging in Profile even when
-      // `hasActiveSubscription` is false.
-      await fetchSubscriptionDetails();
-    } catch (err) {
-      console.error("fetchProfile", err);
-    } finally {
-      setLoading(false);
-    }
-  }
-  
-  // fetch subscription details
-  async function fetchSubscriptionDetails() {
-    const url = buildApiUrl('/api/v1/tagada/subscription/me');
-    setSubscriptionLoading(true);
-    try {
-      const res = await fetchWithAuth(url, { credentials: "include", headers: token ? { Authorization: `Bearer ${token}` } : undefined });
-      if (!res.ok) return;
-      const data = await res.json();
-      setSubscriptionDetails(data);
-    } catch (err) {
-      console.error("fetchSubscriptionDetails", err);
-    } finally {
-      setSubscriptionLoading(false);
-    }
-  }
-  // Refresh subscription details when auth-level subscription flag changes
-  useEffect(() => {
-    try {
-      // When AuthContext updates user's hasActiveSubscription (e.g. via WS),
-      // refresh subscription details so the profile page shows correct state.
-      fetchSubscriptionDetails();
-    } catch {}
-  }, [ (user as any)?.hasActiveSubscription, token ]);
-  const handleChangePassword = async () => {
-    // client-side validation messages
+  async function handleChangePassword() {
     if (oldPass.length < 8) {
       try { showError("Old password must be at least 8 characters."); } catch {}
       return;
@@ -541,7 +556,8 @@ export default function Profile() {
       try { showError("New password and confirmation must match."); } catch {}
       return;
     }
-    const url = buildApiUrl('/auth/change-password');
+
+    const url = buildApiUrl("/auth/change-password");
     try {
       setPassLoading(true);
       const res = await fetchWithAuth(url, {
@@ -556,424 +572,349 @@ export default function Profile() {
       const data = await res.json().catch(() => null);
       if (!res.ok) {
         const body = data ?? null;
-        const message = body ? (typeof body === 'string' ? body : JSON.stringify(body)) : (res.statusText || `HTTP ${res.status}`);
+        const message = body ? (typeof body === "string" ? body : JSON.stringify(body)) : res.statusText || `HTTP ${res.status}`;
         const e: any = new Error(message);
         e.status = res.status;
         e.body = body;
         throw e;
       }
 
-  // show the same modal feedback as Update Profile
-  setPassSuccessOpen(true);
-  setOldPass("");
-  setNewPass("");
-  setConfirmPass("");
-  setTimeout(() => setPassSuccessOpen(false), 2000);
+      setPassSuccessOpen(true);
+      setOldPass("");
+      setNewPass("");
+      setConfirmPass("");
+      setTimeout(() => setPassSuccessOpen(false), 2000);
     } catch (err: any) {
       console.error("changePassword", err);
       try {
-        const status = (err && typeof err.status === 'number') ? err.status : (err?.status || 0);
+        const status = typeof err.status === "number" ? err.status : err?.status || 0;
         if (status >= 400 && status < 500) {
           const detail = err?.body?.detail ?? err?.body?.message ?? err?.detail ?? err?.message ?? getErrorMessage(err);
-          showError('Unable to change password', detail);
+          showError("Unable to change password", detail);
         } else if (status >= 500) {
-          try { console.warn('Profile changePassword: server error', status, err?.body ?? err); } catch {}
-          showError('Unable to change password', 'Unable to change password right now.');
+          showError("Unable to change password", "Unable to change password right now.");
         } else {
-          showError('Unable to change password', getErrorMessage(err));
+          showError("Unable to change password", getErrorMessage(err));
         }
-      } catch (e) {
-        try { showError('Unable to change password', getErrorMessage(err)); } catch {}
-      }
+      } catch {}
     } finally {
       setPassLoading(false);
     }
+  }
+
+  const panelClass =
+    "overflow-hidden rounded-[30px] border border-[rgba(158,130,243,0.35)] bg-[linear-gradient(180deg,rgba(20,17,29,0.98)_0%,rgba(15,12,22,0.98)_55%,rgba(72,18,49,0.72)_100%)] shadow-[0_24px_80px_rgba(0,0,0,0.28)]";
+  const sectionHeadingClass = "text-[24px] font-medium uppercase tracking-[0.48px] text-[#7F5AF0]";
+  const primaryButtonStyle: React.CSSProperties = {
+    borderRadius: 12,
+    border: "1px solid rgba(255,255,255,0.50)",
+    background: "linear-gradient(180deg, #7F5AF0 3.02%, #E53170 98.45%)",
   };
 
   return (
-  <div className="max-w-6xl mx-auto px-3 py-6">
-      <div>
-        <h1 className={heading}>Profile</h1>
-          <p className={sub} style={{ color: "var(--primary)" }}>PERSONAL INFORMATION</p>
-      </div>
+    <div className="mx-auto w-full max-w-[1670px] px-0 pb-8 pt-5 md:pt-8">
+      <h1 className="text-4xl font-normal text-white">Profile</h1>
 
-      {/* PERSONAL INFORMATION */}
-      <div className="mt-6 grid gap-6">
-        <section className={`${cardBase} bg-[#0f0f0f]`}>
-          <div className="flex flex-col md:flex-row md:flex-wrap md:items-center gap-6">
-            <div className="relative shrink-0 self-center md:self-auto">
-              {/* larger avatar and click-to-upload (removed separate upload/remove buttons per design) */}
-              <div
-                role="button"
-                tabIndex={0}
-                onClick={() => fileInputRef.current?.click()}
-                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") fileInputRef.current?.click(); }}
-                className="h-40 w-40 rounded-full ring-1 ring-white/10 overflow-hidden bg-black/40 cursor-pointer"
-                title="Click to upload avatar"
-              >
-                {selectedPreview ? (
-                  // preview from selected file
-                  <img src={selectedPreview} alt="avatar preview" className="h-full w-full object-cover" />
-                ) : profileImageUrl ? (
-                  <img src={profileImageUrl} alt="avatar" className="h-full w-full object-cover" />
-                ) : (
-                  <div style={{ background: `linear-gradient(135deg, hsla(${avatarHue},80%,60%,0.35), transparent)` }} className="h-full w-full" />
-                )}
-              </div>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/png,image/jpg,image/jpeg"
-                className="hidden"
-                onChange={(e) => {
-                  const f = e.target.files && e.target.files[0];
-                  if (!f) return;
-                  const allowed = ["image/png", "image/jpg", "image/jpeg"];
-                  if (!allowed.includes(f.type)) {
-                    try { showError("Invalid file type. Use PNG/JPG/JPEG."); } catch {}
-                    return;
-                  }
-                  setSelectedFile(f);
-                  const url = URL.createObjectURL(f);
-                  setSelectedPreview(url);
-                }}
-              />
-              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2">
-              {/* removed separate upload/remove avatar action buttons — upload is handled by clicking the avatar */}
-            </div>
-            </div>
-
-            <div className="flex-1 min-w-0 grid sm:grid-cols-2 gap-5 w-full">
-              <div>
-                <Label>Full name</Label>
-                <Input value={fullName} onChange={setFullName} placeholder="Your full name" />
-              </div>
-
-              <div>
-                <Label>Email Id</Label>
-                <div className="flex items-center gap-3">
-                  <div className="flex-1"><Input value={email} onChange={setEmail} disabled /></div>
+      <div className="mt-8 space-y-6">
+        <section>
+          <p className={sectionHeadingClass}>Personal information</p>
+          <div className={`${panelClass} mt-[22px] overflow-visible px-6 py-7 md:px-10 md:py-10`}>
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
+              <div className="shrink-0 self-center lg:self-start">
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => fileInputRef.current?.click()}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") fileInputRef.current?.click();
+                  }}
+                  className="h-[180px] w-[180px] overflow-hidden rounded-full border border-white/10 bg-[rgba(255,255,255,0.08)] shadow-[0_8px_40px_rgba(0,0,0,0.22)]"
+                  title="Click to upload avatar"
+                >
+                  {selectedPreview ? (
+                    <img src={selectedPreview} alt="avatar preview" className="h-full w-full object-cover" />
+                  ) : profileImageUrl ? (
+                    <img src={profileImageUrl} alt="avatar" className="h-full w-full object-cover" />
+                  ) : (
+                    <div
+                      style={{ background: `linear-gradient(135deg, hsla(${avatarHue},80%,60%,0.35), rgba(255,255,255,0.04))` }}
+                      className="h-full w-full"
+                    />
+                  )}
                 </div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/png,image/jpg,image/jpeg"
+                  className="hidden"
+                  onChange={(e) => {
+                    const f = e.target.files && e.target.files[0];
+                    if (!f) return;
+                    const allowed = ["image/png", "image/jpg", "image/jpeg"];
+                    if (!allowed.includes(f.type)) {
+                      try { showError("Invalid file type. Use PNG/JPG/JPEG."); } catch {}
+                      return;
+                    }
+                    setSelectedFile(f);
+                    const url = URL.createObjectURL(f);
+                    setSelectedPreview(url);
+                  }}
+                />
               </div>
 
-              <div>
-                <Label>Username</Label>
-                <Input value={username} onChange={setUsername} />
-              </div>
+              <div className="min-w-0 flex-1">
+                <div className="grid gap-5 md:grid-cols-2">
+                  <div>
+                    <Label>Email Id</Label>
+                    <Input value={email} onChange={setEmail} disabled />
+                  </div>
+                  <div>
+                    <Label>Username</Label>
+                    <Input value={username} onChange={setUsername} />
+                  </div>
+                  <div>
+                    <Label>Gender</Label>
+                    <Select value={gender} onChange={setGender} options={["Male", "Female", "Trans"]} />
+                  </div>
+                  <div className="relative z-30">
+                    <Label>Birth Date</Label>
+                    <DatePicker value={birth} onChange={setBirth} />
+                    {birthError && <div className="mt-2 text-sm text-rose-400">{birthError}</div>}
+                  </div>
+                </div>
 
-              <div>
-                <Label>Gender</Label>
-                <Select value={gender} onChange={setGender} options={["Male", "Female", "Trans"]} />
-              </div>
-
-              <div>
-                <Label>Birth Date</Label>
-                <DatePicker value={birth} onChange={setBirth} />
-                {birthError && <div className="text-sm text-rose-400 mt-1">{birthError}</div>}
-              </div>
-
-              {/* Update button aligned with the Birth Date input (not the label) */}
-              <div className="sm:col-span-1 md:col-span-2 lg:col-span-1 mt-8 flex justify-center sm:justify-start">
-                <Button
+                <div className="mt-6">
+                  <Button
                     onClick={submitProfileUpdate}
                     variant="primary"
-                    className="w-full flex items-center justify-center gap-3"
-                    style={{
-                      borderRadius: 60,
-                      border: "1px solid rgba(255,255,255,0.50)",
-                      background: "linear-gradient(90deg, #FFC54D 0%, #FFD784 100%)",
-                      boxShadow: "0 8px 20px rgba(255,197,77,0.18)",
-                    }}
+                    className="h-[70px] w-full max-w-[320px] justify-center gap-3 text-[18px] font-semibold text-white"
+                    style={primaryButtonStyle}
                     disabled={loading}
                   >
                     {loading ? (
-                      <span className="inline-flex items-center gap-2"><IconSpinner className="w-4 h-4 animate-spin" />Updating…</span>
+                      <span className="inline-flex items-center gap-2">
+                        <IconSpinner className="h-4 w-4 animate-spin" />
+                        Updating...
+                      </span>
                     ) : (
                       <>
-                        <img src={ChangePasswordIcon} alt="icon" className="h-5 w-5" aria-hidden />
-                        <span className="text-sm font-semibold">Update profile</span>
+                        <img src={ChangePasswordIcon} alt="" className="h-5 w-5" aria-hidden />
+                        <span>Update Profile</span>
                       </>
                     )}
                   </Button>
+                </div>
               </div>
             </div>
           </div>
         </section>
-
-        {/* Section headers for PASSWORD and DELETE ACCOUNT to match Figma */}
-        <div className="grid lg:grid-cols-2 gap-6">
-          <p className={sub} style={{ color: "var(--primary)" }}>PASSWORD</p>
-          <p className={sub + " lg:block hidden"} style={{ color: "var(--primary)" }}>DELETE ACCOUNT</p>
-        </div>
-
-        {/* PASSWORD + DELETE */}
-        <div className="grid lg:grid-cols-2 gap-6">
-          {/* Password card */}
-          <section className={cardBase}>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-10 w-10 rounded-xl bg-yellow-900/40 grid place-items-center ring-1 ring-white/10">
-                <span role="img" aria-label="lock">🔒</span>
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.42fr)_minmax(0,1fr)]">
+          <section>
+            <p className={sectionHeadingClass}>Password</p>
+            <div className={`${panelClass} mt-[22px] px-6 py-6 md:px-8 md:py-8`}>
+              <div className="rounded-[12px] border border-[rgba(158,130,243,0.3)] bg-[linear-gradient(180deg,#7F5AF0_3.02%,#E53170_98.45%)] px-5 py-4">
+                <div className="flex items-center gap-4">
+                  <img src={PasswordBannerStar} alt="" className="h-[42px] w-[42px]" aria-hidden />
+                  <p className="max-w-[430px] text-sm leading-6 text-white">
+                    set a new password for this account. Feel free to do so if you wish to use standard email/password login.
+                  </p>
+                </div>
               </div>
-              <div className="text-white font-semibold">Set a new password</div>
-            </div>
 
-            <div className="grid gap-4">
-              <div>
-                <Label>Old Password</Label>
-                <PasswordInput value={oldPass} onChange={setOldPass} placeholder="Enter" />
+              <div className="mt-6 grid gap-4">
+                <div>
+                  <Label>Old Password</Label>
+                  <PasswordInput value={oldPass} onChange={setOldPass} placeholder="Enter old password" />
+                </div>
+                <div>
+                  <Label>New Password</Label>
+                  <PasswordInput value={newPass} onChange={setNewPass} placeholder="Enter new password" />
+                </div>
+                <div>
+                  <Label>Confirm new Password</Label>
+                  <PasswordInput value={confirmPass} onChange={setConfirmPass} placeholder="Confirm new password" />
+                </div>
               </div>
-              <div>
-                <Label>New Password</Label>
-                <PasswordInput value={newPass} onChange={setNewPass} placeholder="Enter" />
-              </div>
-              <div>
-                <Label>Confirm new Password</Label>
-                <PasswordInput value={confirmPass} onChange={setConfirmPass} placeholder="Enter" />
-              </div>
-            </div>
 
-            <div className="mt-5 flex items-center gap-3 justify-center sm:justify-start">
+              <div className="mt-6">
                 <Button
                   variant="primary"
-                  className="w-56 flex items-center justify-center gap-3"
+                  className="h-[70px] w-full max-w-[320px] justify-center gap-3 text-[18px] font-semibold text-white"
                   onClick={handleChangePassword}
-                  style={{
-                    borderRadius: 60,
-                    border: "1px solid rgba(255,255,255,0.50)",
-                    background: "linear-gradient(90deg, #FFC54D 0%, #FFD784 100%)",
-                    boxShadow: "0 8px 20px rgba(255,197,77,0.18)",
-                  }}
+                  style={primaryButtonStyle}
                   disabled={passLoading}
                 >
                   {passLoading ? (
-                    <span className="inline-flex items-center gap-2"><IconSpinner className="w-4 h-4 animate-spin" />Changing…</span>
+                    <span className="inline-flex items-center gap-2">
+                      <IconSpinner className="h-4 w-4 animate-spin" />
+                      Changing...
+                    </span>
                   ) : (
                     <>
-                      <img src={ChangePasswordIcon} alt="icon" className="h-5 w-5" aria-hidden />
-                      <span className="text-sm font-semibold">Change Password</span>
+                      <img src={ChangePasswordIcon} alt="" className="h-5 w-5" aria-hidden />
+                      <span>Change Password</span>
                     </>
                   )}
                 </Button>
+              </div>
             </div>
           </section>
 
-          {/* Delete account card */}
-          <section className={cardBase}>
-            <div className="lg:hidden mb-4">
-              <p className={sub} style={{ color: "var(--primary)" }}>DELETE ACCOUNT</p>
-            </div>
-            <div className="flex flex-col items-center text-center gap-5">
-              <div className="rounded-md bg-[rgba(255,56,45,0.15)] p-3">
-                <img src={DeleteIcon} alt="delete icon" className="h-12 w-12" />
+          <section>
+            <p className={sectionHeadingClass}>Delete Account</p>
+            <div className={`${panelClass} mt-[22px] flex min-h-[436px] flex-col items-center justify-center px-6 py-8 text-center md:px-10`}>
+              <div className="rounded-[18px] bg-[radial-gradient(circle_at_center,rgba(127,90,240,0.18),rgba(127,90,240,0.02))] p-4">
+                <img src={DeleteAccountCardIcon} alt="delete icon" className="h-16 w-16" />
               </div>
-              <p className="text-sm text-white/80 max-w-md">
-                You have an option to delete your account, but beware,
-                {" "}
-                <span className="text-(--hl-gold)">you will not be able to access it</span>
-                {" "}
-                if you proceed.
+              <p className="mt-8 max-w-[430px] text-[18px] leading-7 text-white">
+                You have an option to delete your account, but beware,{" "}
+                <span className="text-[#7F5AF0]">you will not be able to access it</span> if you proceed.
               </p>
-              <Button variant="primary" className="w-56" onClick={() => setConfirmOpen(true)}>Delete Account</Button>
+              <button
+                type="button"
+                onClick={() => setConfirmOpen(true)}
+                className="mt-8 h-[70px] w-full max-w-[320px] rounded-[12px] border border-white/10 bg-[rgba(255,255,255,0.10)] text-[18px] font-semibold text-white transition hover:bg-[rgba(255,255,255,0.14)]"
+              >
+                Delete Account
+              </button>
             </div>
           </section>
         </div>
 
-        {/* Subscription - show for logged-in users (including while loading) */}
-        {user && ((subscriptionDetails) || ((user as any).hasActiveSubscription) || ((user as any).isSubscribed) || (user as any).role === 'admin' || subscriptionLoading) && (
-          <>
-            <div>
-              <p className={sub} style={{ color: "var(--primary)" }}>SUBSCRIPTION</p>
-            </div>
-            <section className={cardBase}>
-              <div className="flex items-start gap-4">
+        {user && (
+          <section
+            className="overflow-hidden rounded-[24px] border border-[rgba(158,130,243,0.3)] px-6 py-6 md:px-8"
+            style={{ background: "linear-gradient(180deg, #7F5AF0 3.02%, #E53170 98.45%)" }}
+          >
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex items-start gap-5">
                 <div className="shrink-0">
-                  <img src={SubscriptionIcon} alt="Subscription" className="w-12 h-12" />
+                  <img src={SubscriptionIcon} alt="Subscription" className="h-[76px] w-[76px]" />
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-white mb-2">SUBSCRIPTION</h3>
-                  {(subscriptionDetails || (user as any).hasActiveSubscription) ? (
-                    <>
-                      {subscriptionDetails?.status === 'expired' ? (
-                        <div className="mb-4">
-                          <p className="text-sm text-orange-400 mb-3">Your subscription has expired. Renew to continue enjoying premium benefits.</p>
-                          <button
-                            onClick={() => window.location.href = '/premium'}
-                            className="w-full bg-linear-to-r from-(--hl-gold) to-yellow-500 text-black font-bold py-2.5 px-4 rounded-lg hover:shadow-lg hover:shadow-yellow-500/50 transition-all"
-                          >
-                            Renew Subscription
-                          </button>
-                        </div>
-                      ) : (
-                        <p className="text-sm text-white/60 mb-3">You are subscribed to our premium plan. Use tokens to access premium features or buy more tokens below.</p>
+                <div className="max-w-[860px] text-white">
+                  <h3 className="text-[24px] font-medium uppercase leading-[34px]">Subscription</h3>
+                  {subscriptionLoading ? (
+                    <p className="mt-2 text-[17px] leading-[26px] text-white/85">Loading subscription details...</p>
+                  ) : subscriptionDetails || (user as any).hasActiveSubscription ? (
+                    <div className="mt-2 space-y-1 text-[16px] leading-[24px] text-white/90">
+                      <p>
+                        {subscriptionDetails?.status === "expired"
+                          ? "Your subscription has expired. Renew to continue enjoying premium benefits."
+                          : `Plan: ${subscriptionDetails?.plan_name || "Premium"}${subscriptionDetails?.billing_cycle ? ` â€¢ ${subscriptionDetails.billing_cycle}` : ""}`}
+                      </p>
+                      {subscriptionDetails?.current_period_end && (
+                        <p>
+                          Next Billing Date:{" "}
+                          {new Date(subscriptionDetails.current_period_end).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                        </p>
                       )}
-                      
-                      {/* Subscription Details */}
-                      <div className="mb-4 space-y-3 rounded-lg bg-white/5 p-4 border border-white/10">
-                        {subscriptionDetails ? (
-                          <>
-                            <div className="flex items-center justify-between text-sm">
-                              <span className="text-white/60">Plan:</span>
-                              <span className="text-white font-semibold">{subscriptionDetails.plan_name || 'Premium'}</span>
-                            </div>
-                            <div className="flex items-center justify-between text-sm">
-                              <span className="text-white/60">Status:</span>
-                              <span className={`font-semibold capitalize ${
-                                subscriptionDetails.status === 'active' ? 'text-emerald-400' :
-                                subscriptionDetails.status === 'expired' ? 'text-orange-400' :
-                                subscriptionDetails.status === 'cancelled' ? 'text-red-400' :
-                                'text-white'
-                              }`}>
-                                {subscriptionDetails.status || 'Active'}
-                              </span>
-                            </div>
-                            {subscriptionDetails.billing_cycle && (
-                              <div className="flex items-center justify-between text-sm">
-                                <span className="text-white/60">Billing Cycle:</span>
-                                <span className="text-white font-semibold">{subscriptionDetails.billing_cycle}</span>
-                              </div>
-                            )}
-                            {subscriptionDetails.current_period_end ? (
-                              <div className="flex items-center justify-between text-sm">
-                                <span className="text-white/60">Next Billing Date:</span>
-                                <span className="text-white">{new Date(subscriptionDetails.current_period_end).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                              </div>
-                            ) : (
-                              <div className="flex items-center justify-between text-sm">
-                                <span className="text-white/60">Next Billing Date:</span>
-                                <span className="text-white/40 italic">Not set</span>
-                              </div>
-                            )}
-                            {tokensAvailable !== null && (
-                              <div className="flex items-center justify-between text-sm pt-2 border-t border-white/10">
-                                <span className="text-white/60">Available Tokens:</span>
-                                <span className="text-(--hl-gold) font-bold text-base">{tokensAvailable.toLocaleString()}</span>
-                              </div>
-                            )}
-                            {subscriptionDetails.total_coins_rewarded > 0 && (
-                              <div className="flex items-center justify-between text-sm">
-                                <span className="text-white/60">Total Earned:</span>
-                                <span className="text-(--hl-gold) font-semibold">{subscriptionDetails.total_coins_rewarded.toLocaleString()}</span>
-                              </div>
-                            )}
-                            {subscriptionDetails.cancel_at_period_end && (
-                              <div className="mt-2 pt-2 border-t border-white/10">
-                                <p className="text-sm text-orange-400">⚠️ Your subscription will be cancelled at the end of the current period.</p>
-                              </div>
-                            )}
-                          </>
-                        ) : (
-                          <div className="text-center py-2">
-                            <p className="text-white/40 text-sm">Loading subscription details...</p>
-                          </div>
-                        )}
-                      </div>
-                      
-                      <button
-                        onClick={() => navigate('/buy-tokens')}
-                        className="flex items-center gap-2 px-6 py-3 text-black font-semibold"
-                        style={{
-                          borderRadius: '60px',
-                          border: '1px solid rgba(255, 255, 255, 0.50)',
-                          background: 'linear-gradient(90deg, #FFC54D 0%, #FFD784 100%)'
-                        }}
-                      >
-                        <img src={tokenIcon} alt="Tokens" className="w-5 h-5" />
-                        Buy Tokens
-                      </button>
-                    </>
+                      {tokensAvailable !== null && <p>Available Tokens: {tokensAvailable.toLocaleString()}</p>}
+                    </div>
                   ) : (
-                    <>
-                      <p className="text-sm text-white/60 mb-4">You are not subscribed to our premium plan. Subscribe to our premium plan to get access to all the features.</p>
-                      <button
-                        onClick={() => navigate('/premium')}
-                        className="flex items-center gap-2 px-6 py-3 text-black font-semibold"
-                        style={{
-                          borderRadius: '60px',
-                          border: '1px solid rgba(255, 255, 255, 0.50)',
-                          background: 'linear-gradient(90deg, #FFC54D 0%, #FFD784 100%)'
-                        }}
-                      >
-                        <img src={PremiumIcon} alt="Premium" className="w-5 h-5" />
-                        Upgrade to Premium
-                      </button>
-                    </>
+                    <p className="mt-2 text-[18px] leading-[28px] text-white/90">
+                      You are not subscribed to our premium plan. Subscribe to our premium plan to get access to all the features.
+                    </p>
                   )}
                 </div>
               </div>
-            </section>
-          </>
+
+              <button
+                type="button"
+                onClick={() => navigate(subscriptionDetails || (user as any).hasActiveSubscription ? "/buy-tokens" : "/premium")}
+                className="flex h-[70px] w-full max-w-[298px] items-center justify-center gap-3 rounded-[12px] border border-white/60 bg-white px-6 text-[18px] font-semibold text-[#7F5AF0]"
+              >
+                <img
+                  src={subscriptionDetails || (user as any).hasActiveSubscription ? tokenIcon : PremiumIcon}
+                  alt=""
+                  className="h-5 w-5"
+                  aria-hidden
+                />
+                <span>{subscriptionDetails || (user as any).hasActiveSubscription ? "Buy Tokens" : "Upgrade to Premium"}</span>
+              </button>
+            </div>
+          </section>
         )}
       </div>
-
-      {/* Delete dialog */}
       <Modal open={confirmOpen} onClose={() => setConfirmOpen(false)}>
-        <div className="flex flex-col items-center text-center gap-4">
-          <div className="h-16 w-16 rounded-2xl grid place-items-center" style={{ background: "linear-gradient(135deg,#431417,#1a0b0c)" }}>
+        <div className="flex flex-col items-center gap-4 text-center">
+          <div className="grid h-16 w-16 place-items-center rounded-2xl" style={{ background: "linear-gradient(135deg,#431417,#1a0b0c)" }}>
             <TrashIcon />
           </div>
-          <div className="text-2xl font-bold text-(--hl-gold)">Delete Account</div>
-          <p className="text-white/80 max-w-md">After deleting your account you have 30 days to reactivate or it will be definitive.</p>
+          <div className="text-2xl font-bold text-white">Delete Account</div>
+          <p className="max-w-md text-white/80">After deleting your account you have 30 days to reactivate or it will be definitive.</p>
           <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
-            <button className="rounded-full px-6 py-3 text-white/90 bg-white/10 ring-1 ring-white/10 hover:bg-white/15" onClick={() => setConfirmOpen(false)} disabled={deleteLoading}>
+            <button className="rounded-full bg-white/10 px-6 py-3 text-white/90 ring-1 ring-white/10 hover:bg-white/15" onClick={() => setConfirmOpen(false)} disabled={deleteLoading}>
               Cancel
             </button>
             <button
-              className="rounded-full px-6 py-3 text-black bg-linear-to-b from-(--hl-gold) to-(--hl-gold-strong) hover:from-(--hl-gold) hover:to-(--hl-gold-strong)"
+              className="rounded-full bg-[#7F5AF0] px-6 py-3 text-white"
               onClick={async () => {
                 try {
                   setDeleteLoading(true);
-                  const url = buildApiUrl('/user/delete-account');
-                  const res = await fetchWithAuth(url, { method: 'POST', credentials: 'include', headers: token ? { Authorization: `Bearer ${token}` } : undefined });
+                  const url = buildApiUrl("/user/delete-account");
+                  const res = await fetchWithAuth(url, {
+                    method: "POST",
+                    credentials: "include",
+                    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+                  });
                   if (res && res.ok) {
                     setConfirmOpen(false);
-                    try { showSuccess('Account scheduled for deletion'); } catch {}
+                    try { showSuccess("Account scheduled for deletion"); } catch {}
                   } else {
-                    // Try to parse error message
                     let body = null;
                     try { body = await res?.json().catch(() => null); } catch {}
                     const msg = body?.message || body?.detail || res?.statusText || `HTTP ${res?.status}`;
-                    try { showError('Unable to delete account', msg as string); } catch {}
+                    try { showError("Unable to delete account", msg as string); } catch {}
                   }
                 } catch (err) {
-                  console.error('deleteAccount', err);
-                  try { showError('Unable to delete account', 'Request failed'); } catch {}
+                  console.error("deleteAccount", err);
+                  try { showError("Unable to delete account", "Request failed"); } catch {}
                 } finally {
                   setDeleteLoading(false);
                 }
               }}
               disabled={deleteLoading}
             >
-              {deleteLoading ? <span className="inline-flex items-center gap-2"><IconSpinner className="w-4 h-4 animate-spin" />Deleting…</span> : 'Yes Delete'}
+              {deleteLoading ? (
+                <span className="inline-flex items-center gap-2">
+                  <IconSpinner className="h-4 w-4 animate-spin" />
+                  Deleting...
+                </span>
+              ) : (
+                "Yes Delete"
+              )}
             </button>
           </div>
         </div>
       </Modal>
 
-      {/* Success toast/modal */}
       <Modal open={successOpen} onClose={() => setSuccessOpen(false)}>
-        <div className="flex flex-col items-center text-center gap-3">
-          <div className="h-14 w-14 rounded-full grid place-items-center bg-(--hl-gold) text-black text-2xl">✓</div>
-          <div className="text-xl font-semibold">Profile updated</div>
+        <div className="flex flex-col items-center gap-3 text-center">
+          <div className="grid h-14 w-14 place-items-center rounded-full bg-[#7F5AF0] text-2xl text-white">âœ“</div>
+          <div className="text-xl font-semibold text-white">Profile updated</div>
           <div className="text-sm text-white/80">Your profile was updated successfully.</div>
-          <div className="mt-2">
-            <button className="rounded-full px-6 py-2 bg-white/10 hover:bg-white/15" onClick={() => setSuccessOpen(false)}>Close</button>
-          </div>
+          <button className="mt-2 rounded-full bg-white/10 px-6 py-2 hover:bg-white/15" onClick={() => setSuccessOpen(false)}>
+            Close
+          </button>
         </div>
       </Modal>
 
-      {/* Password change success modal (same style as profile update) */}
       <Modal open={passSuccessOpen} onClose={() => setPassSuccessOpen(false)}>
-        <div className="flex flex-col items-center text-center gap-3">
-          <div className="h-14 w-14 rounded-full grid place-items-center bg-(--hl-gold) text-black text-2xl">✓</div>
-          <div className="text-xl font-semibold">Password changed</div>
+        <div className="flex flex-col items-center gap-3 text-center">
+          <div className="grid h-14 w-14 place-items-center rounded-full bg-[#7F5AF0] text-2xl text-white">âœ“</div>
+          <div className="text-xl font-semibold text-white">Password changed</div>
           <div className="text-sm text-white/80">Your password was changed successfully.</div>
-          <div className="mt-2">
-            <button className="rounded-full px-6 py-2 bg-white/10 hover:bg-white/15" onClick={() => setPassSuccessOpen(false)}>Close</button>
-          </div>
+          <button className="mt-2 rounded-full bg-white/10 px-6 py-2 hover:bg-white/15" onClick={() => setPassSuccessOpen(false)}>
+            Close
+          </button>
         </div>
       </Modal>
-
-      {/* Toasts are handled globally via ToastContext */}
     </div>
   );
 }
+
+
