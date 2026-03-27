@@ -1167,7 +1167,7 @@ export default function AdsFunnel() {
             {/* Login side */}
             <div className="flex-1 w-full max-w-lg flex flex-col items-center pt-2">
               <div className="w-full flex justify-center mb-8">
-                <img src={LogoIcon} alt="HoneyLove" className="h-[28px] md:h-[34px] w-auto drop-shadow-md" />
+                <img src={LogoIcon} alt="SheFeels" className="h-[28px] md:h-[34px] w-auto drop-shadow-md" />
               </div>
               <div className="w-full bg-[#111] rounded-3xl p-6 border border-white/5 shadow-2xl relative overflow-hidden">
                 <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#FF9C00]/50 to-transparent" />

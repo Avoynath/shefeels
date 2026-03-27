@@ -32,19 +32,19 @@ export default function HelpCenterGettingStarted() {
   }, [query]);
 
   return (
-    <div className="mx-auto w-full max-w-[1670px] px-0 pb-12 pt-5 md:pt-8">
-      <h1 className="text-[34px] font-semibold leading-[1.15] text-white md:text-[48px]">Help Center</h1>
+    <div className="mx-auto w-full max-w-screen-2xl px-3 pb-8 pt-4 sm:px-4 md:px-6 md:pt-6">
+      <h1 className="text-2xl font-bold leading-tight text-white md:text-3xl">Help Center</h1>
 
-      <div className="mt-8 grid gap-6 xl:grid-cols-[386px_minmax(0,1fr)] xl:items-start">
-        <aside className="rounded-[24px] bg-[linear-gradient(180deg,#161320_0%,#120F19_100%)] p-4 md:p-5">
+      <div className="mt-6 grid gap-6 lg:grid-cols-12 lg:items-start">
+        <aside className="lg:col-span-4 rounded-2xl bg-[#161320] p-4 md:p-5">
           <div className="relative">
-            <Search className="pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search"
-              className="h-[54px] w-full rounded-full border border-white/12 bg-[rgba(255,255,255,0.05)] pl-12 pr-4 text-sm text-white outline-none placeholder:text-white/35 focus:border-[#7F5AF0]/70"
+              placeholder="Search guides..."
+              className="h-10 w-full rounded-full border border-white/10 bg-white/5 pl-10 pr-4 text-sm text-white outline-none placeholder:text-white/30 focus:border-[#7F5AF0]/50"
             />
           </div>
 
@@ -55,10 +55,10 @@ export default function HelpCenterGettingStarted() {
                 <Link
                   key={topic.id}
                   to={topic.to}
-                  className={`mt-2 flex min-h-[60px] items-center rounded-lg px-5 py-4 text-[18px] leading-[26px] text-white transition first:mt-0 ${
+                  className={`mt-1.5 flex h-10 items-center rounded-lg px-4 text-sm font-medium transition first:mt-0 ${
                     isActive
-                      ? "bg-[#7F5AF0] shadow-[0_12px_30px_rgba(127,90,240,0.2)]"
-                      : "bg-transparent text-white/90 hover:bg-white/5"
+                      ? "bg-[#7F5AF0] text-white"
+                      : "text-white/70 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   {topic.label}
@@ -68,17 +68,16 @@ export default function HelpCenterGettingStarted() {
           </div>
         </aside>
 
-        <section className="overflow-hidden rounded-[24px] border border-white/6 bg-[linear-gradient(180deg,rgba(20,17,29,0.98)_0%,rgba(16,13,24,0.98)_54%,rgba(72,18,49,0.72)_100%)] px-6 py-8 md:px-10 md:py-12">
-          <div className="pointer-events-none absolute" />
-          <div className="max-w-[940px]">
-            <h2 className="text-[26px] font-semibold uppercase leading-9 text-[#7F5AF0] md:text-[34px]">
+        <section className="lg:col-span-8 overflow-hidden rounded-2xl border border-white/5 bg-[linear-gradient(180deg,rgba(20,17,29,0.98)_0%,rgba(16,13,24,0.98)_54%,rgba(229,49,112,0.15)_100%)] p-6 md:p-8">
+          <div className="max-w-[800px]">
+            <h2 className="text-xl font-bold uppercase tracking-tight text-[#7F5AF0] md:text-2xl">
               Getting Started
             </h2>
 
-            <ul className="mt-6 space-y-6 text-[18px] leading-[30px] text-white/80 md:text-[20px]">
+            <ul className="mt-5 space-y-5 text-sm leading-relaxed text-white/70 md:text-base">
               {gettingStartedBullets.map((bullet) => (
-                <li key={bullet} className="flex gap-4">
-                  <span className="mt-[11px] h-2 w-2 shrink-0 rounded-full bg-white/85" />
+                <li key={bullet} className="flex gap-3">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#7F5AF0]" />
                   <span>{bullet}</span>
                 </li>
               ))}

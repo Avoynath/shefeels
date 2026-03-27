@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 
-const STORAGE_KEY = "honeylove_age_verified_v1";
+const STORAGE_KEY = "shefeels_age_verified_v1";
 
 // OPTIMIZATION: Inline SVG instead of loading external image - eliminates network request
 const Icon18SVG = () => (
@@ -39,7 +39,7 @@ const AgeGate: React.FC = () => {
     } catch { }
     // notify other components in the same window that age verification passed
     try {
-      window.dispatchEvent(new CustomEvent("honeylove:age-verified"));
+      window.dispatchEvent(new CustomEvent("shefeels:age-verified"));
     } catch { }
     setOpen(false);
   };

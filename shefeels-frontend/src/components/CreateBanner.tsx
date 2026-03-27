@@ -16,13 +16,13 @@ type Props = {
 };
 
 const overlayCardClass =
-  "relative h-[200px] w-[154px] overflow-hidden rounded-[12px] after:absolute after:inset-0 after:rounded-[12px] after:bg-[rgba(229,49,112,0.2)] after:content-['']";
+  "relative h-[160px] w-[124px] overflow-hidden rounded-[12px] after:absolute after:inset-0 after:rounded-[12px] after:bg-[rgba(229,49,112,0.2)] after:content-['']";
 
 const CreateBanner: React.FC<Props> = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative h-[280px] w-full overflow-hidden rounded-[30px]">
+    <section className="relative h-[240px] w-full overflow-hidden rounded-[24px]">
       <img
         src={bannerBg}
         alt=""
@@ -39,12 +39,12 @@ const CreateBanner: React.FC<Props> = () => {
         style={{ maskImage: `url(${maskRight})`, WebkitMaskImage: `url(${maskRight})` }}
       />
 
-      <div className="absolute left-[53px] top-[38px] flex w-[487px] flex-col items-start gap-[30px]">
-        <div className="flex w-full flex-col items-start gap-3 text-white">
-          <p className="w-full text-[36px] font-bold leading-[46px]">
+      <div className="absolute left-[40px] top-[32px] flex w-[400px] flex-col items-start gap-6">
+        <div className="flex w-full flex-col items-start gap-2 text-white">
+          <p className="w-full text-2xl font-bold leading-tight">
             Best NSFW AI Chatbot
           </p>
-          <p className="w-full text-[20px] leading-[28px] text-white">
+          <p className="w-full text-sm leading-relaxed text-white/90">
             Our AI Girlfriend isn&apos;t just smart; she&apos;s emotionally intuitive, and uniquely tailored to understand you.
           </p>
         </div>
@@ -52,14 +52,14 @@ const CreateBanner: React.FC<Props> = () => {
         <button
           type="button"
           onClick={() => navigate("/chat")}
-          className="inline-flex h-[60px] items-center justify-center gap-[10px] rounded-[12px] border border-white/50 bg-[#815cf0] px-[34px] py-3 text-[18px] font-medium leading-[28px] text-white"
+          className="inline-flex h-9 items-center justify-center gap-2 rounded-full border border-white/50 bg-[#815cf0] px-6 text-sm font-medium text-white transition-all hover:brightness-110 active:scale-95"
         >
-          <img src={buttonChatIcon} alt="" className="h-6 w-6" />
+          <img src={buttonChatIcon} alt="" className="h-5 w-5" />
           Chat Now
         </button>
       </div>
 
-      <div className="absolute left-[635px] top-[20px] flex items-center gap-5">
+      <div className="absolute left-[520px] top-[15px] flex items-center gap-4">
         <div className={overlayCardClass}>
           <img src={cardLeftA} alt="" aria-hidden="true" className="h-full w-full object-cover" />
         </div>
@@ -68,18 +68,18 @@ const CreateBanner: React.FC<Props> = () => {
           <img src={cardLeftB} alt="" aria-hidden="true" className="h-full w-full object-cover" />
         </div>
 
-        <div className="relative flex h-[240px] w-[184px] flex-col justify-end overflow-hidden rounded-[12px] px-[10px] py-4">
+        <div className="relative flex h-[190px] w-[146px] flex-col justify-end overflow-hidden rounded-[12px] px-2.5 py-4">
           <img src={cardCenter} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(0,0,0,0.21)]" />
 
           <div className="relative flex w-[152px] flex-col items-start gap-[10px]">
-            <p className="w-full text-[18px] font-semibold leading-[26px] text-white">
+            <p className="w-full text-base font-semibold leading-tight text-white">
               Valentina, 20
             </p>
 
-            <span className="inline-flex h-8 items-center justify-center rounded-[6px] bg-[#815cf0] px-[15px] py-[7px]">
-              <span className="inline-flex items-center gap-[6px] text-[14px] leading-5 text-white">
-                <img src={cardChatIcon} alt="" className="h-5 w-5" />
+            <span className="inline-flex h-7 items-center justify-center rounded-md bg-[#815cf0] px-3">
+              <span className="inline-flex items-center gap-1.5 text-xs text-white">
+                <img src={cardChatIcon} alt="" className="h-4 w-4" />
                 Chat
               </span>
             </span>

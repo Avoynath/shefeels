@@ -13,8 +13,8 @@ export default function ContentRemovalPolicy() {
   return (
     <GenericPolicy title="Content Removal Policy" updated="11/11/25" toc={toc}>
       <p>
-        HoneyLove (“HoneyLove,” “we,” “our,” or “us”) is committed to maintaining a safe, respectful, and legally compliant
-        platform at https://honeylove.ai (the “Platform”). This Content Removal Policy explains when and how we may remove content.
+        SheFeels (“SheFeels,” “we,” “our,” or “us”) is committed to maintaining a safe, respectful, and legally compliant
+        platform at https://shefeels.ai (the “Platform”). This Content Removal Policy explains when and how we may remove content.
       </p>
 
       <section id="grounds" className="space-y-2">
@@ -33,14 +33,14 @@ export default function ContentRemovalPolicy() {
   <h3 className="mt-4 text-lg sm:text-xl font-semibold text-[var(--hl-gold)] tracking-tight">2. Methods of Removal</h3>
         <ul className="list-disc pl-5 space-y-1">
           <li><strong>User-Initiated Removal:</strong> Users may delete their own content at any time.</li>
-          <li><strong>HoneyLove Removal:</strong> We may remove content proactively or in response to reports.</li>
+          <li><strong>SheFeels Removal:</strong> We may remove content proactively or in response to reports.</li>
           <li><strong>Legal Removal:</strong> Content may be removed in compliance with court orders, DMCA notices, or other legal requests.</li>
         </ul>
       </section>
 
       <section id="reporting" className="space-y-2">
   <h3 className="mt-4 text-lg sm:text-xl font-semibold text-[var(--hl-gold)] tracking-tight">3. Reporting Content</h3>
-  <p className="text-sm">If you believe content violates our policies or the law, report it to 📧 <a className="underline" href="mailto:support@honeylove.ai">support@honeylove.ai</a> and include:</p>
+  <p className="text-sm">If you believe content violates our policies or the law, report it to 📧 <a className="underline" href="mailto:support@shefeels.ai">support@shefeels.ai</a> and include:</p>
         <ul className="list-disc pl-5 space-y-1">
           <li>A description of the content.</li>
           <li>The reason for your request.</li>
@@ -51,7 +51,7 @@ export default function ContentRemovalPolicy() {
 
       <section id="appeals" className="space-y-2">
   <h3 className="mt-4 text-lg sm:text-xl font-semibold text-[var(--hl-gold)] tracking-tight">4. Appeals</h3>
-  <p className="text-sm">If your content is removed and you believe it was an error, you may appeal by contacting us at 📧 <a className="underline" href="mailto:support@honeylove.ai">support@honeylove.ai</a>. We will review appeals fairly and notify you of our decision.</p>
+  <p className="text-sm">If your content is removed and you believe it was an error, you may appeal by contacting us at 📧 <a className="underline" href="mailto:support@shefeels.ai">support@shefeels.ai</a>. We will review appeals fairly and notify you of our decision.</p>
       </section>
 
       <section id="repeat" className="space-y-2">
@@ -61,21 +61,17 @@ export default function ContentRemovalPolicy() {
 
       <section id="updates" className="space-y-2">
   <h3 className="mt-4 text-lg sm:text-xl font-semibold text-[var(--hl-gold)] tracking-tight">6. Updates to This Policy</h3>
-  <p className="text-sm">We may update this Content Removal Policy from time to time. Updates will be posted on https://honeylove.ai with a revised effective date.</p>
+  <p className="text-sm">We may update this Content Removal Policy from time to time. Updates will be posted on https://shefeels.ai with a revised effective date.</p>
       </section>
 
       <section id="contact" className="space-y-2">
   <h3 className="mt-4 text-lg sm:text-xl font-semibold text-[var(--hl-gold)] tracking-tight">7. Contact Us</h3>
   <div className="text-sm space-y-1">
-          <div>HONEY SYS LLC</div>
-          <div>254 Chapman Rd, Ste 208 #24555</div>
-          <div>Newark, Delaware 19702, USA</div>
-          <div>EIN: 39-4239108</div>
-          <div>Honey Prod Limited</div>
-          <div>Unit 1603, 16th Floor, The L. Plaza</div>
-          <div>367–375 Queen's Road Central, Sheung Wan, Hong Kong</div>
-          <div>Company No.: 78640969</div>
-          <div>📧 Email: <a className="underline" href="mailto:support@honeylove.ai">support@honeylove.ai</a></div>
+          <div className="font-semibold">JLHL MANAGEMENT LTD (HE 484306)</div>
+          <div>Georgiou Karaiskaki 11-13,</div>
+          <div>Carisa Salonica Court, Office 102,</div>
+          <div>7560 Pervolia, Larnaca, Cyprus</div>
+          <div>📧 Email: <a className="underline" href="mailto:support@shefeels.ai">support@shefeels.ai</a></div>
         </div>
       </section>
     </GenericPolicy>

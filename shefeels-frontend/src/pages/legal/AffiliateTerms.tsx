@@ -17,9 +17,9 @@ export default function AffiliateTerms() {
   return (
     <GenericPolicy title="Affiliate Terms" updated="11/11/25" toc={toc}>
       <p>
-        These Affiliate Terms (“Agreement”) govern participation in the HoneyLove Affiliate Program (“Program”). By
-        enrolling, you (“Affiliate,” “you,” or “your”) agree to the following terms with HoneyLove (“HoneyLove,” “we,” “our,” or
-        “us”). The Program is operated by HONEY SYS LLC (payments) and Honey Prod Limited (IP and parent entity).
+        These Affiliate Terms (“Agreement”) govern participation in the SheFeels Affiliate Program (“Program”). By
+        enrolling, you (“Affiliate,” “you,” or “your”) agree to the following terms with SheFeels (“SheFeels,” “we,” “our,” or
+        “us”). The Program is operated by JLHL MANAGEMENT LTD (HE 484306).
       </p>
 
       <section id="enrollment" className="space-y-2">
@@ -34,7 +34,7 @@ export default function AffiliateTerms() {
       <section id="responsibilities" className="space-y-2">
   <h3 className="mt-4 text-lg sm:text-xl font-semibold text-[var(--hl-gold)] tracking-tight">2. Affiliate Responsibilities</h3>
         <ul className="list-disc pl-5 space-y-1">
-          <li>Promote HoneyLove lawfully, ethically, and positively.</li>
+          <li>Promote SheFeels lawfully, ethically, and positively.</li>
           <li>No spamming, misleading advertising, or false claims.</li>
           <li>No use of trademarks without approval (except official materials provided).</li>
           <li>No targeting minors or promoting on illegal/harmful sites.</li>
@@ -46,7 +46,7 @@ export default function AffiliateTerms() {
         <ul className="list-disc pl-5 space-y-1">
           <li>Earn commission on qualified purchases by referred users.</li>
           <li>Rates/structures appear in your affiliate dashboard.</li>
-          <li>Paid in USD by HONEY SYS LLC, subject to payout thresholds.</li>
+          <li>Paid in USD by JLHL MANAGEMENT LTD, subject to payout thresholds.</li>
           <li>No commissions on fraudulent, refunded, or chargeback transactions.</li>
         </ul>
       </section>
@@ -70,7 +70,7 @@ export default function AffiliateTerms() {
 
       <section id="ip" className="space-y-2">
   <h3 className="mt-4 text-lg sm:text-xl font-semibold text-[var(--hl-gold)] tracking-tight">6. Intellectual Property</h3>
-  <p className="text-sm">All rights in HoneyLove trademarks, logos, and content belong to Honey Prod Limited. Use only approved materials.</p>
+  <p className="text-sm">All rights in SheFeels trademarks, logos, and content belong to JLHL MANAGEMENT LTD. Use only approved materials.</p>
       </section>
 
       <section id="contractor" className="space-y-2">
@@ -80,31 +80,27 @@ export default function AffiliateTerms() {
 
       <section id="liability" className="space-y-2">
   <h3 className="mt-4 text-lg sm:text-xl font-semibold text-[var(--hl-gold)] tracking-tight">8. Limitation of Liability</h3>
-  <p className="text-sm">HoneyLove will not be liable for indirect, incidental, or consequential damages. Our liability is limited to properly earned but unpaid commissions.</p>
+  <p className="text-sm">SheFeels will not be liable for indirect, incidental, or consequential damages. Our liability is limited to properly earned but unpaid commissions.</p>
       </section>
 
       <section id="modifications" className="space-y-2">
   <h3 className="mt-4 text-lg sm:text-xl font-semibold text-[var(--hl-gold)] tracking-tight">9. Modifications</h3>
-  <p className="text-sm">We may modify these terms at any time. Updates will be posted on https://honeylove.ai. Continued participation constitutes acceptance.</p>
+  <p className="text-sm">We may update these terms at any time. Updates will be posted on https://shefeels.ai. Continued participation constitutes acceptance.</p>
       </section>
 
       <section id="law" className="space-y-2">
   <h3 className="mt-4 text-lg sm:text-xl font-semibold text-[var(--hl-gold)] tracking-tight">10. Governing Law</h3>
-  <p className="text-sm">Delaware law applies to payments; Hong Kong law applies to IP/ownership.</p>
+  <p className="text-sm">Cyprus law applies to this Agreement.</p>
       </section>
 
       <section id="contact" className="space-y-2">
   <h3 className="mt-4 text-lg sm:text-xl font-semibold text-[var(--hl-gold)] tracking-tight">11. Contact Us</h3>
   <div className="text-sm space-y-1">
-          <div>HONEY SYS LLC</div>
-          <div>254 Chapman Rd, Ste 208 #24555</div>
-          <div>Newark, Delaware 19702, USA</div>
-          <div>EIN: 39-4239108</div>
-          <div>Honey Prod Limited</div>
-          <div>Unit 1603, 16th Floor, The L. Plaza</div>
-          <div>367–375 Queen's Road Central, Sheung Wan, Hong Kong</div>
-          <div>Company No.: 78640969</div>
-          <div>📧 Email: <a className="underline" href="mailto:support@honeylove.ai">support@honeylove.ai</a></div>
+          <div className="font-semibold">JLHL MANAGEMENT LTD (HE 484306)</div>
+          <div>Georgiou Karaiskaki 11-13,</div>
+          <div>Carisa Salonica Court, Office 102,</div>
+          <div>7560 Pervolia, Larnaca, Cyprus</div>
+          <div>📧 Email: <a className="underline" href="mailto:support@shefeels.ai">support@shefeels.ai</a></div>
         </div>
       </section>
     </GenericPolicy>

@@ -124,9 +124,9 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
   /* Ensure components relying on hl-gold tokens keep brand color */
-  --hl-gold: #C19B4A;
-  --hl-gold-strong: #B78E3F;
-  --hl-gold-weak: rgba(193,155,74,0.12);
+  --hl-gold: var(--sf-purple);
+  --hl-gold-strong: #6c47d9;
+  --hl-gold-weak: rgba(127, 90, 240, 0.12);
   /* helper neutrals used across components */
   --hl-grey: #f1f5f9;
   --hl-black: #0f0f0f;

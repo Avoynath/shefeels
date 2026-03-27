@@ -90,8 +90,8 @@ const CenteredBanner: React.FC<Props> = ({ gender }) => {
           </div>
 
           <div className="flex items-center gap-4 overflow-hidden">
-            <img src={BANNER_IMAGE_1} alt="" className="hidden h-50 w-38.5 rounded-xl object-cover md:block" />
-            <img src={BANNER_IMAGE_2} alt="" className="hidden h-50 w-38.5 rounded-xl object-cover md:block" />
+            <img src={BANNER_IMAGE_1} alt="" className="hidden h-42 w-32 rounded-xl object-cover md:block" />
+            <img src={BANNER_IMAGE_2} alt="" className="hidden h-42 w-32 rounded-xl object-cover md:block" />
 
             <div className="relative h-48 w-36 shrink-0 overflow-hidden rounded-xl">
               <img src={BANNER_IMAGE_CENTER} alt="featured character" className="absolute inset-0 h-full w-full object-cover" />
@@ -105,8 +105,8 @@ const CenteredBanner: React.FC<Props> = ({ gender }) => {
               </div>
             </div>
 
-            <img src={BANNER_IMAGE_1} alt="" className="hidden h-50 w-38.5 rounded-xl object-cover md:block" />
-            <img src={BANNER_IMAGE_2} alt="" className="hidden h-50 w-38.5 rounded-xl object-cover md:block" />
+            <img src={BANNER_IMAGE_1} alt="" className="hidden h-42 w-32 rounded-xl object-cover md:block" />
+            <img src={BANNER_IMAGE_2} alt="" className="hidden h-42 w-32 rounded-xl object-cover md:block" />
           </div>
         </div>
       </div>

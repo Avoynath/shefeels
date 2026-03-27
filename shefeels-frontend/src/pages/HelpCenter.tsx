@@ -64,7 +64,7 @@ function HelpCardTile({ card }: { card: HelpCard }) {
       <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-[rgba(129,92,240,0.18)] text-(--sf-purple-light)">
         <Sparkles className="h-4 w-4" />
       </div>
-      <h2 className="relative mt-3 text-[18px] font-semibold leading-6 text-white">{card.title}</h2>
+      <h2 className="relative mt-3 text-lg font-semibold leading-normal text-white">{card.title}</h2>
       <p className="relative mt-1.5 max-w-[295px] text-[13px] leading-relaxed tracking-[0.01em] text-white/70">
         {card.description}
       </p>

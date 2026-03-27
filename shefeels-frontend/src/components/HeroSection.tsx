@@ -34,7 +34,7 @@ function HeroCard({
   rightExtra?: boolean;
 }) {
   return (
-    <article className="relative h-[300px] overflow-hidden rounded-[20px] border-2 border-[#E53170] bg-[linear-gradient(180deg,rgba(75,1,27,0.20)_0%,rgba(229,49,112,0.20)_100%)]">
+    <article className="relative h-[260px] overflow-hidden rounded-[20px] border-2 border-[#E53170] bg-[linear-gradient(180deg,rgba(75,1,27,0.20)_0%,rgba(229,49,112,0.20)_100%)]">
       <div className="pointer-events-none absolute right-[174px] top-[68px] h-[72px] w-[72px] rotate-[-33deg] overflow-hidden rounded-[8px] opacity-20 sm:right-[182px]">
         <img src={floatingCard} alt="" className="h-full w-full object-cover" />
       </div>
@@ -61,17 +61,17 @@ function HeroCard({
         </div>
       )}
 
-      <div className="absolute left-[32px] top-[58px] z-10 flex max-w-[402px] flex-col gap-[30px] sm:left-[50px] sm:top-[103px]">
-        <h2 className="m-0 max-w-[359px] text-[40px] leading-[1.05] font-bold text-white sm:text-[36px] sm:leading-[46px]">
+      <div className="absolute left-[32px] top-[58px] z-10 flex max-w-[402px] flex-col gap-6 sm:left-[50px] sm:top-[103px]">
+        <h2 className="m-0 max-w-[359px] text-xl font-bold leading-tight text-white md:text-2xl">
           {title}
         </h2>
 
         <button
           type="button"
           onClick={onClick}
-          className="inline-flex h-[60px] w-fit items-center justify-center gap-[10px] rounded-[12px] border border-[rgba(255,255,255,0.50)] bg-[#E53170] px-[34px] py-3 text-[18px] leading-[28px] font-medium text-white"
+          className="inline-flex h-10 w-fit items-center justify-center gap-2 rounded-full border border-[rgba(255,255,255,0.50)] bg-[#E53170] px-6 text-sm font-medium text-white transition-all hover:scale-[1.02]"
         >
-          <img src={buttonSparkIcon} alt="" className="h-6 w-6" />
+          <img src={buttonSparkIcon} alt="" className="h-5 w-5" />
           Chat Now
         </button>
       </div>
@@ -83,13 +83,13 @@ const HeroSection: React.FC<Props> = ({ gender: _gender }) => {
   const navigate = useNavigate();
 
   return (
-    <section className="mx-auto w-full max-w-[1670px] px-4 pt-4 sm:px-6 md:px-[34px] md:pt-6">
+    <section className="mx-auto w-full max-w-screen-2xl px-3 pt-4 sm:px-4 md:px-6 md:pt-6 overflow-x-hidden">
       <div className="grid grid-cols-1 gap-[34px] lg:grid-cols-2">
         <HeroCard
           title="Best NSFW AI New Chatbot"
           onClick={() => navigate("/chat")}
           character={leftCharacter}
-          characterClass="pointer-events-none absolute bottom-[-4px] right-[18px] h-[324px] w-auto max-w-none -scale-x-100 object-contain object-bottom"
+          characterClass="pointer-events-none absolute bottom-[-4px] right-[18px] h-[284px] w-auto max-w-none -scale-x-100 object-contain object-bottom"
           rightTopCardClass="pointer-events-none absolute right-[-22px] top-[8px] h-[45px] w-[45px] overflow-hidden rounded-[8px]"
           rightBottomIconClass="pointer-events-none absolute right-[14px] bottom-[20px] h-10 w-10"
           leftPlay
@@ -99,7 +99,7 @@ const HeroSection: React.FC<Props> = ({ gender: _gender }) => {
           title="Best NSFW AI New Chatbot"
           onClick={() => navigate("/chat")}
           character={rightCharacter}
-          characterClass="pointer-events-none absolute bottom-[-2px] right-[14px] h-[320px] w-auto max-w-none object-contain object-bottom"
+          characterClass="pointer-events-none absolute bottom-[-2px] right-[14px] h-[280px] w-auto max-w-none object-contain object-bottom"
           rightTopCardClass="pointer-events-none absolute right-[-18px] top-[170px] h-[56px] w-[56px] overflow-hidden rounded-[8px]"
           rightBottomIconClass="pointer-events-none absolute right-[146px] bottom-[14px] h-10 w-10"
           rightExtra

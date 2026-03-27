@@ -1625,8 +1625,8 @@ export default function CreateCharacter() {
       style={{ paddingBottom: isMobile ? '160px' : '120px' }}
     >
       <SEOHead
-        title="Create AI Character - Custom AI Girlfriend & Companion | HoneyLove"
-        description="Create your perfect AI girlfriend or companion with HoneyLove's character creator. Customize appearance, personality, and traits to build your ideal AI character."
+        title="Create AI Character - Custom AI Girlfriend & Companion | SheFeels"
+        description="Create your perfect AI girlfriend or companion with SheFeels's character creator. Customize appearance, personality, and traits to build your ideal AI character."
         keywords="create AI character, custom AI girlfriend, AI character creator, personalized AI companion, build AI character, AI girlfriend maker"
         canonical="/create-character"
       />

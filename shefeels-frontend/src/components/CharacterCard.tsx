@@ -113,7 +113,7 @@ export default function CharacterCard({
   const likeCompactBaseClass = `inline-flex items-center gap-[2.37px] px-0 py-0.5 ${countTextClass} font-medium tracking-[0.01em] ${pillSizingClass} text-white ${likeTextTone}`;
   const likeIconColor = isLiked ? 'text-[#FF9DB5]' : 'text-rose-400';
   const chatButtonBackground = 'rgba(255, 255, 255, 0.08)';
-  const chatButtonClass = `allow-custom-text inline-flex items-center justify-center h-[36px] px-3 text-[14px] font-normal text-white backdrop-blur-[7.5px] rounded-[6px] transition-all duration-200 border border-transparent hover:bg-white/18`;
+  const chatButtonClass = `allow-custom-text inline-flex items-center justify-center h-[30px] px-3 text-[13px] font-normal text-white backdrop-blur-[7.5px] rounded-[6px] transition-all duration-200 border border-transparent hover:bg-white/18`;
   const chatButtonStyle = { background: chatButtonBackground };
   const typographyStyle = { fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif' };
   const actionLabel = (() => {
@@ -299,13 +299,13 @@ export default function CharacterCard({
             </div>
           </div>
 
-        <div className={`absolute inset-x-0 bottom-0 z-30 ${isCompact ? 'px-3 pb-3 pt-3' : 'px-[21px] pb-5 pt-3'}`}>
+        <div className={`absolute inset-x-0 bottom-0 z-30 ${isCompact ? 'px-3 pb-3 pt-3' : 'px-4 pb-4 pt-3'}`}>
           <div className={`flex gap-3 ${metaBadgeLabel ? 'items-start justify-between' : 'items-baseline'}`}>
             {displayFullName ? (
               <h3
                 className={`${isCompact
-                  ? 'text-[18px] sm:text-[20px] md:text-[22px]'
-                  : 'text-[21px] sm:text-[22px] md:text-[24px]'} font-semibold leading-[1.2] tracking-[0.01em] text-[#FEFEFE]`}
+                  ? 'text-base sm:text-lg md:text-[19px]'
+                  : 'text-lg sm:text-xl md:text-2xl'} font-semibold leading-[1.2] tracking-[0.01em] text-[#FEFEFE]`}
                 style={typographyStyle}
               >
                 {name}
@@ -315,21 +315,21 @@ export default function CharacterCard({
               <>
                 <h3
                   className={`${isCompact
-                    ? 'text-[18px] sm:text-[20px] md:text-[22px]'
-                    : 'text-[21px] sm:text-[22px] md:text-[24px]'} font-semibold leading-[1.2] tracking-[0.01em] text-[#FEFEFE] capitalize`}
+                    ? 'text-sm sm:text-base md:text-[17px]'
+                    : 'text-base sm:text-lg md:text-[19px]'} font-semibold leading-tight tracking-[0.01em] text-[#FEFEFE] capitalize`}
                   style={typographyStyle}
                 >
                   {name.split(' ')[0]}
                   {typeof age === 'number' ? ',\t' : ''}
                 </h3>
                 {typeof age === 'number' && (
-                  <span className={`${isCompact ? 'text-[18px] sm:text-[20px]' : 'text-[21px] sm:text-[22px] md:text-[24px]'} font-semibold text-[#FEFEFE] leading-[1.2]`} style={typographyStyle}>{age}</span>
+                  <span className={`${isCompact ? 'text-sm sm:text-base' : 'text-base sm:text-lg md:text-[19px]'} font-semibold text-[#FEFEFE] leading-tight`} style={typographyStyle}>{age}</span>
                 )}
               </>
             )}
             {metaBadgeLabel ? (
               <span
-                className="inline-flex h-[36px] shrink-0 items-center rounded-[6px] bg-[rgba(255,255,255,0.08)] px-3 text-[16px] font-normal text-white backdrop-blur-[7.5px]"
+                className="inline-flex h-[28px] shrink-0 items-center rounded-[6px] bg-[rgba(255,255,255,0.08)] px-2.5 text-[14px] font-normal text-white backdrop-blur-[7.5px]"
                 style={typographyStyle}
               >
                 {metaBadgeLabel}

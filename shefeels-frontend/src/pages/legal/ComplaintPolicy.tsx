@@ -14,8 +14,8 @@ export default function ComplaintPolicy() {
   return (
     <GenericPolicy title="Complaint Policy" updated="11/11/25" toc={toc}>
       <p>
-        HoneyLove (“HoneyLove,” “we,” “our,” or “us”) values transparency and accountability. We are committed to handling
-        complaints fairly, promptly, and consistently. This Complaint Policy explains how users of https://honeylove.ai (the
+        SheFeels (“SheFeels,” “we,” “our,” or “us”) values transparency and accountability. We are committed to handling
+        complaints fairly, promptly, and consistently. This Complaint Policy explains how users of https://shefeels.ai (the
         “Platform”) can submit complaints and how we address them.
       </p>
 
@@ -32,7 +32,7 @@ export default function ComplaintPolicy() {
 
       <section id="submit" className="space-y-2">
   <h3 className="mt-4 text-lg sm:text-xl font-semibold text-[var(--hl-gold)] tracking-tight">2. How to Submit a Complaint</h3>
-  <p className="text-sm">To submit a complaint, contact us at 📧 <a className="underline" href="mailto:support@honeylove.ai">support@honeylove.ai</a> and include:</p>
+  <p className="text-sm">To submit a complaint, contact us at 📧 <a className="underline" href="mailto:support@shefeels.ai">support@shefeels.ai</a> and include:</p>
         <ul className="list-disc pl-5 space-y-1">
           <li>Your full name and contact information.</li>
           <li>A clear description of the issue or concern.</li>
@@ -70,21 +70,17 @@ export default function ComplaintPolicy() {
 
       <section id="updates" className="space-y-2">
   <h3 className="mt-4 text-lg sm:text-xl font-semibold text-[var(--hl-gold)] tracking-tight">7. Updates to This Policy</h3>
-  <p className="text-sm">We may update this Complaint Policy from time to time. Updates will be posted on https://honeylove.ai with a revised effective date.</p>
+  <p className="text-sm">We may update this Complaint Policy from time to time. Updates will be posted on https://shefeels.ai with a revised effective date.</p>
       </section>
 
       <section id="contact" className="space-y-2">
   <h3 className="mt-4 text-lg sm:text-xl font-semibold text-[var(--hl-gold)] tracking-tight">8. Contact Us</h3>
   <div className="text-sm space-y-1">
-          <div>HONEY SYS LLC</div>
-          <div>254 Chapman Rd, Ste 208 #24555</div>
-          <div>Newark, Delaware 19702, USA</div>
-          <div>EIN: 39-4239108</div>
-          <div>Honey Prod Limited</div>
-          <div>Unit 1603, 16th Floor, The L. Plaza</div>
-          <div>367–375 Queen's Road Central, Sheung Wan, Hong Kong</div>
-          <div>Company No.: 78640969</div>
-          <div>📧 Email: <a className="underline" href="mailto:support@honeylove.ai">support@honeylove.ai</a></div>
+          <div className="font-semibold">JLHL MANAGEMENT LTD (HE 484306)</div>
+          <div>Georgiou Karaiskaki 11-13,</div>
+          <div>Carisa Salonica Court, Office 102,</div>
+          <div>7560 Pervolia, Larnaca, Cyprus</div>
+          <div>📧 Email: <a className="underline" href="mailto:support@shefeels.ai">support@shefeels.ai</a></div>
         </div>
       </section>
     </GenericPolicy>

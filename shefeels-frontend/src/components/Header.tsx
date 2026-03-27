@@ -400,7 +400,7 @@ export const Header: React.FC<Props> = ({
         <div className={`flex h-full w-full items-center justify-between ${useHomepageNavbar ? '' : 'gap-2.5 md:gap-3'}`}>
           {/* Left side (branding column sized to the sidebar) */}
           {/* Reserve the expanded sidebar width so header doesn't move when the sidebar collapses */}
-          <div className={useHomepageNavbar ? "flex shrink-0 items-center gap-2 sm:gap-4" : "flex items-center gap-2 sm:gap-4 md:w-[250px]"}>
+          <div className={useHomepageNavbar ? "flex shrink-0 items-center gap-2 sm:gap-4" : "flex items-center gap-2 sm:gap-4 md:w-60"}>
             {/* Mobile menu - only show hamburger icon on mobile */}
             <button
               className={`md:hidden grid place-items-center h-9 w-9 rounded-full transition theme-transition ${compactButton}`}
@@ -640,12 +640,13 @@ export const Header: React.FC<Props> = ({
                           }
                         } catch { }
                       }}
-                      className="inline-flex h-[38px] shrink-0 items-center gap-[6px] rounded-[12px] px-[10px] py-[7px] text-[16px] font-normal leading-[20px] text-white transition"
+                      className="inline-flex h-8 sm:h-9 shrink-0 items-center gap-1.5 rounded-full px-2 sm:px-4 text-[13px] sm:text-sm font-medium text-white transition"
                       title={`Tokens left: ${tokenBalance}`}
                       style={{
                         background: 'rgba(255, 255, 255, 0.12)',
                         backdropFilter: 'blur(6px)',
                         WebkitBackdropFilter: 'blur(6px)',
+                        border: '1px solid rgba(255, 255, 255, 0.15)'
                       }}
                     >
                       <img src={tokenIcon} alt="token" className="h-5 w-5 shrink-0" />
@@ -674,12 +675,12 @@ export const Header: React.FC<Props> = ({
                           <div className="flex flex-col gap-3">
                             {coinCostItems.map((item) => (
                               <div key={item.label} className="flex items-center justify-between gap-4">
-                                <span className="whitespace-nowrap text-[18px] font-normal leading-7 text-white/88">
+                                <span className="whitespace-nowrap text-sm font-normal text-white/88">
                                   {item.label}
                                 </span>
                                 <span className="inline-flex shrink-0 items-center gap-1 text-white">
                                   <img src={tokenIcon} alt="coin" className="h-4 w-4 shrink-0" />
-                                  <span className="text-[18px] font-normal leading-5">
+                                  <span className="text-sm font-semibold">
                                     {item.value}
                                   </span>
                                 </span>
@@ -688,9 +689,9 @@ export const Header: React.FC<Props> = ({
 
                             <button
                               onClick={() => { setCoinCostOpen(false); window.requestAnimationFrame(() => navigate('/buy-tokens')); }}
-                              className="mt-1 inline-flex h-[46px] w-full items-center justify-center gap-[6px] rounded-[8px] bg-[#7F5AF0] px-[15px] py-[7px] text-[14px] font-normal text-white transition hover:brightness-110"
+                              className="mt-1 inline-flex h-10 w-full items-center justify-center gap-2 rounded-full bg-[#7F5AF0] px-4 text-sm font-semibold text-white transition hover:brightness-110"
                             >
-                              <span className="text-[22px] font-normal leading-none">+</span>
+                              <span className="text-xl font-normal leading-none">+</span>
                               <span>Buy more</span>
                             </button>
                           </div>
@@ -720,31 +721,31 @@ export const Header: React.FC<Props> = ({
                     >
                       <button
                         onClick={() => { setShowProfile(false); navigate('/premium'); }}
-                        className={`flex h-16 w-full items-center gap-3 rounded-[8px] px-4 text-left text-[20px] font-medium transition-colors ${
+                        className={`flex h-12 w-full items-center gap-3 rounded-md px-3 text-left text-sm font-medium transition-colors ${
                           isDark ? "text-white hover:bg-white/[0.03]" : "text-slate-900 hover:bg-slate-100"
                         }`}
                       >
-                        <Crown className="h-7 w-7 shrink-0" strokeWidth={2.2} />
+                        <Crown className="h-5 w-5 shrink-0 text-[#815CF0]" strokeWidth={2} />
                         <span>Subscription</span>
                       </button>
 
                       <button
                         onClick={() => { setShowProfile(false); navigate('/profile'); }}
-                        className={`mt-1 flex h-16 w-full items-center gap-3 rounded-[8px] px-4 text-left text-[20px] font-medium transition-colors ${
+                        className={`mt-1 flex h-12 w-full items-center gap-3 rounded-md px-3 text-left text-sm font-medium transition-colors ${
                           isDark ? "text-white hover:bg-white/[0.03]" : "text-slate-900 hover:bg-slate-100"
                         }`}
                       >
-                        <Settings className="h-7 w-7 shrink-0" strokeWidth={2.2} />
-                        <span>Setting</span>
+                        <Settings className="h-5 w-5 shrink-0" strokeWidth={2} />
+                        <span>Settings</span>
                       </button>
 
                       <button
                         onClick={() => { setShowProfile(false); logout(); }}
-                        className={`mt-1 flex h-16 w-full items-center gap-3 rounded-[8px] px-4 text-left text-[20px] font-medium transition-colors ${
-                          isDark ? "text-[#FF3B30] hover:bg-white/[0.03]" : "text-[#FF3B30] hover:bg-slate-100"
+                        className={`mt-1 flex h-12 w-full items-center gap-3 rounded-md px-3 text-left text-sm font-medium transition-colors ${
+                          isDark ? "text-[#FF453A] hover:bg-white/[0.03]" : "text-[#FF3B30] hover:bg-slate-100"
                         }`}
                       >
-                        <LogOut className="h-7 w-7 shrink-0" strokeWidth={2.2} />
+                        <LogOut className="h-5 w-5 shrink-0" strokeWidth={2} />
                         <span>Logout</span>
                       </button>
                     </div>

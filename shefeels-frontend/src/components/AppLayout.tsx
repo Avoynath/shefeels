@@ -724,13 +724,13 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
             return "Craving for a realistic AI companion? Try interactive chat online, meet AI companions chatbot, and get personalized with the best AI companion website on SheFeels AI.";
           })()}
           keywords="AI girlfriend, AI boyfriend, AI chat, NSFW AI, AI companion, character AI, virtual girlfriend, virtual boyfriend, AI roleplay, custom AI characters"
-          canonical="https://honeylove.ai"
+          canonical="https://shefeels.ai"
           structuredData={{
             "@context": "https://schema.org",
             "@type": "WebApplication",
             "name": "SheFeels AI",
             "description": "AI companion platform for creating and chatting with custom AI characters",
-            "url": "https://honeylove.ai",
+            "url": "https://shefeels.ai",
             "applicationCategory": "Entertainment",
             "operatingSystem": "Web Browser",
             "offers": {
@@ -767,7 +767,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
         style={{ left: sidebarCollapsed ? '64px' : '240px', height: 'var(--header-h)' }}
       />
 
-      <div className={`flex min-h-[calc(100vh-1px)] transition-all duration-300 ${mobilePaddingClass} md:pb-0 ${
+      <div className={`flex min-h-[calc(100vh-1px)] transition-all duration-300 md:pb-0 ${
         (sidebarCollapsed ? 'md:pl-16' : 'md:pl-60')
         }`} style={{ paddingTop: "var(--header-h)" } as React.CSSProperties}>
         <Sidebar
@@ -782,7 +782,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
         {/* Main content column (remove inner left border to avoid double line) */}
         <div className="flex min-h-screen min-w-0 flex-1 flex-col">
           {children ? (
-            <main className="w-full px-4 sm:px-6 md:px-[34px]">{children}</main>
+            <main className="mx-auto w-full max-w-screen-2xl px-3 sm:px-4 md:px-6">{children}</main>
           ) : (
             <>
               <HeroSection gender={gender} />
@@ -797,7 +797,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
                     </h2>
 
                     {/* Mobile-only filter pills below heading - smaller size, proper dropdowns */}
-                    <div className="md:hidden w-full flex flex-nowrap items-center gap-2 mt-2.5 pb-1.5">
+                    <div className="md:hidden w-full flex flex-wrap items-center gap-2 mt-2.5 pb-1.5">
                       {/* Gender Dropdown */}
                       <div className="relative flex-auto min-w-0" ref={popoverRef} data-gender-anchor>
                         <button
