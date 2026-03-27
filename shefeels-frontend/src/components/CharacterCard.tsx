@@ -299,37 +299,40 @@ export default function CharacterCard({
             </div>
           </div>
 
-        <div className={`absolute inset-x-0 bottom-0 z-30 ${isCompact ? 'px-3 pb-3 pt-3' : 'px-4 pb-4 pt-3'}`}>
-          <div className={`flex gap-3 ${metaBadgeLabel ? 'items-start justify-between' : 'items-baseline'}`}>
-            {displayFullName ? (
-              <h3
-                className={`${isCompact
-                  ? 'text-base sm:text-lg md:text-[19px]'
-                  : 'text-lg sm:text-xl md:text-2xl'} font-semibold leading-[1.2] tracking-[0.01em] text-[#FEFEFE]`}
-                style={typographyStyle}
-              >
-                {name}
-                {typeof age === 'number' ? `, ${age}` : ''}
-              </h3>
-            ) : (
-              <>
+        <div className={`absolute inset-x-0 bottom-0 z-30 ${isCompact ? 'px-3 pb-3 pt-3' : 'px-3.5 pb-3.5 pt-4 sm:px-4 sm:pb-4 sm:pt-3'}`}>
+          <div className={`flex min-w-0 gap-2 md:gap-3 ${metaBadgeLabel ? 'flex-col items-start md:flex-row md:items-start md:justify-between' : 'items-end'}`}>
+            <div className="flex min-w-0 items-end gap-1.5">
+              {displayFullName ? (
                 <h3
-                  className={`${isCompact
-                    ? 'text-sm sm:text-base md:text-[17px]'
-                    : 'text-base sm:text-lg md:text-[19px]'} font-semibold leading-tight tracking-[0.01em] text-[#FEFEFE] capitalize`}
+                  className={`min-w-0 ${isCompact
+                    ? 'text-base sm:text-lg md:text-[19px]'
+                    : 'text-lg sm:text-xl md:text-2xl'} font-semibold leading-[1.2] tracking-[0.01em] text-[#FEFEFE]`}
                   style={typographyStyle}
                 >
-                  {name.split(' ')[0]}
-                  {typeof age === 'number' ? ',\t' : ''}
+                  {name}
+                  {typeof age === 'number' ? `, ${age}` : ''}
                 </h3>
-                {typeof age === 'number' && (
-                  <span className={`${isCompact ? 'text-sm sm:text-base' : 'text-base sm:text-lg md:text-[19px]'} font-semibold text-[#FEFEFE] leading-tight`} style={typographyStyle}>{age}</span>
-                )}
-              </>
-            )}
+              ) : (
+                <>
+                  <h3
+                    className={`${isCompact
+                      ? 'text-sm sm:text-base md:text-[17px]'
+                      : 'text-base sm:text-lg md:text-[19px]'} font-semibold leading-tight tracking-[0.01em] text-[#FEFEFE] capitalize`}
+                    style={typographyStyle}
+                  >
+                    {name.split(' ')[0]}
+                    {typeof age === 'number' ? ',\t' : ''}
+                  </h3>
+                  {typeof age === 'number' && (
+                    <span className={`${isCompact ? 'text-sm sm:text-base' : 'text-base sm:text-lg md:text-[19px]'} font-semibold text-[#FEFEFE] leading-tight`} style={typographyStyle}>{age}</span>
+                  )}
+                </>
+              )}
+            </div>
+
             {metaBadgeLabel ? (
               <span
-                className="inline-flex h-[28px] shrink-0 items-center rounded-[6px] bg-[rgba(255,255,255,0.08)] px-2.5 text-[14px] font-normal text-white backdrop-blur-[7.5px]"
+                className="hidden h-[28px] max-w-full shrink-0 items-center rounded-[6px] bg-[rgba(255,255,255,0.08)] px-2.5 text-[14px] font-normal text-white backdrop-blur-[7.5px] md:inline-flex"
                 style={typographyStyle}
               >
                 {metaBadgeLabel}
@@ -339,10 +342,10 @@ export default function CharacterCard({
 
           {/* Actions row: either spread (left/center/right) or the default compact layout */}
           {alignActionsSpread ? (
-            <div className="mt-2.5 flex items-end justify-between gap-3">
+            <div className="mt-2 hidden items-end justify-between gap-2 sm:mt-2.5 sm:gap-3 md:flex">
               {/* left group: Message count + Like */}
               {(optionsOnLeft || showMessagePill || showLikePill) && (
-                <div className="flex items-center gap-2">
+                <div className="flex min-w-0 flex-wrap items-center gap-2">
                   {optionsOnLeft && (
                     <div className="relative z-300">
                       {renderOptionsControl('left')}
@@ -389,24 +392,35 @@ export default function CharacterCard({
                 </div>
               )}
 
-              {!hideChat && (
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (typeof onClick === "function") {
-                      onClick();
-                    } else {
-                      navigate("/chat/character");
-                    }
-                  }}
-                  aria-label={`Chat with ${name}`}
-                  className={chatButtonClass}
-                  style={{ ...chatButtonStyle, ...typographyStyle }}
-                >
-                  {actionLabel}
-                </button>
-              )}
+              <div className="flex shrink-0 items-center gap-2">
+                {metaBadgeLabel ? (
+                  <span
+                    className="inline-flex h-[28px] max-w-full items-center rounded-[6px] bg-[rgba(255,255,255,0.08)] px-2.5 text-[13px] font-normal text-white backdrop-blur-[7.5px] md:hidden"
+                    style={typographyStyle}
+                  >
+                    {metaBadgeLabel}
+                  </span>
+                ) : null}
+
+                {!hideChat && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (typeof onClick === "function") {
+                        onClick();
+                      } else {
+                        navigate("/chat/character");
+                      }
+                    }}
+                    aria-label={`Chat with ${name}`}
+                    className={chatButtonClass}
+                    style={{ ...chatButtonStyle, ...typographyStyle }}
+                  >
+                    {actionLabel}
+                  </button>
+                )}
+              </div>
             </div>
           ) : (
             <div className="mt-2.5 flex items-center justify-between gap-3">

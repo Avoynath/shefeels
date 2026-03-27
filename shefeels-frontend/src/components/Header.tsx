@@ -53,7 +53,7 @@ export const Header: React.FC<Props> = ({
   });
   const [isMobileViewport, setIsMobileViewport] = React.useState<boolean>(() => {
     try {
-      return (window?.innerWidth || document?.documentElement?.clientWidth || 0) < 640;
+      return (window?.innerWidth || document?.documentElement?.clientWidth || 0) < 768;
     } catch {
       return false;
     }
@@ -62,7 +62,7 @@ export const Header: React.FC<Props> = ({
   React.useEffect(() => {
     function onResize() {
       try {
-        setIsMobileViewport((window.innerWidth || document.documentElement.clientWidth || 0) < 640);
+        setIsMobileViewport((window.innerWidth || document.documentElement.clientWidth || 0) < 768);
       } catch { }
     }
     try {
@@ -300,6 +300,7 @@ export const Header: React.FC<Props> = ({
   const isExplorePage = currentPath === '/' || currentPath === '/ai-girlfriend' || currentPath === '/ai-boyfriend' || currentPath === '/ai-transgender';
   const isCreateCharacterPage = currentPath === '/create-character';
   const useHomepageNavbar = isExplorePage;
+  const isExploreMobile = isExplorePage && isMobileViewport;
   // Style toggle visibility and the My AI flag are currently unused because the style
   // pills were requested to be commented out. Keep the page detection logic in place
   // in case we re-enable later.
@@ -387,7 +388,10 @@ export const Header: React.FC<Props> = ({
     height: "var(--header-h)",
     minHeight: "var(--header-h)",
     ...(useHomepageNavbar && isDark ? {
-      backgroundImage: 'radial-gradient(55% 160% at 50% -18%, rgba(127, 90, 240, 0.34) 0%, rgba(229, 49, 112, 0.18) 46%, rgba(15, 14, 22, 0) 100%)',
+      backgroundImage: isExploreMobile
+        ? 'linear-gradient(180deg, rgba(12, 9, 19, 0.98) 0%, rgba(22, 14, 30, 0.98) 100%), radial-gradient(78% 170% at 50% -18%, rgba(127, 90, 240, 0.38) 0%, rgba(229, 49, 112, 0.16) 48%, rgba(15, 14, 22, 0) 100%)'
+        : 'radial-gradient(55% 160% at 50% -18%, rgba(127, 90, 240, 0.34) 0%, rgba(229, 49, 112, 0.18) 46%, rgba(15, 14, 22, 0) 100%)',
+      boxShadow: isExploreMobile ? 'inset 0 -1px 0 rgba(129,92,240,0.36)' : undefined,
     } : {}),
   };
 
@@ -397,14 +401,23 @@ export const Header: React.FC<Props> = ({
       style={headerStyle}
     >
       <div className="mx-auto h-full w-full max-w-[1920px] px-3 sm:px-5 md:px-[34px]">
-        <div className={`flex h-full w-full items-center justify-between ${useHomepageNavbar ? '' : 'gap-2.5 md:gap-3'}`}>
+        <div className={`flex h-full w-full min-w-0 items-center justify-between ${useHomepageNavbar ? '' : 'gap-2.5 md:gap-3'} ${isExploreMobile ? 'gap-4' : ''}`}>
           {/* Left side (branding column sized to the sidebar) */}
           {/* Reserve the expanded sidebar width so header doesn't move when the sidebar collapses */}
-          <div className={useHomepageNavbar ? "flex shrink-0 items-center gap-2 sm:gap-4" : "flex items-center gap-2 sm:gap-4 md:w-60"}>
+          <div className={useHomepageNavbar ? `flex shrink-0 items-center ${isExploreMobile ? 'gap-1.5' : 'gap-2 sm:gap-4'}` : "flex items-center gap-2 sm:gap-4 md:w-60"}>
             {/* Mobile menu - only show hamburger icon on mobile */}
             <button
-              className={`md:hidden grid place-items-center h-9 w-9 rounded-full transition theme-transition ${compactButton}`}
+              className={`md:hidden grid place-items-center transition theme-transition ${isExploreMobile ? '' : compactButton}`}
+              style={isExploreMobile ? {
+                width: 42,
+                height: 42,
+                borderRadius: 9999,
+                background: isDark ? 'rgba(0, 0, 0, 0.32)' : 'rgba(255,255,255,0.92)',
+                border: isDark ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(129,92,240,0.12)',
+                boxShadow: isDark ? '0 10px 24px rgba(0,0,0,0.22)' : '0 8px 20px rgba(127,90,240,0.08)',
+              } : undefined}
               onClick={() => setSidebarOpen((v) => !v)}
+              aria-label="Open menu"
             >
               <HambergerMenu size="20" color="currentColor" className={`${isDark ? "text-white/80" : "text-gray-700"}`} />
             </button>
@@ -428,7 +441,9 @@ export const Header: React.FC<Props> = ({
                   src={headerLogo}
                   alt="Honey Love"
                   className="block shrink-0"
-                  style={{ width: "93.866px", height: "44.262px", flexShrink: 0 }}
+                  style={isExploreMobile
+                    ? { width: "62px", height: "29px", flexShrink: 0 }
+                    : { width: "93.866px", height: "44.262px", flexShrink: 0 }}
                 />
               </button>
             </div>
@@ -564,7 +579,7 @@ export const Header: React.FC<Props> = ({
 
           {/* Right side */}
           <div
-            className={`flex items-center gap-2 sm:gap-3 lg:gap-4`}>
+            className={`flex min-w-0 items-center gap-2 sm:gap-3 lg:gap-4 ${isExploreMobile ? 'ml-auto shrink items-center justify-end gap-1.5' : ''}`}>
 
             {/* Mobile search icon removed as per latest mobile design */}
 
@@ -586,29 +601,36 @@ export const Header: React.FC<Props> = ({
 
             {/* Premium button - shown only for guests or users WITHOUT an active subscription */}
             {(!user || !(user as any).hasActiveSubscription) && promoConfig && promoConfig.offer_enabled && (
-              <button
-                onClick={() => navigate('/premium')}
-                className="hidden md:inline-flex items-center gap-3 px-4 sm:px-5 py-1 h-9 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.02]"
-                style={{
-                  borderRadius: 50,
-                  background: 'linear-gradient(90deg, #B88CFF 0%, #815CF0 52%, #7F5AF0 100%)',
-                  boxShadow: '0 2px 26px 0 rgba(127, 90, 240, 0.60)'
-                }}
-              >
-                <img src={premiumIcon} alt="" className="h-5 w-5 brightness-0 invert" />
-                <span className="hidden xs:inline">{promoConfig?.premium_button_text || 'Get Premium'}</span>
-                <span className="xs:hidden">Premium</span>
-                <span className="inline-flex items-center rounded-full bg-white/90 px-2 py-0.5 text-[11px] font-semibold text-[#815CF0]">
-                  {promoConfig?.offer_badge_text || '70% off'}
-                </span>
-              </button>
+              <>
+                <button
+                  onClick={() => navigate('/premium')}
+                  className="hidden md:inline-flex items-center gap-3 px-4 sm:px-5 py-1 h-9 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.02]"
+                  style={{
+                    borderRadius: 50,
+                    background: 'linear-gradient(90deg, #B88CFF 0%, #815CF0 52%, #7F5AF0 100%)',
+                    boxShadow: '0 2px 26px 0 rgba(127, 90, 240, 0.60)'
+                  }}
+                >
+                  <img src={premiumIcon} alt="" className="h-5 w-5 brightness-0 invert" />
+                  <span className="hidden xs:inline">{promoConfig?.premium_button_text || 'Get Premium'}</span>
+                  <span className="xs:hidden">Premium</span>
+                  <span className="inline-flex items-center rounded-full bg-white/90 px-2 py-0.5 text-[11px] font-semibold text-[#815CF0]">
+                    {promoConfig?.offer_badge_text || '70% off'}
+                  </span>
+                </button>
+              </>
             )}
 
             {/* Login / User */}
             {!isAuthenticated ? (
               <button
                 onClick={() => { onOpenAuth ? onOpenAuth() : navigate('/login'); }}
-                className={`rounded-xl px-4 py-1.5 h-8 text-sm font-medium transition theme-transition ${compactButton}`}
+                className={`font-medium transition theme-transition ${isExploreMobile ? 'h-10 shrink-0 rounded-[14px] px-3.5 text-[14px]' : 'rounded-xl px-4 py-1.5 h-8 text-sm'} ${compactButton}`}
+                style={isExploreMobile ? {
+                  background: isDark ? 'rgba(0, 0, 0, 0.34)' : 'rgba(255,255,255,0.92)',
+                  border: isDark ? '1px solid rgba(255,255,255,0.04)' : '1px solid rgba(129,92,240,0.10)',
+                  boxShadow: isDark ? '0 10px 24px rgba(0,0,0,0.24)' : '0 8px 20px rgba(127,90,240,0.08)',
+                } : undefined}
               >
                 Login
               </button>
