@@ -427,7 +427,7 @@ export default function Premium() {
               </div>
 
               <div
-                className="mt-[30px] overflow-hidden rounded-[10px] border border-[rgba(255,166,0,0.12)] bg-[rgba(71,37,8,0.92)] bg-cover bg-center bg-no-repeat px-4 py-2 text-center text-[14px] text-[#FBB03B]"
+                className="mt-[30px] overflow-hidden rounded-[10px] border border-[#7F5AF0]/20 bg-[#120F1D] bg-cover bg-center bg-no-repeat px-4 py-2 text-center text-[14px] text-[#7F5AF0]"
                 style={{ backgroundImage: `url(${paymentBanner})` }}
               />
 

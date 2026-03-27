@@ -448,7 +448,7 @@ export const Header: React.FC<Props> = ({
                       localStorage.setItem('hl_nsfw', String(newValue));
                     } catch { }
                   }}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${nsfwEnabled ? 'bg-(--hl-gold)' : isDark ? 'bg-white/20' : 'bg-gray-300'
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${nsfwEnabled ? 'bg-[#E53170]' : isDark ? 'bg-white/20' : 'bg-gray-300'
                     }`}
                 >
                   <span
@@ -479,8 +479,8 @@ export const Header: React.FC<Props> = ({
                               clearHomepageStyleSelection();
                             }
                           }}
-                          className={`px-6 py-2 text-sm font-medium transition-all duration-200 ${selected ? 'ring-[1px] ring-(--hl-gold) shadow-[0_0_0_1px_rgb(255,197,77),0_8px_24px_rgba(255,197,77,0.35)]' : ''} ${isDark ? 'text-white/90' : 'text-gray-800'}`}
-                          style={selected ? { borderRadius: 50, border: '1px solid var(--secondary, #C09B62)', background: 'rgba(192, 155, 98, 0.18)' } : { borderRadius: 50, background: 'rgba(255, 255, 255, 0.10)' }}
+                          className={`px-6 py-2 text-sm font-medium transition-all duration-200 ${selected ? 'ring-[1px] ring-[#7F5AF0] shadow-[0_0_0_1px_rgba(127,90,240,0.5),0_8px_24px_rgba(127,90,240,0.35)]' : ''} ${isDark ? 'text-white/90' : 'text-gray-800'}`}
+                          style={selected ? { borderRadius: 50, border: '1px solid #7F5AF0', background: 'rgba(127, 90, 240, 0.18)' } : { borderRadius: 50, background: 'rgba(255, 255, 255, 0.10)' }}
                         >
                           {label}
                         </button>

@@ -34,10 +34,10 @@ const CATEGORY_STYLES: Record<string, {
     glowDark:  '0 0 0 1.5px rgba(239,68,68,0.35), 0 6px 20px rgba(239,68,68,0.12)',
   },
   playful:  {
-    badge:     'bg-yellow-100 text-yellow-700',
-    badgeDark: 'bg-yellow-500/20 text-yellow-400',
-    glowLight: '0 0 0 1.5px rgba(234,179,8,0.45), 0 6px 20px rgba(234,179,8,0.18)',
-    glowDark:  '0 0 0 1.5px rgba(234,179,8,0.35), 0 6px 20px rgba(234,179,8,0.12)',
+    badge:     'bg-amber-100 text-amber-700',
+    badgeDark: 'bg-amber-500/20 text-amber-400',
+    glowLight: '0 0 0 1.5px rgba(245,158,11,0.45), 0 6px 20px rgba(245,158,11,0.18)',
+    glowDark:  '0 0 0 1.5px rgba(245,158,11,0.35), 0 6px 20px rgba(245,158,11,0.12)',
   },
   romantic: {
     badge:     'bg-purple-100 text-purple-700',

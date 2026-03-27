@@ -268,8 +268,8 @@ export default function MyAI() {
 			setCurrentStyle(val || null);
 		}
 
-		window.addEventListener('hl_style_changed', onStyle as EventListener);
-		return () => window.removeEventListener('hl_style_changed', onStyle as EventListener);
+		window.addEventListener('sf_style_changed', onStyle as EventListener);
+		return () => window.removeEventListener('sf_style_changed', onStyle as EventListener);
 	}, []);
 
 	const handleLikeClick = async (characterId: string) => {
@@ -313,21 +313,21 @@ export default function MyAI() {
 		return (
 			<button
 				className={`inline-flex items-center rounded-full px-4 py-2 h-9 text-sm font-medium transition-all duration-200 ${isActive
-					? 'bg-(--hl-gold) text-black'
+					? 'bg-(--sf-purple) text-white'
 					: 'bg-[rgba(255,255,255,0.10)] text-white/70 hover:text-white'
 					}`}
 				onClick={() => {
 					try {
 						if (isActive) {
 							// Deselect
-							if ((window as any).hl_set_style) {
-								(window as any).hl_set_style('');
-								try { (window as any).hl_current_style = ''; } catch { }
-								try { window.dispatchEvent(new CustomEvent('hl_style_changed', { detail: '' })); } catch { }
+							if ((window as any).sf_set_style) {
+								(window as any).sf_set_style('');
+								try { (window as any).sf_current_style = ''; } catch { }
+								try { window.dispatchEvent(new CustomEvent('sf_style_changed', { detail: '' })); } catch { }
 							} else {
-								try { localStorage.removeItem('hl_style'); } catch { }
-								try { window.dispatchEvent(new CustomEvent('hl_style_changed', { detail: '' })); } catch { }
-								try { (window as any).hl_current_style = ''; } catch { }
+								try { localStorage.removeItem('sf_style'); } catch { }
+								try { window.dispatchEvent(new CustomEvent('sf_style_changed', { detail: '' })); } catch { }
+								try { (window as any).sf_current_style = ''; } catch { }
 							}
 							setCurrentStyle(null);
 							setStyleFilter('any');
@@ -335,14 +335,14 @@ export default function MyAI() {
 							// Select
 							// Use the styleKey as canonical payload (keeps stored value consistent)
 							const payload = styleKey || label;
-							if ((window as any).hl_set_style) {
-								(window as any).hl_set_style(payload);
-								try { (window as any).hl_current_style = String(payload).toLowerCase(); } catch { }
-								try { window.dispatchEvent(new CustomEvent('hl_style_changed', { detail: payload })); } catch { }
+							if ((window as any).sf_set_style) {
+								(window as any).sf_set_style(payload);
+								try { (window as any).sf_current_style = String(payload).toLowerCase(); } catch { }
+								try { window.dispatchEvent(new CustomEvent('sf_style_changed', { detail: payload })); } catch { }
 							} else {
-								try { localStorage.setItem('hl_style', payload); } catch { }
-								try { window.dispatchEvent(new CustomEvent('hl_style_changed', { detail: payload })); } catch { }
-								try { (window as any).hl_current_style = String(payload).toLowerCase(); } catch { }
+								try { localStorage.setItem('sf_style', payload); } catch { }
+								try { window.dispatchEvent(new CustomEvent('sf_style_changed', { detail: payload })); } catch { }
+								try { (window as any).sf_current_style = String(payload).toLowerCase(); } catch { }
 							}
 							setCurrentStyle(styleKey);
 							setStyleFilter(String(payload).toLowerCase().trim());
@@ -360,12 +360,12 @@ export default function MyAI() {
 		<div className="flex items-center justify-center py-12">
 			<div className="bg-white/5 border border-white/6 rounded-2xl p-8 max-w-xl w-full text-center">
 				<div className="mb-4 grid place-items-center">
-						<svg width="56" height="56" viewBox="0 0 24 24" fill="none" className="text-(--hl-gold)"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM4 20v-1c0-2.21 3.58-4 8-4s8 1.79 8 4v1H4z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+						<svg width="56" height="56" viewBox="0 0 24 24" fill="none" className="text-(--sf-purple)"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM4 20v-1c0-2.21 3.58-4 8-4s8 1.79 8 4v1H4z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
 				</div>
 				<h3 className="text-xl font-semibold mb-2">You&apos;re not signed in</h3>
 				<p className="text-sm text-white/70 mb-6">Sign in to view and manage your AI characters, or explore public characters without an account.</p>
 				<div className="flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 sm:gap-3">
-					<button onClick={() => navigate('/login', { state: { from: location } })} className="whitespace-nowrap px-4 py-2 rounded-full font-medium bg-(--hl-gold) text-black">Sign in</button>
+					<button onClick={() => navigate('/login', { state: { from: location } })} className="whitespace-nowrap px-4 py-2 rounded-full font-medium bg-(--sf-purple) text-white">Sign in</button>
 					<button onClick={() => navigate('/')} className="whitespace-nowrap px-3 sm:px-4 py-2 rounded-full font-medium bg-transparent ring-1 ring-white/10 text-white/90">Explore characters</button>
 					<button onClick={() => navigate('/create-character')} className="whitespace-nowrap px-4 py-2 rounded-full font-medium bg-white/6 text-white/90">Create</button>
 				</div>
@@ -429,13 +429,13 @@ export default function MyAI() {
 						<div className="h-12 w-12 rounded-2xl grid place-items-center" style={{ background: "linear-gradient(135deg,#431417,#1a0b0c)" }}>
 							<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M10 11v6M14 11v6M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" stroke="#ff6b6b" strokeWidth="1.6" /></svg>
 						</div>
-						<div className="text-2xl font-bold text-(--hl-gold)">Delete character</div>
+						<div className="text-2xl font-bold text-(--sf-purple)">Delete character</div>
 						<p className="text-white/80 max-w-md">Are you sure you want to delete this character? This action cannot be reversed and all related chats and media will be deleted.</p>
 						<div className="mt-2 flex items-center justify-center gap-3">
 							<button className="rounded-full px-6 py-3 text-white/90 bg-white/10 ring-1 ring-white/10 hover:bg-white/15" onClick={() => { setConfirmOpen(false); setPendingDeleteId(null); }}>
 								Cancel
 							</button>
-							<button disabled={actionLoading} className="rounded-full px-6 py-3 text-black bg-linear-to-b from-(--hl-gold) to-(--hl-gold-strong) hover:from-(--hl-gold) hover:to-(--hl-gold-strong)" onClick={() => confirmDelete()}>
+							<button disabled={actionLoading} className="rounded-full px-6 py-3 text-white bg-linear-to-b from-(--sf-purple) to-[#6c47d9] hover:from-[#6c47d9] hover:to-(--sf-purple)" onClick={() => confirmDelete()}>
 								{actionLoading ? 'Deleting...' : 'Yes Delete'}
 							</button>
 						</div>
@@ -491,20 +491,20 @@ export default function MyAI() {
 											setStyleFilter('any');
 											setSearchQuery('');
 											try {
-												if ((window as any).hl_set_style) {
-													(window as any).hl_set_style('');
+												if ((window as any).sf_set_style) {
+													(window as any).sf_set_style('');
 												} else {
-													localStorage.removeItem('hl_style');
+													localStorage.removeItem('sf_style');
 												}
 												setCurrentStyle(null);
-												window.dispatchEvent(new CustomEvent('hl_style_changed', { detail: '' }));
+												window.dispatchEvent(new CustomEvent('sf_style_changed', { detail: '' }));
 											} catch { }
 										}}
 										className="whitespace-nowrap px-4 py-2 rounded-full font-medium bg-white/10 text-white hover:bg-white/20"
 									>
 										Clear filters
 									</button>
-									<button onClick={() => navigate('/create-character')} className="whitespace-nowrap px-4 py-2 rounded-full font-medium bg-(--hl-gold) text-black">Create new character</button>
+									<button onClick={() => navigate('/create-character')} className="whitespace-nowrap px-4 py-2 rounded-full font-medium bg-(--sf-purple) text-white">Create new character</button>
 								</div>
 							</div>
 						</div>

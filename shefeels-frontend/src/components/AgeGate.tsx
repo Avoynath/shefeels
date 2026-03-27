@@ -6,8 +6,8 @@ const STORAGE_KEY = "shefeels_age_verified_v1";
 // OPTIMIZATION: Inline SVG instead of loading external image - eliminates network request
 const Icon18SVG = () => (
   <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="32" cy="32" r="30" stroke="#FFD700" strokeWidth="3" fill="none" />
-    <text x="32" y="38" textAnchor="middle" fill="#FFD700" fontSize="22" fontWeight="bold" fontFamily="sans-serif">18+</text>
+    <circle cx="32" cy="32" r="30" stroke="#E53170" strokeWidth="3" fill="none" />
+    <text x="32" y="38" textAnchor="middle" fill="#E53170" fontSize="22" fontWeight="bold" fontFamily="sans-serif">18+</text>
   </svg>
 );
 
@@ -68,7 +68,7 @@ const AgeGate: React.FC = () => {
           {/* OPTIMIZATION: Inline SVG - no network request needed */}
           <Icon18SVG />
 
-          <h3 className="text-lg font-semibold text-yellow-400">
+          <h3 className="text-lg font-semibold text-[#E53170]">
             Warning 18 +
           </h3>
 

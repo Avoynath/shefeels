@@ -3,8 +3,8 @@ import { useLocation } from "react-router-dom";
 import Icon18 from "../assets/18+Icon.avif";
 import ChatNowIcon from "../assets/home/ChatNowIcon.svg";
 
-const STORAGE_KEY = "hl_cookies_accepted_v1";
-const PREFS_KEY = "hl_cookies_prefs_v1";
+const STORAGE_KEY = "sf_cookies_accepted_v1";
+const PREFS_KEY = "sf_cookies_prefs_v1";
 
 const CookieBanner: React.FC = () => {
   const ageVerified = true;
@@ -119,7 +119,7 @@ const CookieBanner: React.FC = () => {
         >
           <div className="flex flex-col items-center gap-4">
             <img src={Icon18} alt="18+" className="h-16 w-16 object-contain" />
-            <h3 className="text-lg font-semibold text-yellow-400">Cookies</h3>
+            <h3 className="text-lg font-semibold text-[#E53170]">Cookies</h3>
             <p className="text-sm text-white/80 leading-relaxed max-w-sm">
               This site uses cookies to improve your experience. Please select your preferences or accept all cookies to continue.
             </p>
@@ -145,8 +145,8 @@ const CookieBanner: React.FC = () => {
                   alignItems: "center",
                   justifyContent: "center",
                   gap: 10,
-                  background: "linear-gradient(90deg,#FFD86A 0%, #FFC94D 50%, #FFB84D 100%)",
-                  color: "#151515",
+                  background: "linear-gradient(90deg, #d9b2ff 0%, #7f5af0 38%, #9d66ff 64%, #f48db5 100%)",
+                  color: "#FFFFFF",
                   padding: "0.75rem 1.5rem",
                   height: 48,
                   boxSizing: "border-box",
@@ -200,7 +200,7 @@ const CookieBanner: React.FC = () => {
                     <button onClick={() => setShowSettings(false)} className="px-3 py-2 rounded-md" style={{ border: "1px solid rgba(255,255,255,0.08)", color: "#fff" }}>
                       Cancel
                     </button>
-                    <button onClick={savePrefs} className="px-3 py-2 rounded-md" style={{ background: "linear-gradient(90deg,#FFD86A 0%, #FFC94D 50%, #FFB84D 100%)", color: "#151515" }}>
+                    <button onClick={savePrefs} className="px-3 py-2 rounded-md" style={{ background: "linear-gradient(90deg, #d9b2ff 0%, #7f5af0 38%, #9d66ff 64%, #f48db5 100%)", color: "#FFFFFF" }}>
                       Save
                     </button>
                   </div>
@@ -232,7 +232,7 @@ const CookieBanner: React.FC = () => {
           gap: "20px",
           flexShrink: 0,
           // semi-transparent gradient so backdrop-filter shows through
-          background: "linear-gradient(92deg, rgba(255,197,77,0.92) -150.73%, rgba(0,0,0,0.86) 53.73%)",
+          background: "linear-gradient(92deg, rgba(229, 49, 112, 0.45) -150.73%, rgba(11, 8, 19, 0.98) 53.73%)",
           // enable blur of content behind the banner
           backdropFilter: "blur(6px)",
           WebkitBackdropFilter: "blur(6px)",
@@ -246,7 +246,7 @@ const CookieBanner: React.FC = () => {
 
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "10px" }}>
             <div style={{ color: "#FFFFFF", fontSize: "16px", lineHeight: "1.5", fontWeight: 400 }}>
-              This site is for adults only! It contains only AI-generated adult content. By entering this website, you confirm that you are 18 years old or more. By using the site, you agree to our It contains only AI-generated adult content.
+              This site is for adults only! It contains only AI-generated adult content. By entering this website, you confirm that you are 18 years old or more. By using the site, you agree to our use of cookies.
             </div>
           </div>
         </div>
@@ -363,8 +363,8 @@ const CookieBanner: React.FC = () => {
                     padding: "0 12px",
                     borderRadius: 8,
                     border: "none",
-                    background: "linear-gradient(90deg, #FFD86A 0%, #FFC94D 50%, #FFB84D 100%)",
-                    color: "#151515",
+                    background: "linear-gradient(90deg, #d9b2ff 0%, #7f5af0 38%, #9d66ff 64%, #f48db5 100%)",
+                    color: "#FFFFFF",
                     fontWeight: 700,
                     cursor: "pointer",
                   }}
@@ -385,8 +385,8 @@ const CookieBanner: React.FC = () => {
               padding: "0 24px",
               borderRadius: "30px",
               border: "none",
-              background: "linear-gradient(90deg, #FFD86A 0%, #FFC94D 50%, #FFB84D 100%)",
-              color: "#151515",
+              background: "linear-gradient(90deg, #d9b2ff 0%, #7f5af0 38%, #9d66ff 64%, #f48db5 100%)",
+              color: "#FFFFFF",
               fontSize: "14px",
               lineHeight: "44px",
               fontWeight: 700,

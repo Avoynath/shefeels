@@ -30,13 +30,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const navigate = useNavigate();
   const [user, setUser] = useState<User>(() => {
     try {
-      const raw = localStorage.getItem("hl_user");
+      const raw = localStorage.getItem("sf_user");
       return raw ? JSON.parse(raw) : null;
     } catch {
       return null;
     }
   });
-  const [token, setToken] = useState<string | null>(() => localStorage.getItem("hl_token"));
+  const [token, setToken] = useState<string | null>(() => localStorage.getItem("sf_token"));
   const isAuthenticated = useMemo(() => Boolean(token), [token]);
 
   // ensure api client knows about token
@@ -136,7 +136,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               });
               // Also dispatch a DOM event so pages/components can refresh subscription details if needed
               try {
-                window.dispatchEvent(new CustomEvent('hl_subscription_updated', { detail: data }));
+                window.dispatchEvent(new CustomEvent('sf_subscription_updated', { detail: data }));
               } catch {}
             } catch {}
           }
@@ -177,7 +177,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         
         try {
           // Store token and update context
-          localStorage.setItem("hl_token", token);
+          localStorage.setItem("sf_token", token);
           setToken(token);
           
           // The useEffect watching 'token' will automatically fetch the user profile
@@ -194,15 +194,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     try {
-      if (token) localStorage.setItem("hl_token", token);
-      else localStorage.removeItem("hl_token");
+      if (token) localStorage.setItem("sf_token", token);
+      else localStorage.removeItem("sf_token");
     } catch {}
   }, [token]);
 
   useEffect(() => {
     try {
-      if (user) localStorage.setItem("hl_user", JSON.stringify(user));
-      else localStorage.removeItem("hl_user");
+      if (user) localStorage.setItem("sf_user", JSON.stringify(user));
+      else localStorage.removeItem("sf_user");
     } catch {}
   }, [user]);
 
@@ -210,8 +210,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setToken(null);
     setUser(null);
     try {
-      localStorage.removeItem("hl_token");
-      localStorage.removeItem("hl_user");
+      localStorage.removeItem("sf_token");
+      localStorage.removeItem("sf_user");
     } catch {}
     navigate("/");
   }

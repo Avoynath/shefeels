@@ -10,8 +10,8 @@ export default function EditCharacter({ character: propCharacter, onSaved, inlin
   const { components } = useThemeStyles();
   const cardBase = components.cardBase;
   // Adjusted title and card styles to match Figma
-  const titleClass = "text-2xl font-semibold text-[var(--hl-gold)]";
-  const cardBorder = "ring-0 border border-[var(--hl-gold)]/25"; // very thin light golden edge
+  const titleClass = "text-2xl font-semibold text-[#7F5AF0]";
+  const cardBorder = "ring-0 border border-[#7F5AF0]/25"; // very thin light purple edge
 
   const location = useLocation();
   // Accept character from prop for embedding; fallback to navigation state for backwards-compat
@@ -100,16 +100,16 @@ export default function EditCharacter({ character: propCharacter, onSaved, inlin
   const inner = (
     <div className="space-y-6">
       <div>
-        <div className="text-sm font-medium text-[var(--hl-gold)] mb-2 uppercase tracking-wide">Name</div>
+        <div className="text-sm font-medium text-[#7F5AF0] mb-2 uppercase tracking-wide">Name</div>
         {readOnly ? (
           <div className="text-xl font-semibold text-white/95 py-2">{name || '—'}</div>
         ) : (
-          <input value={name} onChange={(e)=>setName(e.target.value)} className={`${components.input} rounded-xl border-white/10 focus:border-[var(--hl-gold)]/50 focus:ring-2 focus:ring-[var(--hl-gold)]/20`} />
+          <input value={name} onChange={(e)=>setName(e.target.value)} className={`${components.input} rounded-xl border-white/10 focus:border-[#7F5AF0]/50 focus:ring-2 focus:ring-[#7F5AF0]/20`} />
         )}
       </div>
 
       <div>
-        <div className="text-sm font-medium text-[var(--hl-gold)] mb-2 uppercase tracking-wide">Username</div>
+        <div className="text-sm font-medium text-[#7F5AF0] mb-2 uppercase tracking-wide">Username</div>
         {readOnly ? (
           <div className="text-white/90 py-1 font-mono">{username ? `@${username}` : '—'}</div>
         ) : (
@@ -119,7 +119,7 @@ export default function EditCharacter({ character: propCharacter, onSaved, inlin
 
       <div>
         <div className="flex justify-between items-center mb-2">
-          <div className="text-sm font-medium text-[var(--hl-gold)] uppercase tracking-wide">Bio</div>
+          <div className="text-sm font-medium text-[#7F5AF0] uppercase tracking-wide">Bio</div>
           {!readOnly && (
             <button
               type="button"
@@ -141,7 +141,7 @@ export default function EditCharacter({ character: propCharacter, onSaved, inlin
                 }
               }}
               disabled={loading}
-              className="text-[10px] sm:text-xs font-bold text-black bg-[var(--hl-gold)] hover:bg-yellow-400 px-3 py-1 rounded-full transition-all flex items-center gap-1 shadow-sm active:scale-95 disabled:opacity-50"
+              className="text-[10px] sm:text-xs font-bold text-white bg-[#7F5AF0] hover:bg-[#9D66FF] px-3 py-1 rounded-full transition-all flex items-center gap-1 shadow-sm active:scale-95 disabled:opacity-50"
             >
               {loading ? '...' : '✨ Generate with AI'}
             </button>
@@ -150,71 +150,71 @@ export default function EditCharacter({ character: propCharacter, onSaved, inlin
         {readOnly ? (
           <div className="bg-white/5 rounded-xl p-4 text-white/90 min-h-[80px] whitespace-pre-wrap leading-relaxed border border-white/5">{bio || '—'}</div>
         ) : (
-          <textarea value={bio} onChange={(e)=>setBio(e.target.value)} rows={4} className={`${components.input} resize-none rounded-xl border-white/10 focus:border-[var(--hl-gold)]/50 focus:ring-2 focus:ring-[var(--hl-gold)]/20`} />
+          <textarea value={bio} onChange={(e)=>setBio(e.target.value)} rows={4} className={`${components.input} resize-none rounded-xl border-white/10 focus:border-[#7F5AF0]/50 focus:ring-2 focus:ring-[#7F5AF0]/20`} />
         )}
       </div>
 
       <div>
-        <div className="text-sm font-medium text-[var(--hl-gold)] mb-2 uppercase tracking-wide">OnlyFans URL</div>
+        <div className="text-sm font-medium text-[#7F5AF0] mb-2 uppercase tracking-wide">OnlyFans URL</div>
         {readOnly ? (
           onlyFansUrl ? (
-            <a href={onlyFansUrl} target="_blank" rel="noreferrer" className="text-[var(--hl-gold)] hover:text-yellow-400 underline decoration-[var(--hl-gold)]/30 hover:decoration-[var(--hl-gold)] break-all transition-colors inline-flex items-center gap-2">🔗 {onlyFansUrl}</a>
+            <a href={onlyFansUrl} target="_blank" rel="noreferrer" className="text-[#7F5AF0] hover:text-[#9D66FF] underline decoration-[#7F5AF0]/30 hover:decoration-[#7F5AF0] break-all transition-colors inline-flex items-center gap-2">🔗 {onlyFansUrl}</a>
           ) : (
             <div className="text-white/50">—</div>
           )
         ) : (
-          <input value={onlyFansUrl} onChange={(e)=>setOnlyFansUrl(e.target.value)} placeholder="https://onlyfans.com/username" className={`${components.input} rounded-xl border-white/10 focus:border-[var(--hl-gold)]/50 focus:ring-2 focus:ring-[var(--hl-gold)]/20`} />
+          <input value={onlyFansUrl} onChange={(e)=>setOnlyFansUrl(e.target.value)} placeholder="https://onlyfans.com/username" className={`${components.input} rounded-xl border-white/10 focus:border-[#7F5AF0]/50 focus:ring-2 focus:ring-[#7F5AF0]/20`} />
         )}
       </div>
 
       <div>
-        <div className="text-sm font-medium text-[var(--hl-gold)] mb-2 uppercase tracking-wide">Fanvue URL</div>
+        <div className="text-sm font-medium text-[#7F5AF0] mb-2 uppercase tracking-wide">Fanvue URL</div>
         {readOnly ? (
           fanvueUrl ? (
-            <a href={fanvueUrl} target="_blank" rel="noreferrer" className="text-[var(--hl-gold)] hover:text-yellow-400 underline decoration-[var(--hl-gold)]/30 hover:decoration-[var(--hl-gold)] break-all transition-colors inline-flex items-center gap-2">🔗 {fanvueUrl}</a>
+            <a href={fanvueUrl} target="_blank" rel="noreferrer" className="text-[#7F5AF0] hover:text-[#9D66FF] underline decoration-[#7F5AF0]/30 hover:decoration-[#7F5AF0] break-all transition-colors inline-flex items-center gap-2">🔗 {fanvueUrl}</a>
           ) : (
             <div className="text-white/50">—</div>
           )
         ) : (
-          <input value={fanvueUrl} onChange={(e)=>setFanvueUrl(e.target.value)} placeholder="https://fanvue.com/username" className={`${components.input} rounded-xl border-white/10 focus:border-[var(--hl-gold)]/50 focus:ring-2 focus:ring-[var(--hl-gold)]/20`} />
+          <input value={fanvueUrl} onChange={(e)=>setFanvueUrl(e.target.value)} placeholder="https://fanvue.com/username" className={`${components.input} rounded-xl border-white/10 focus:border-[#7F5AF0]/50 focus:ring-2 focus:ring-[#7F5AF0]/20`} />
         )}
       </div>
 
       <div>
-        <div className="text-sm font-medium text-[var(--hl-gold)] mb-2 uppercase tracking-wide">TikTok URL</div>
+        <div className="text-sm font-medium text-[#7F5AF0] mb-2 uppercase tracking-wide">TikTok URL</div>
         {readOnly ? (
           tiktokUrl ? (
-            <a href={tiktokUrl} target="_blank" rel="noreferrer" className="text-[var(--hl-gold)] hover:text-yellow-400 underline decoration-[var(--hl-gold)]/30 hover:decoration-[var(--hl-gold)] break-all transition-colors inline-flex items-center gap-2">🔗 {tiktokUrl}</a>
+            <a href={tiktokUrl} target="_blank" rel="noreferrer" className="text-[#7F5AF0] hover:text-[#9D66FF] underline decoration-[#7F5AF0]/30 hover:decoration-[#7F5AF0] break-all transition-colors inline-flex items-center gap-2">🔗 {tiktokUrl}</a>
           ) : (
             <div className="text-white/50">—</div>
           )
         ) : (
-          <input value={tiktokUrl} onChange={(e)=>setTiktokUrl(e.target.value)} placeholder="https://www.tiktok.com/@username" className={`${components.input} rounded-xl border-white/10 focus:border-[var(--hl-gold)]/50 focus:ring-2 focus:ring-[var(--hl-gold)]/20`} />
+          <input value={tiktokUrl} onChange={(e)=>setTiktokUrl(e.target.value)} placeholder="https://www.tiktok.com/@username" className={`${components.input} rounded-xl border-white/10 focus:border-[#7F5AF0]/50 focus:ring-2 focus:ring-[#7F5AF0]/20`} />
         )}
       </div>
 
       <div>
-        <div className="text-sm font-medium text-[var(--hl-gold)] mb-2 uppercase tracking-wide">Instagram URL</div>
+        <div className="text-sm font-medium text-[#7F5AF0] mb-2 uppercase tracking-wide">Instagram URL</div>
         {readOnly ? (
           instagramUrl ? (
-            <a href={instagramUrl} target="_blank" rel="noreferrer" className="text-[var(--hl-gold)] hover:text-yellow-400 underline decoration-[var(--hl-gold)]/30 hover:decoration-[var(--hl-gold)] break-all transition-colors inline-flex items-center gap-2">🔗 {instagramUrl}</a>
+            <a href={instagramUrl} target="_blank" rel="noreferrer" className="text-[#7F5AF0] hover:text-[#9D66FF] underline decoration-[#7F5AF0]/30 hover:decoration-[#7F5AF0] break-all transition-colors inline-flex items-center gap-2">🔗 {instagramUrl}</a>
           ) : (
             <div className="text-white/50">—</div>
           )
         ) : (
-          <input value={instagramUrl} onChange={(e)=>setInstagramUrl(e.target.value)} placeholder="https://www.instagram.com/username" className={`${components.input} rounded-xl border-white/10 focus:border-[var(--hl-gold)]/50 focus:ring-2 focus:ring-[var(--hl-gold)]/20`} />
+          <input value={instagramUrl} onChange={(e)=>setInstagramUrl(e.target.value)} placeholder="https://www.instagram.com/username" className={`${components.input} rounded-xl border-white/10 focus:border-[#7F5AF0]/50 focus:ring-2 focus:ring-[#7F5AF0]/20`} />
         )}
       </div>
 
       <div>
-        <div className="text-sm font-medium text-[var(--hl-gold)] mb-2 uppercase tracking-wide">Privacy</div>
+        <div className="text-sm font-medium text-[#7F5AF0] mb-2 uppercase tracking-wide">Privacy</div>
         {readOnly ? (
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 text-white/90 border border-white/10">
             <span>{privacy === 'public' ? '🌍' : privacy === 'unlisted' ? '🔓' : '🔒'}</span>
             <span className="capitalize font-medium">{privacy || 'Private'}</span>
           </div>
         ) : (
-          <select value={privacy} onChange={(e)=>setPrivacy(e.target.value)} className={`${components.input} appearance-none rounded-xl border-white/10 focus:border-[var(--hl-gold)]/50 focus:ring-2 focus:ring-[var(--hl-gold)]/20`}>
+          <select value={privacy} onChange={(e)=>setPrivacy(e.target.value)} className={`${components.input} appearance-none rounded-xl border-white/10 focus:border-[#7F5AF0]/50 focus:ring-2 focus:ring-[#7F5AF0]/20`}>
             <option value="private">Private</option>
             <option value="public">Public</option>
             <option value="unlisted">Unlisted</option>
@@ -224,7 +224,7 @@ export default function EditCharacter({ character: propCharacter, onSaved, inlin
 
       {!readOnly && (
         <div className="mt-8 pt-6 border-t border-white/10">
-          <Button variant="primary" onClick={handleSave} className="w-full rounded-full py-3 bg-gradient-to-r from-[var(--hl-gold)] to-yellow-600 hover:from-yellow-600 hover:to-[var(--hl-gold)] text-black font-bold shadow-lg shadow-[var(--hl-gold)]/30 hover:shadow-[var(--hl-gold)]/50 transition-all">
+          <Button variant="primary" onClick={handleSave} className="w-full rounded-full py-3 bg-gradient-to-r from-[#7F5AF0] to-[#E53170] hover:from-[#E53170] hover:to-[#7F5AF0] text-white font-bold shadow-lg shadow-[#7F5AF0]/30 hover:shadow-[#7F5AF0]/50 transition-all">
             {loading ? '⏳ Saving...' : '💾 Save Changes'}
           </Button>
         </div>

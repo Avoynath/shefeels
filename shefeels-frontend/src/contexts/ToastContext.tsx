@@ -137,14 +137,14 @@ function ToastItem({ toast, onRemove }: ToastItemProps) {
   const colors = {
     success: 'ring-green-500/50 bg-green-950/90',
     error: 'ring-red-500/50 bg-red-950/90',
-    warning: 'ring-yellow-500/50 bg-yellow-950/90',
+    warning: 'ring-amber-500/50 bg-amber-950/90',
     info: 'ring-blue-500/50 bg-blue-950/90',
   };
 
   const iconColors = {
     success: 'text-green-400',
     error: 'text-red-400',
-    warning: 'text-yellow-400',
+    warning: 'text-amber-400',
     info: 'text-blue-400',
   };
 

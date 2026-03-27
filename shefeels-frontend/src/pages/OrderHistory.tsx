@@ -36,9 +36,9 @@ const StatusBadge = ({ status }: { status: string }) => {
         };
       case 'pending':
         return {
-          bg: 'rgba(255, 197, 77, 0.15)',
-          text: '#FFC54D',
-          border: 'rgba(255, 197, 77, 0.3)',
+          bg: 'rgba(127, 90, 240, 0.15)',
+          text: '#7F5AF0',
+          border: 'rgba(127, 90, 240, 0.3)',
         };
       case 'failed':
         return {
@@ -157,8 +157,8 @@ export default function OrderHistory() {
           <div
             className="h-12 w-12 animate-spin rounded-full border-4"
             style={{
-              borderColor: 'rgba(255, 197, 77, 0.2)',
-              borderTopColor: '#FFC54D',
+              borderColor: 'rgba(127, 90, 240, 0.2)',
+              borderTopColor: '#7F5AF0',
             }}
           />
           <p className={isDark ? 'text-white/70' : 'text-gray-600'}>Loading order history...</p>
@@ -199,16 +199,16 @@ export default function OrderHistory() {
             className="rounded-2xl p-12 text-center"
             style={{
               background: isDark
-                ? 'linear-gradient(124deg, #000000 37.56%, rgba(255, 183, 3, 0.08) 203.74%)'
+                ? 'linear-gradient(124deg, #000000 37.56%, rgba(127, 90, 240, 0.08) 203.74%)'
                 : 'rgba(255, 255, 255, 0.9)',
-              border: `1px solid ${isDark ? 'rgba(192, 155, 98, 0.4)' : 'rgba(192, 155, 98, 0.2)'}`,
+              border: `1px solid ${isDark ? 'rgba(127, 90, 240, 0.4)' : 'rgba(127, 90, 240, 0.2)'}`,
             }}
           >
             <div className="flex flex-col items-center gap-4">
               <div
                 className="p-4 rounded-full"
                 style={{
-                  background: 'rgba(255, 197, 77, 0.15)',
+                  background: 'rgba(127, 90, 240, 0.15)',
                 }}
               >
                 <svg
@@ -216,7 +216,7 @@ export default function OrderHistory() {
                   height="48"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#FFC54D"
+                  stroke="#7F5AF0"
                   strokeWidth="1.5"
                 >
                   <path d="M9 11l3 3 8-8M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
@@ -232,8 +232,8 @@ export default function OrderHistory() {
                 onClick={() => navigate('/buy-tokens')}
                 className="mt-4"
                 style={{
-                  background: 'linear-gradient(90deg, #FFC54D 0%, #FFD700 100%)',
-                  color: '#000',
+                  background: 'linear-gradient(90deg, #d9b2ff 0%, #7f5af0 38%, #9d66ff 64%, #f48db5 100%)',
+                  color: '#FFF',
                 }}
               >
                 Buy Tokens
@@ -246,9 +246,9 @@ export default function OrderHistory() {
             <div className="hidden md:block overflow-hidden rounded-2xl"
               style={{
                 background: isDark
-                  ? 'linear-gradient(124deg, #000000 37.56%, rgba(255, 183, 3, 0.08) 203.74%)'
+                  ? 'linear-gradient(124deg, #000000 37.56%, rgba(127, 90, 240, 0.08) 203.74%)'
                   : 'rgba(255, 255, 255, 0.9)',
-                border: `1px solid ${isDark ? 'rgba(192, 155, 98, 0.4)' : 'rgba(192, 155, 98, 0.2)'}`,
+                border: `1px solid ${isDark ? 'rgba(127, 90, 240, 0.4)' : 'rgba(127, 90, 240, 0.2)'}`,
               }}
             >
               <table className="w-full">
@@ -338,9 +338,9 @@ export default function OrderHistory() {
                   className="rounded-xl p-4"
                   style={{
                     background: isDark
-                      ? 'linear-gradient(124deg, #000000 37.56%, rgba(255, 183, 3, 0.08) 203.74%)'
+                      ? 'linear-gradient(124deg, #000000 37.56%, rgba(127, 90, 240, 0.08) 203.74%)'
                       : 'rgba(255, 255, 255, 0.9)',
-                    border: `1px solid ${isDark ? 'rgba(192, 155, 98, 0.4)' : 'rgba(192, 155, 98, 0.2)'}`,
+                    border: `1px solid ${isDark ? 'rgba(127, 90, 240, 0.4)' : 'rgba(127, 90, 240, 0.2)'}`,
                   }}
                 >
                   <div className="flex justify-between items-start mb-3">
@@ -387,9 +387,9 @@ export default function OrderHistory() {
               className="rounded-xl p-6 mt-6"
               style={{
                 background: isDark
-                  ? 'linear-gradient(124deg, #000000 37.56%, rgba(255, 183, 3, 0.12) 203.74%)'
+                  ? 'linear-gradient(124deg, #000000 37.56%, rgba(127, 90, 240, 0.12) 203.74%)'
                   : 'rgba(255, 255, 255, 0.9)',
-                border: `1px solid ${isDark ? 'rgba(192, 155, 98, 0.5)' : 'rgba(192, 155, 98, 0.3)'}`,
+                border: `1px solid ${isDark ? 'rgba(127, 90, 240, 0.5)' : 'rgba(127, 90, 240, 0.3)'}`,
               }}
             >
               <div className="flex items-center justify-between">
@@ -413,8 +413,8 @@ export default function OrderHistory() {
               background: isDark 
                 ? 'rgba(255, 255, 255, 0.05)' 
                 : 'rgba(0, 0, 0, 0.05)',
-              border: `1px solid ${isDark ? 'rgba(192, 155, 98, 0.3)' : 'rgba(192, 155, 98, 0.2)'}`,
-              color: isDark ? '#FFC54D' : '#C09B62',
+              border: `1px solid ${isDark ? 'rgba(127, 90, 240, 0.3)' : 'rgba(127, 90, 240, 0.2)'}`,
+              color: isDark ? '#7F5AF0' : '#6c47d9',
             }}
           >
             Back to Profile

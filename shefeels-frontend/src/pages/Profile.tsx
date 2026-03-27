@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
@@ -51,7 +51,7 @@ const TrashIcon = () => (
 );
 
 function Label({ children }: { children: React.ReactNode }) {
-  return <div className="mb-2 text-[18px] leading-7 text-white">{children}</div>;
+  return <div className="mb-2 text-sm font-medium text-white/70">{children}</div>;
 }
 
 function Input({
@@ -77,7 +77,7 @@ function Input({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="h-[70px] w-full rounded-[14px] border border-white/20 bg-[rgba(255,255,255,0.10)] px-5 py-4 pr-12 text-[18px] text-white placeholder:text-[#8E8E93] focus:border-[#7F5AF0] focus:bg-[rgba(255,255,255,0.12)] focus:outline-none disabled:cursor-not-allowed disabled:opacity-90"
+        className="h-11 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2 pr-10 text-sm text-white placeholder:text-white/25 focus:border-[#7F5AF0]/50 focus:bg-white/10 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
       />
       {right && <div className="absolute inset-y-0 right-3 flex items-center text-white/70">{right}</div>}
     </div>
@@ -116,7 +116,7 @@ function Select({ value, onChange, options }: { value: string; onChange: (v: str
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="h-[70px] w-full rounded-[14px] border border-white/20 bg-[rgba(255,255,255,0.10)] px-5 py-4 pr-14 text-left text-[18px] text-white transition focus:border-[#7F5AF0] focus:outline-none"
+        className="h-11 w-full rounded-xl border border-white/10 bg-white/5 px-4 text-left text-sm text-white transition focus:border-[#7F5AF0]/50 focus:outline-none"
         aria-haspopup="listbox"
         aria-expanded={open}
       >
@@ -603,23 +603,24 @@ export default function Profile() {
   }
 
   const panelClass =
-    "overflow-hidden rounded-[30px] border border-[rgba(158,130,243,0.35)] bg-[linear-gradient(180deg,rgba(20,17,29,0.98)_0%,rgba(15,12,22,0.98)_55%,rgba(72,18,49,0.72)_100%)] shadow-[0_24px_80px_rgba(0,0,0,0.28)]";
-  const sectionHeadingClass = "text-[24px] font-medium uppercase tracking-[0.48px] text-[#7F5AF0]";
+    "overflow-hidden rounded-2xl border border-white/5 bg-[linear-gradient(180deg,rgba(20,17,29,0.98)_0%,rgba(15,12,22,0.98)_55%,rgba(72,18,49,0.72)_100%)] shadow-[0_24px_80px_rgba(0,0,0,0.28)]";
+  const sectionHeadingClass = "text-lg font-bold uppercase tracking-wider text-[#7F5AF0]";
   const primaryButtonStyle: React.CSSProperties = {
-    borderRadius: 12,
-    border: "1px solid rgba(255,255,255,0.50)",
+    borderRadius: 60,
+    border: "1px solid rgba(255,255,255,0.40)",
     background: "linear-gradient(180deg, #7F5AF0 3.02%, #E53170 98.45%)",
+    boxShadow: "0 8px 16px rgba(127,90,240,0.12)",
   };
 
   return (
-    <div className="mx-auto w-full max-w-[1670px] px-0 pb-8 pt-5 md:pt-8">
-      <h1 className="text-4xl font-normal text-white">Profile</h1>
+    <div className="mx-auto w-full max-w-screen-2xl px-4 pb-8 pt-4 md:px-6 md:pt-6">
+      <h1 className="text-2xl font-bold text-white md:text-3xl">Profile</h1>
 
       <div className="mt-8 space-y-6">
         <section>
           <p className={sectionHeadingClass}>Personal information</p>
-          <div className={`${panelClass} mt-[22px] overflow-visible px-6 py-7 md:px-10 md:py-10`}>
-            <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
+          <div className={`${panelClass} mt-4 overflow-visible px-6 py-6 md:px-8 md:py-8`}>
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
               <div className="shrink-0 self-center lg:self-start">
                 <div
                   role="button"
@@ -628,7 +629,7 @@ export default function Profile() {
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") fileInputRef.current?.click();
                   }}
-                  className="h-[180px] w-[180px] overflow-hidden rounded-full border border-white/10 bg-[rgba(255,255,255,0.08)] shadow-[0_8px_40px_rgba(0,0,0,0.22)]"
+                  className="h-40 w-40 overflow-hidden rounded-full border border-white/10 bg-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.22)]"
                   title="Click to upload avatar"
                 >
                   {selectedPreview ? (
@@ -687,7 +688,7 @@ export default function Profile() {
                   <Button
                     onClick={submitProfileUpdate}
                     variant="primary"
-                    className="h-[70px] w-full max-w-[320px] justify-center gap-3 text-[18px] font-semibold text-white"
+                    className="h-11 w-full max-w-[240px] justify-center gap-2 text-sm font-semibold text-white"
                     style={primaryButtonStyle}
                     disabled={loading}
                   >
@@ -711,8 +712,8 @@ export default function Profile() {
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1.42fr)_minmax(0,1fr)]">
           <section>
             <p className={sectionHeadingClass}>Password</p>
-            <div className={`${panelClass} mt-[22px] px-6 py-6 md:px-8 md:py-8`}>
-              <div className="rounded-[12px] border border-[rgba(158,130,243,0.3)] bg-[linear-gradient(180deg,#7F5AF0_3.02%,#E53170_98.45%)] px-5 py-4">
+            <div className={`${panelClass} mt-4 px-5 py-5 md:px-6 md:py-6`}>
+              <div className="rounded-xl border border-white/10 bg-[linear-gradient(180deg,#7F5AF0_3.02%,#E53170_98.45%)] px-5 py-3">
                 <div className="flex items-center gap-4">
                   <img src={PasswordBannerStar} alt="" className="h-[42px] w-[42px]" aria-hidden />
                   <p className="max-w-[430px] text-sm leading-6 text-white">
@@ -739,7 +740,7 @@ export default function Profile() {
               <div className="mt-6">
                 <Button
                   variant="primary"
-                  className="h-[70px] w-full max-w-[320px] justify-center gap-3 text-[18px] font-semibold text-white"
+                  className="h-11 w-full max-w-[240px] justify-center gap-2 text-sm font-semibold text-white"
                   onClick={handleChangePassword}
                   style={primaryButtonStyle}
                   disabled={passLoading}
@@ -762,18 +763,18 @@ export default function Profile() {
 
           <section>
             <p className={sectionHeadingClass}>Delete Account</p>
-            <div className={`${panelClass} mt-[22px] flex min-h-[436px] flex-col items-center justify-center px-6 py-8 text-center md:px-10`}>
-              <div className="rounded-[18px] bg-[radial-gradient(circle_at_center,rgba(127,90,240,0.18),rgba(127,90,240,0.02))] p-4">
-                <img src={DeleteAccountCardIcon} alt="delete icon" className="h-16 w-16" />
+            <div className={`${panelClass} mt-4 flex min-h-[380px] flex-col items-center justify-center px-6 py-8 text-center md:px-8`}>
+              <div className="rounded-2xl bg-white/5 p-4">
+                <img src={DeleteAccountCardIcon} alt="delete icon" className="h-12 w-12" />
               </div>
-              <p className="mt-8 max-w-[430px] text-[18px] leading-7 text-white">
+              <p className="mt-6 max-w-[400px] text-sm leading-relaxed text-white/70">
                 You have an option to delete your account, but beware,{" "}
-                <span className="text-[#7F5AF0]">you will not be able to access it</span> if you proceed.
+                <span className="text-[#E53170]">you will not be able to access it</span> if you proceed.
               </p>
               <button
                 type="button"
                 onClick={() => setConfirmOpen(true)}
-                className="mt-8 h-[70px] w-full max-w-[320px] rounded-[12px] border border-white/10 bg-[rgba(255,255,255,0.10)] text-[18px] font-semibold text-white transition hover:bg-[rgba(255,255,255,0.14)]"
+                className="mt-6 h-11 w-full max-w-[240px] rounded-full border border-white/10 bg-white/5 text-sm font-semibold text-white transition hover:bg-white/10"
               >
                 Delete Account
               </button>
@@ -783,24 +784,24 @@ export default function Profile() {
 
         {user && (
           <section
-            className="overflow-hidden rounded-[24px] border border-[rgba(158,130,243,0.3)] px-6 py-6 md:px-8"
+            className="overflow-hidden rounded-2xl border border-white/10 px-6 py-6"
             style={{ background: "linear-gradient(180deg, #7F5AF0 3.02%, #E53170 98.45%)" }}
           >
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-              <div className="flex items-start gap-5">
+              <div className="flex items-start gap-4">
                 <div className="shrink-0">
-                  <img src={SubscriptionIcon} alt="Subscription" className="h-[76px] w-[76px]" />
+                  <img src={SubscriptionIcon} alt="Subscription" className="h-12 w-12" />
                 </div>
                 <div className="max-w-[860px] text-white">
-                  <h3 className="text-[24px] font-medium uppercase leading-[34px]">Subscription</h3>
+                  <h3 className="text-lg font-bold uppercase tracking-tight">Subscription</h3>
                   {subscriptionLoading ? (
-                    <p className="mt-2 text-[17px] leading-[26px] text-white/85">Loading subscription details...</p>
+                    <p className="mt-1 text-sm text-white/80">Loading subscription details...</p>
                   ) : subscriptionDetails || (user as any).hasActiveSubscription ? (
-                    <div className="mt-2 space-y-1 text-[16px] leading-[24px] text-white/90">
+                    <div className="mt-1 space-y-0.5 text-sm text-white/90">
                       <p>
                         {subscriptionDetails?.status === "expired"
                           ? "Your subscription has expired. Renew to continue enjoying premium benefits."
-                          : `Plan: ${subscriptionDetails?.plan_name || "Premium"}${subscriptionDetails?.billing_cycle ? ` â€¢ ${subscriptionDetails.billing_cycle}` : ""}`}
+                          : `Plan: ${subscriptionDetails?.plan_name || "Premium"}${subscriptionDetails?.billing_cycle ? ` \u2022 ${subscriptionDetails.billing_cycle}` : ""}`}
                       </p>
                       {subscriptionDetails?.current_period_end && (
                         <p>
@@ -815,8 +816,8 @@ export default function Profile() {
                       {tokensAvailable !== null && <p>Available Tokens: {tokensAvailable.toLocaleString()}</p>}
                     </div>
                   ) : (
-                    <p className="mt-2 text-[18px] leading-[28px] text-white/90">
-                      You are not subscribed to our premium plan. Subscribe to our premium plan to get access to all the features.
+                    <p className="mt-1 text-sm leading-relaxed text-white/90">
+                      You are not subscribed to our premium plan. Subscribe to get access to all features.
                     </p>
                   )}
                 </div>
@@ -825,15 +826,15 @@ export default function Profile() {
               <button
                 type="button"
                 onClick={() => navigate(subscriptionDetails || (user as any).hasActiveSubscription ? "/buy-tokens" : "/premium")}
-                className="flex h-[70px] w-full max-w-[298px] items-center justify-center gap-3 rounded-[12px] border border-white/60 bg-white px-6 text-[18px] font-semibold text-[#7F5AF0]"
+                className="flex h-11 w-full max-w-[240px] items-center justify-center gap-2 rounded-full border border-white/20 bg-white px-6 text-sm font-bold text-[#E53170] shadow-lg transition hover:bg-white/90"
               >
                 <img
                   src={subscriptionDetails || (user as any).hasActiveSubscription ? tokenIcon : PremiumIcon}
                   alt=""
-                  className="h-5 w-5"
+                  className="h-4 w-4"
                   aria-hidden
                 />
-                <span>{subscriptionDetails || (user as any).hasActiveSubscription ? "Buy Tokens" : "Upgrade to Premium"}</span>
+                <span>{subscriptionDetails || (user as any).hasActiveSubscription ? "Buy Tokens" : "Upgrade Now"}</span>
               </button>
             </div>
           </section>

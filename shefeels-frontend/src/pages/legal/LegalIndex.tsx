@@ -45,7 +45,7 @@ export default function LegalIndex() {
             </Link>
           ))}
         </div>
-        <div className={`pt-6 text-xs ${colors.textSecondary}`}>Last updated: Nov 11, 2025</div>
+        <div className={`pt-6 text-xs ${colors.textSecondary}`}>Last updated: Mar 27, 2026</div>
       </Card>
     </div>
   );

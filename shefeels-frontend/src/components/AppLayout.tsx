@@ -53,15 +53,13 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
   const { theme } = useTheme();
   const isDark = theme === "dark";
   const location = useLocation();
-  const footerVisibleRoutes = new Set([
-    "/",
-    "/ai-girlfriend",
-    "/ai-boyfriend",
-    "/ai-transgender",
-    "/contact-center",
-    "/help-center",
-  ]);
-  const shouldShowFooter = footerVisibleRoutes.has(location.pathname);
+  // Footer is shown on all pages except Chat and multi-step creation/admin areas
+  const isChatRoute = location.pathname.startsWith('/chat');
+  const isCreateCharacterRoute = location.pathname.startsWith('/create-character');
+  const isGalleryRoute = location.pathname.startsWith('/gallery'); // Gallery often used without footer in some designs, but we'll include it unless requested otherwise
+  const isAdminRoute = location.pathname.startsWith('/admin');
+  
+  const shouldShowFooter = !isChatRoute && !isCreateCharacterRoute && !isAdminRoute;
 
   // Fixed header height for consistency across all pages (match Figma header)
   const HEADER_H = 74; // px
@@ -493,7 +491,6 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
     let aborted = false;
 
     // Skip character loading on chat routes - chat page loads its own characters
-    const isChatRoute = location.pathname.startsWith('/chat');
     if (isChatRoute) {
       return;
     }
@@ -694,7 +691,6 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
     return () => { try { window.removeEventListener('hl_style_changed', onStyleChange as EventListener); } catch { } };
   }, []);
 
-  const isChatRoute = location.pathname.startsWith('/chat');
   const showMobileTabBar = !isChatRoute;
   const mobilePaddingClass = showMobileTabBar ? 'pb-[84px]' : 'pb-6';
 

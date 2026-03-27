@@ -12,6 +12,7 @@ import PageSkeleton from "./components/PageSkeleton";
 import CookieBanner from "./components/CookieBanner.tsx";
 import AdsFunnel from "./pages/AdsFunnel";
 import PaymentFunnel from "./pages/PaymentFunnel";
+import AgeGate from "./components/AgeGate";
 
 // Lazy load all pages for aggressive code splitting
 const CreateCharacter = lazy(() => import("./pages/CreateCharacter"));
@@ -137,6 +138,7 @@ export default function App() {
             <AuthProvider>
               <ScrollToTop />
               <CookieBanner />
+              <AgeGate />
               <Suspense fallback={<RouteSkeletonFallback />}>
           <Routes>
             <Route path="/" element={<AppLayout />} />
