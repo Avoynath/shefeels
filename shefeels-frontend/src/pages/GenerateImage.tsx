@@ -321,46 +321,37 @@ type ScenePreset = {
 
 function Thumb({ label, selected, imageUrl }: { label: string; selected?: boolean; imageUrl?: string | null }) {
   return (
-    <div className="w-[90px] overflow-visible text-center">
+    <div className="w-[80px] overflow-visible text-center">
       <div className="relative flex justify-center">
         {imageUrl ? (
           <div
-            className={`h-[90px] w-[90px] overflow-hidden rounded-[16px] border transition-all ${selected ? 'border-[#9d66ff] shadow-[0_8px_20px_rgba(127,90,240,0.3)]' : 'border-white/10'} bg-black/5`}
-            style={selected ? { boxShadow: '0 4px 20px rgba(127, 90, 240, 0.35)' } : undefined}
+            className={`h-[72px] w-[72px] overflow-hidden rounded-xl border-2 transition-all ${selected ? 'border-[#9d66ff] shadow-[0_4px_12px_rgba(157,102,255,0.4)]' : 'border-white/10'} bg-black/5`}
           >
             <img src={imageUrl} alt={label} className="w-full h-full object-cover block" />
           </div>
         ) : (
-          <div className={`h-[90px] w-[90px] rounded-[16px] border transition-all ${selected ? 'border-[#9d66ff]' : 'border-white/10'} bg-gradient-to-br from-white/10 to-white/0`} />
+          <div className={`h-[72px] w-[72px] rounded-xl border-2 transition-all ${selected ? 'border-[#9d66ff]' : 'border-white/10'} bg-gradient-to-br from-white/10 to-white/0`} />
         )}
         {selected && (
-          <span className="absolute right-[-2px] top-[-2px] flex h-[34px] w-[34px] items-center justify-center rounded-[6px] bg-[#7f5af0] text-white shadow-[0_4px_20px_#7f5af0]">
-            +
+          <span className="absolute right-[-2px] top-[-2px] flex h-6 w-6 items-center justify-center rounded-full bg-[#7f5af0] text-white shadow-[0_2px_10px_#7f5af0] text-xs font-bold ring-2 ring-black">
+            ✓
           </span>
         )}
       </div>
 
       <div className="mt-2 px-1">
-        <span className="block truncate text-[14px] leading-4 text-[#9b9b9b]">{label}</span>
+        <span className="block truncate text-[11px] leading-4 text-white/90">{label}</span>
       </div>
     </div>
   );
 }
 
 function EmptyGenerated() {
-  // Render a simple inner panel (not a Card) so we avoid nesting Card -> Card.
-  // The outer Card in the page remains the single container for gallery content.
   return (
-    <div
-      className="flex min-h-[124px] w-full items-center justify-center rounded-[8px] border border-dashed border-[#b8a3f6] px-[34px] py-[34px] text-center"
-      style={{
-        background:
-          "radial-gradient(44.42% 145.76% at 50% 0%, rgba(127,90,240,0.2) 0%, rgba(0,0,0,0.2) 41.8%, rgba(229,49,112,0.2) 100%)",
-      }}
-    >
+    <div className="h-[220px] rounded-2xl border-2 border-dashed border-[#b8a3f6]/20 flex items-center justify-center text-center bg-black/40 backdrop-blur-sm">
       <div>
-        <p className="text-[18px] font-normal leading-7 text-white">No previous generations</p>
-        <p className="mt-2 text-[14px] leading-5 text-[#a3a3a3]">Go on... generate some spicy images!</p>
+        <p className="text-white/70 text-base font-semibold">No Previous Generation</p>
+        <p className="text-xs text-white/40 mt-2">Go on... generate some spicy images!</p>
       </div>
     </div>
   );
@@ -502,9 +493,9 @@ function CharacterPicker({ open, onClose, onSelect }: { open: boolean; onClose: 
         <button
           onClick={onClose}
           aria-label="Back"
-          className="absolute left-6 top-6 z-60 rounded-full bg-[#2b2b2b] p-2 flex items-center justify-center border border-white/5 text-[var(--hl-gold)]"
+          className="absolute left-6 top-6 z-60 rounded-full bg-[#2b2b2b] p-2 flex items-center justify-center border border-white/5 text-(--sf-purple-light)"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[var(--hl-gold)]">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-(--sf-purple-light)">
             <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
@@ -514,7 +505,7 @@ function CharacterPicker({ open, onClose, onSelect }: { open: boolean; onClose: 
           <button
             type="button"
             onClick={() => setOnlyMyAI((s) => !s)}
-            className={`rounded-full px-4 py-2 text-sm font-medium ${onlyMyAI ? 'bg-[var(--hl-gold)] text-[var(--hl-black)]' : 'bg-[#3a3a3a] text-white/95'}`}
+            className={`rounded-full px-4 py-2 text-sm font-medium ${onlyMyAI ? 'bg-(--sf-purple) text-white' : 'bg-[#3a3a3a] text-white/95'}`}
           >
             My AI
           </button>
@@ -548,7 +539,7 @@ function CharacterPicker({ open, onClose, onSelect }: { open: boolean; onClose: 
                   <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
                   <div className="absolute left-4 bottom-3 right-4">
                     <div
-                      className="text-[var(--hl-gold)] font-semibold leading-tight drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]"
+                      className="text-(--sf-purple-light) font-semibold leading-tight drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]"
                       style={{ fontSize: '18px' }}
                     >
                       {(c.name || c.username) ? (
@@ -1132,13 +1123,13 @@ export default function GenerateImage() {
     return () => window.removeEventListener('keydown', onKey);
   }, [viewer, displayedItems]);
 
-  const pageHeading = "text-[24px] font-semibold leading-7 text-white";
+  const pageHeading = "text-xl sm:text-2xl font-semibold leading-7 text-white";
   // const pageSub = `text-sm ${isDark ? 'text-white/60' : 'text-gray-600'}`; // unused
-  const pageShellClass = "mx-auto w-full max-w-[1602px] px-1 pb-8 pt-2 sm:px-2 sm:pb-10 sm:pt-4";
-  const desktopGridClass = "mt-4 grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,746px)_minmax(0,816px)] xl:gap-10";
-  const tabBaseClass = "flex h-[60px] items-center justify-center rounded-[8px] text-[16px] font-medium transition-all";
-  const cardSurfaceClass = "rounded-[16px] bg-[rgba(255,255,255,0.07)] ring-1 ring-white/8";
-  const panelTitleClass = "text-[24px] font-semibold leading-7 text-white";
+  const pageShellClass = "mx-auto w-full max-w-6xl px-1 sm:px-4 md:px-0 pt-2 pb-8 sm:pt-4 sm:pb-12 md:pb-20";
+  const desktopGridClass = "mt-4 grid grid-cols-1 gap-6 lg:grid-cols-12 xl:gap-8";
+  const tabBaseClass = "flex h-10 sm:h-12 items-center justify-center rounded-lg text-sm sm:text-base font-medium transition-all px-6";
+  const cardSurfaceClass = "rounded-2xl bg-white/[0.05] ring-1 ring-white/10";
+  const panelTitleClass = "text-lg sm:text-xl font-semibold leading-7 text-white";
   const imageTabAssets = getImageSuggestionAssets(activeTab, gender || 'Female');
   const videoTabAssets =
     videoActiveTab === "Background"
@@ -1153,7 +1144,7 @@ export default function GenerateImage() {
       {/* primary container (no secondary wrapper) */}
       <div className={`flex flex-col min-h-[60vh]`}>
         {/* Title + mirrored right heading to match Figma desktop composition */}
-        <div className="grid grid-cols-1 gap-6 px-1 sm:px-6 xl:grid-cols-[minmax(0,746px)_minmax(0,816px)] xl:gap-10">
+        <div className="grid grid-cols-1 gap-6 px-1 lg:px-0 xl:grid-cols-[minmax(0,400px)_minmax(1fr)] xl:gap-8">
           <div className="flex items-center gap-3">
             <button
               onClick={() => window.history.back()}
@@ -1204,264 +1195,251 @@ export default function GenerateImage() {
         {/* ===== VIDEO MODE ===== */}
         {mediaMode === 'video' && (
           <div className={desktopGridClass}>
-            <div className="space-y-5 px-1 sm:px-6">
+            {/* Left – Controls (50%) */}
+            <div className="lg:col-span-6 space-y-3 sm:space-y-6">
               <div className="rounded-[12px] bg-[rgba(255,255,255,0.08)] p-[3px] ring-1 ring-white/6">
                 <div className="grid grid-cols-2 gap-[3px]">
-                <button
-                  onClick={() => setMediaMode('image')}
-                  className={`${tabBaseClass} bg-[#232323] text-white/72`}
-                >
-                  Image
-                </button>
-                <button
-                  onClick={() => setMediaMode('video')}
-                  className={tabBaseClass}
-                  style={{ background: "linear-gradient(180deg, #7f5af0 0%, #9d66ff 100%)" }}
-                >
-                  <span className="text-white">Video</span>
-                </button>
-              </div>
+                  <button
+                    onClick={() => setMediaMode('image')}
+                    className={`${tabBaseClass} bg-[#232323] text-white/72`}
+                  >
+                    Image
+                  </button>
+                  <button
+                    onClick={() => setMediaMode('video')}
+                    className={tabBaseClass}
+                    style={{ background: "linear-gradient(180deg, #7f5af0 0%, #9d66ff 100%)" }}
+                  >
+                    <span className="text-white">Video</span>
+                  </button>
+                </div>
               </div>
 
-            {/* Character picker (reuse same one) */}
-            <div className="flex flex-col sm:flex-row items-center sm:items-stretch gap-4">
-              <div className="sm:min-w-[180px]">
-                {!character ? (
-                  <button onClick={() => navigate('/generate-image/characters', { state: { mediaMode: 'video' } })} className="h-[144px] w-[144px] sm:h-[180px] sm:w-[180px]">
-                    <Card
-                      noBase
-                      className={`h-[144px] w-[144px] min-h-0 flex items-center justify-center rounded-[24px] border-[1.8px] border-dashed border-[#B8A3F6] p-3 sm:h-[180px] sm:w-[180px] ${isDark ? 'bg-[rgba(255,255,255,0.03)]' : 'bg-[var(--hl-surface)]'}`}
-                    >
-                      <div className="flex flex-col items-center gap-2">
-                        <div className={isDark ? "h-12 w-12 rounded-full bg-white/6 ring-1 ring-white/10 grid place-items-center text-white" : "h-12 w-12 rounded-full bg-[var(--hl-surface)] ring-1 ring-[var(--border-secondary)] grid place-items-center text-[var(--text-primary)]"}>
-                          <img src={PickCharacterIcon} alt="Pick character" className="w-8 h-8" />
-                        </div>
-                        <div
-                          className="whitespace-nowrap rounded-[12px] px-4 py-2 text-sm font-medium text-white shadow-[0_10px_30px_rgba(127,90,240,0.28)]"
-                          style={{ background: 'linear-gradient(180deg, #7F5AF0 0%, #9D66FF 100%)' }}
+              {/* Character & Prompt matches Image mode sizing */}
+              <div className="px-1 sm:px-6 py-0 min-h-0 relative">
+                <div className="flex flex-col sm:flex-row items-center sm:items-stretch gap-4">
+                  <div className="sm:min-w-[144px]">
+                    {!character ? (
+                      <button onClick={() => navigate('/generate-image/characters', { state: { mediaMode: 'video' } })} className="h-[144px] w-[144px]">
+                        <Card
+                          noBase
+                          className={`h-[144px] w-[144px] min-h-0 flex items-center justify-center rounded-2xl border-[1.8px] border-dashed border-[#B8A3F6] p-3 ${isDark ? 'bg-black' : 'bg-white'}`}
                         >
-                          Pick a Character
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="grid h-12 w-12 place-items-center rounded-full bg-white/6 ring-1 ring-white/10 text-white">
+                              <img src={PickCharacterIcon} alt="Pick character" className="h-8 w-8" />
+                            </div>
+                            <div
+                              className="whitespace-nowrap rounded-xl px-3 py-2 text-xs font-medium text-white shadow-md"
+                              style={{ background: 'linear-gradient(180deg, #7F5AF0 0%, #9D66FF 100%)' }}
+                            >
+                              Pick a Character
+                            </div>
+                          </div>
+                        </Card>
+                      </button>
+                    ) : (
+                      <Card
+                        noBase
+                        className="relative h-[144px] w-[144px] overflow-hidden rounded-2xl border border-[#B8A3F6]/60 shadow-sm p-0 min-h-0"
+                      >
+                        {character.image_url_s3 ? (
+                          <img src={character.image_url_s3} alt={character.name || ''} className="h-full w-full object-cover object-top" />
+                        ) : (
+                          <div className="h-full w-full bg-[linear-gradient(135deg,rgba(127,90,240,0.45),rgba(0,0,0,0))]" />
+                        )}
+                        <div className="absolute inset-x-0 bottom-0 px-3 pb-3">
+                          <div className="truncate text-left text-sm font-medium text-white/95 leading-tight">
+                            {character.name || 'Selected'}
+                          </div>
                         </div>
-                      </div>
-                    </Card>
-                  </button>
-                ) : (
-                  <div className="relative h-[144px] w-[144px] sm:h-[180px] sm:w-[180px]">
-                    <div className="h-[144px] w-[144px] overflow-hidden rounded-[24px] border border-[#B8A3F6]/60 shadow-[0_0_0_1px_rgba(184,163,246,0.12)] sm:h-[180px] sm:w-[180px]">
-                      {character.image_url_s3 ? (
-                        <img src={character.image_url_s3} alt={character.name || ''} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full bg-black/5 flex items-center justify-center text-white/40">No img</div>
-                      )}
-                    </div>
-                    <div className="absolute inset-x-0 bottom-0 px-3 pb-3">
-                      <div className="text-sm font-medium text-white/95 leading-tight truncate">{character.name || 'Selected character'}</div>
-                    </div>
-                    <button
-                      onClick={() => navigate('/generate-image/characters', { state: { mediaMode: 'video' } })}
-                      className="absolute top-3 right-3 h-10 w-10 rounded-full bg-black/65 border border-white/10 text-white/90 flex items-center justify-center hover:bg-black/80 transition-colors"
-                      aria-label="Change character"
-                    >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 11a8 8 0 1 0-2.34 5.66" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                        <path d="M20 4v6h-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </button>
+                        <button
+                          type="button"
+                          onClick={() => navigate('/generate-image/characters', { state: { mediaMode: 'video' } })}
+                          className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white shadow-sm hover:bg-black/80 transition-colors"
+                        >
+                          <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16.667 9.167a6.667 6.667 0 1 0-1.95 4.717" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M16.667 4.167v5h-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </button>
+                      </Card>
+                    )}
                   </div>
-                )}
-              </div>
-              <div className="relative w-full flex-1">
-                <Card className={`relative min-h-[184px] w-full rounded-[16px] px-[18px] py-[18px] ${cardSurfaceClass}`}>
-                  <div className="flex items-start gap-4">
-                    <PromptGlyph className="mt-[2px] h-5 w-5 text-white/70" />
+
+                  <Card className="flex-1 min-h-[120px] p-4 rounded-2xl w-full bg-white/[0.05] ring-1 ring-white/10">
                     <textarea
                       readOnly
                       value={videoPrompt}
                       placeholder="Prompt is auto-generated for videos"
-                      className="min-h-[100px] w-full resize-none bg-transparent text-[16px] leading-6 text-white/80 placeholder-white/20 focus:outline-none"
+                      className="w-full h-full resize-none bg-transparent text-[13px] sm:text-sm text-white/80 placeholder-white/20 focus:outline-none"
                     />
-                  </div>
-                  <div className="absolute bottom-[14px] right-[18px] flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handlePromptAction('video')}
-                      className="flex h-[36px] w-[36px] items-center justify-center rounded-[12px] border border-white/10 bg-white/[0.02] text-white/80 transition-colors hover:bg-white/[0.06]"
-                      aria-label="Refresh video prompt"
-                    >
-                      <img src={PromptActionIcon} alt="" className="h-4 w-4 opacity-90" />
-                    </button>
-                    {renderPromptDropdown('video')}
-                  </div>
-                </Card>
-              </div>
-            </div>
+                  </Card>
+                </div>
 
-            <div className="space-y-3 px-0 sm:px-2 pt-0 pb-0">
-              <label className="block text-[18px] font-normal leading-7 text-white">Negative Prompt (what to avoid in the image)</label>
-              <div className={`relative min-h-[134px] px-[18px] pb-[50px] pt-[18px] ${cardSurfaceClass}`}>
-                <div className="flex items-start gap-4">
-                  <PromptGlyph className="mt-[2px] h-5 w-5 text-white/70" />
+                <div className="absolute right-3 bottom-2 sm:right-10 sm:bottom-3">
+                  {renderPromptDropdown('video')}
+                </div>
+              </div>
+
+              {/* Negative Prompt - matches Image mode style */}
+              <div className="px-1 sm:px-6 space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="block text-sm font-normal text-white">Negative Prompt (what to avoid in the video)</label>
+                  <button
+                    type="button"
+                    onClick={() => setNegOpen((s) => !s)}
+                    className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white px-2 py-1 rounded-md"
+                  >
+                    <span>{negOpen ? 'Hide' : 'Show'}</span>
+                    <svg className={`w-4 h-4 transform transition-transform ${negOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 8l5 5 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                </div>
+                
+                {negOpen && (
                   <textarea
                     value={negPrompt}
                     onChange={(e) => setNegPrompt(e.target.value)}
                     rows={3}
-                    placeholder="--no blur, --no watermark, --no extra limbs, --no distortion."
-                    className="min-h-[66px] w-full resize-none bg-transparent text-[16px] leading-6 text-white placeholder-white/30 focus:outline-none"
+                    className="w-full rounded-xl bg-black/40 px-4 py-3 text-[13px] sm:text-sm text-white placeholder-white/30 ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-[#7f5af0]"
                   />
-                </div>
-                <div className="absolute bottom-[14px] right-[18px] flex h-[36px] w-[36px] items-center justify-center rounded-[12px] text-white/70">
-                  <PromptGlyph className="h-4 w-4 text-white/70" />
-                </div>
+                )}
               </div>
-            </div>
 
-            <div className="space-y-3">
-              <label className="block text-[16px] font-normal text-white">Suggestions</label>
-              <div className="flex flex-wrap items-center gap-5">
-                {(["Scenes", "Background", "Action"] as VideoSuggestionTab[]).map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setVideoActiveTab(tab)}
-                    className={`flex h-[44px] items-center justify-center rounded-[8px] border px-[30px] text-[15px] transition-all ${videoActiveTab === tab
-                      ? "border-white/20 text-white"
-                      : "border-white/14 bg-[rgba(255,255,255,0.1)] text-white hover:bg-white/12"
-                    }`}
-                    style={videoActiveTab === tab ? { background: '#7f5af0' } : undefined}
-                  >
-                    {tab}
-                  </button>
-                ))}
-              </div>
-              <div className="mt-4 flex items-start gap-4 overflow-x-auto overflow-y-visible pb-2 gen-scrollbar">
-                {videoActiveTab === "Scenes" ? (
-                  FIGMA_SCENE_PRESETS.map((scene) => {
-                    const mappedPoseKey = VIDEO_SCENE_POSE_MAP[scene.label];
-                    return (
+              {/* Suggestions - matches Image mode style */}
+              <div className="px-1 sm:px-6 space-y-3">
+                <label className="block text-sm font-semibold text-white">Suggestions</label>
+                <div className="flex flex-wrap items-center gap-3">
+                  {(["Scenes", "Background", "Action"] as VideoSuggestionTab[]).map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setVideoActiveTab(tab)}
+                      className={`flex h-8 sm:h-9 items-center justify-center rounded-lg border px-4 text-xs sm:text-sm transition-all ${videoActiveTab === tab
+                        ? "border-transparent text-white"
+                        : "border-white/10 bg-white/5 text-white/80 hover:bg-white/10"
+                      }`}
+                      style={videoActiveTab === tab ? { background: '#7f5af0' } : undefined}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                </div>
+                <div className="mt-5 flex items-center gap-0 overflow-x-auto overflow-y-visible pb-2 gen-scrollbar">
+                  {videoActiveTab === "Scenes" ? (
+                    FIGMA_SCENE_PRESETS.map((scene) => {
+                      const mappedPoseKey = VIDEO_SCENE_POSE_MAP[scene.label];
+                      return (
+                        <button
+                          key={scene.label}
+                          className="relative inline-flex shrink-0 flex-col items-center overflow-visible px-0.5"
+                          onClick={() => {
+                            const vpPrompts = videoPosePrompts as Record<string, string>;
+                            setVideoSuggestionSelections((prev) => ({ ...prev, Scenes: scene.label }));
+                            if (mappedPoseKey) {
+                              setSelectedVideoPose(mappedPoseKey);
+                              setVideoPrompt(vpPrompts[mappedPoseKey] || scene.promptText);
+                            } else {
+                              setVideoPrompt(scene.promptText);
+                            }
+                          }}
+                        >
+                          <Thumb label={scene.label} selected={videoSuggestionSelections.Scenes === scene.label || selectedVideoPose === mappedPoseKey} imageUrl={scene.imageUrl} />
+                        </button>
+                      );
+                    })
+                  ) : (
+                    videoTabAssets.map((asset) => (
                       <button
-                        key={scene.label}
-                        className="relative inline-flex shrink-0 flex-col items-center overflow-visible"
+                        key={asset.url}
+                        className="relative inline-flex shrink-0 flex-col items-center overflow-visible px-0.5"
                         onClick={() => {
-                          const vpPrompts = videoPosePrompts as Record<string, string>;
-                          setVideoSuggestionSelections((prev) => ({ ...prev, Scenes: scene.label }));
-                          if (mappedPoseKey) {
-                            setSelectedVideoPose(mappedPoseKey);
-                            setVideoPrompt(vpPrompts[mappedPoseKey] || scene.promptText);
-                          } else {
-                            setVideoPrompt(scene.promptText);
-                          }
+                          setVideoSuggestionSelections((prev) => {
+                            const nextValue = prev[videoActiveTab] === asset.label ? null : asset.label;
+                            return { ...prev, [videoActiveTab]: nextValue };
+                          });
+                          setVideoPrompt((prev) => {
+                            const trimmed = prev.trim();
+                            if (!trimmed) return asset.label;
+                            return trimmed.toLowerCase().includes(asset.label.toLowerCase()) ? trimmed : `${trimmed}, ${asset.label}`;
+                          });
                         }}
                       >
-                        <Thumb label={scene.label} selected={videoSuggestionSelections.Scenes === scene.label || selectedVideoPose === mappedPoseKey} imageUrl={scene.imageUrl} />
+                        <Thumb
+                          label={asset.label}
+                          selected={videoSuggestionSelections[videoActiveTab] === asset.label}
+                          imageUrl={asset.url}
+                        />
+                      </button>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Length - matches Image mode button style */}
+              <div className="px-1 sm:px-6 space-y-3">
+                <label className="block text-sm font-normal text-white">Length</label>
+                <div className="grid grid-cols-2 gap-4">
+                  {[5, 10].map((d) => {
+                    const active = videoDuration === d;
+                    return (
+                      <button
+                        key={d}
+                        onClick={() => setVideoDuration(d)}
+                        className={`inline-flex h-8 sm:h-9 items-center justify-center gap-2 rounded-lg border text-xs sm:text-sm font-semibold transition-all ${
+                          active
+                            ? 'border-[#7f5af0] text-white'
+                            : 'border-white/10 bg-[#141414] text-white hover:bg-[#181818]'
+                        }`}
+                        style={active ? { background: 'rgba(127,90,240,0.3)' } : undefined}
+                      >
+                        <span className="leading-none">{d}s</span>
                       </button>
                     );
-                  })
-                ) : (
-                  videoTabAssets.map((asset) => (
-                    <button
-                      key={asset.url}
-                      className="relative inline-flex shrink-0 flex-col items-center overflow-visible"
-                      onClick={() => {
-                        setVideoSuggestionSelections((prev) => {
-                          const nextValue = prev[videoActiveTab] === asset.label ? null : asset.label;
-                          return { ...prev, [videoActiveTab]: nextValue };
-                        });
-                        setVideoPrompt((prev) => {
-                          const trimmed = prev.trim();
-                          if (!trimmed) return asset.label;
-                          return trimmed.toLowerCase().includes(asset.label.toLowerCase()) ? trimmed : `${trimmed}, ${asset.label}`;
-                        });
-                      }}
-                    >
-                      <Thumb
-                        label={asset.label}
-                        selected={videoSuggestionSelections[videoActiveTab] === asset.label}
-                        imageUrl={asset.url}
-                      />
-                    </button>
-                  ))
-                )}
+                  })}
+                </div>
+              </div>
+
+              {/* Generate Video button matches Image mode sizing */}
+              <div className="px-1 sm:px-6 pt-2">
+                <Button
+                  variant="primary"
+                  size="md"
+                  onClick={generateVideo}
+                  disabled={generating || !character || !selectedVideoPose}
+                  className="flex h-10 sm:h-12 w-full items-center justify-center gap-2 rounded-full text-sm sm:text-base font-semibold border border-white/20"
+                  style={{
+                    background: 'linear-gradient(90deg, #7F5AF0 0%, #9D66FF 100%)',
+                    boxShadow: '0 4px 15px rgba(127,90,240,0.3)'
+                  }}
+                >
+                  {generating ? (
+                    <span className="inline-flex items-center gap-2"><IconSpinner className="w-4 h-4 animate-spin" />Generating...</span>
+                  ) : (
+                    <>
+                      <img src={GenerateImageIcon} alt="" className="h-5 w-5 sm:h-6 sm:w-6" />
+                      <span>Generate Now</span>
+                    </>
+                  )}
+                </Button>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <label className="block text-[16px] font-normal text-white">Length</label>
-              <div className="grid grid-cols-2 gap-4">
-                {[5, 10].map((d) => {
-                  const active = videoDuration === d;
-                  return (
-                    <button
-                      key={d}
-                      onClick={() => setVideoDuration(d)}
-                      className={`inline-flex h-[46px] w-full items-center justify-center gap-2 rounded-[8px] border text-[16px] transition-all ${
-                        active
-                          ? 'border-transparent text-white'
-                          : 'border-white/10 bg-[rgba(255,255,255,0.1)] text-white hover:bg-[rgba(255,255,255,0.14)]'
-                      }`}
-                      style={active ? { background: '#7f5af0' } : undefined}
-                    >
-                      <span className="leading-6">{d}s</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Generate Video button */}
-            <div className="pt-2">
-              <button
-                onClick={generateVideo}
-                disabled={generating || !character || !selectedVideoPose}
-                className="hidden"
-                style={{
-                  background: 'radial-gradient(44.42% 145.76% at 50% 50%, #6400E2 0%, #4B00AD 100%)',
-                  boxShadow: '0 4.063px 8.125px -16.25px rgba(68, 0, 191, 0.21), 0 16.25px 32.5px -16.25px rgba(88, 0, 255, 0.12), 0 73.125px 65px -32.5px rgba(68, 0, 191, 0.21), 0 -48.75px 65px 0 rgba(255, 255, 255, 0.16) inset'
-                }}
-              >
-                {generating ? (
-                  <span className="flex items-center gap-2 justify-center">
-                    <IconSpinner className="w-4 h-4 animate-spin" /> Generating...
-                  </span>
-                ) : (
-                  '🎬 Generate Video'
-                )}
-              </button>
-              <Button
-                variant="primary"
-                size="md"
-                onClick={generateVideo}
-                disabled={generating || !character || !selectedVideoPose}
-                className="flex h-[64px] w-full items-center justify-center gap-[10px] rounded-[12px] border border-white/20 text-white disabled:cursor-not-allowed disabled:opacity-50"
-                style={{
-                  background: 'linear-gradient(90deg, #d9b2ff 0%, #7f5af0 38%, #9d66ff 64%, #f48db5 100%)',
-                  boxShadow: 'inset 0 0 8px rgba(227,222,255,0.2), inset 0 20px 20px rgba(202,172,255,0.3), inset 0 1px 2px rgba(255,255,255,1), inset 0 8px 11px rgba(255,255,255,0.1)'
-                }}
-              >
-                {generating ? (
-                  <span className="inline-flex items-center gap-2"><IconSpinner className="w-4 h-4 animate-spin" />Generating...</span>
-                ) : (
-                  <>
-                    <img src={GenerateImageIcon} alt="Generate" className="h-5 w-5 sm:h-6 sm:w-6" />
-                    <span className="text-[20px] font-medium text-white">Generate Now</span>
-                  </>
-                )}
-              </Button>
-            </div>
-
-            </div>
-
-            <div className="px-0 xl:pt-[6px]">
-              <div className="mb-5 px-0 xl:hidden">
+            {/* Right – Generated Media (reuses Image mode logic) */}
+            <div className="lg:col-span-6 lg:-mt-10">
+              <div className="px-0 mb-3 block xl:hidden">
                 <h3 className={panelTitleClass}>Generated Video</h3>
-                <p className="mt-2 text-sm text-white/55">Your previously generated images. They are stored forever.</p>
+                <p className="mt-1 text-xs text-white/50">Your previously generated media. They are stored forever.</p>
               </div>
               <div className="px-0 mt-0">
                 {galleryLoading ? (
-                  <div className="text-white/70">Loading images…</div>
+                  <div className="text-white/70">Loading...</div>
                 ) : galleryError ? (
                   /no media found/i.test(String(galleryError)) ? (
                     <EmptyGenerated />
                   ) : (
-                    <div className="text-red-400">Error loading images: {galleryError}</div>
+                    <div className="text-red-400">Error loading media: {galleryError}</div>
                   )
                 ) : (
                   <>
@@ -1474,18 +1452,11 @@ export default function GenerateImage() {
                             const isVideo = ((img.mime_type || img.content_type || '') || '').toString().startsWith('video') || (url && /\.(mp4|webm|ogg)$/i.test(url));
 
                             return (
-                              <div key={key} className="rounded-xl overflow-hidden border border-white/10 relative">
+                              <div key={key} className="rounded-xl overflow-hidden border border-white/10 relative group">
                                 <button type="button" onClick={() => setViewer(img)} className="w-full block">
                                   {url ? (
                                     isVideo ? (
-                                      <div className="relative">
-                                        <video src={url} className="w-full aspect-[4/5] object-cover block" muted preload="metadata" />
-                                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                          <svg className="w-10 h-10 text-white/80 drop-shadow-lg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                            <path d="M8 5v14l11-7z" />
-                                          </svg>
-                                        </div>
-                                      </div>
+                                      <video src={url} className="w-full aspect-[4/5] object-cover block" muted preload="metadata" />
                                     ) : (
                                       <img src={url} alt={`Generated ${idx + 1}`} className="w-full aspect-[4/5] object-cover block" />
                                     )
@@ -1496,7 +1467,7 @@ export default function GenerateImage() {
                                 <button
                                   type="button"
                                   onClick={(e) => { e.stopPropagation(); if (url) downloadAndSave(url); }}
-                                  className="absolute right-2 bottom-2 inline-flex items-center justify-center w-8 h-8 rounded-full bg-black/60 text-white opacity-95 hover:opacity-100 focus:opacity-100 transition-shadow shadow-sm"
+                                  className="absolute right-2 bottom-2 inline-flex items-center justify-center w-8 h-8 rounded-full bg-black/60 text-white opacity-0 group-hover:opacity-100 transition-opacity"
                                   aria-label="Download"
                                   disabled={!url || !!(downloading && url && downloading === url)}
                                 >
@@ -1512,19 +1483,14 @@ export default function GenerateImage() {
                         </div>
 
                         {galleryImages.length > 9 && (
-                          <div className="mt-3 flex justify-center">
+                          <div className="mt-4 flex justify-center">
                             <button
                               type="button"
-                              className="text-sm font-semibold text-[var(--hl-black)] shadow-md"
+                              className="text-xs font-semibold text-white px-5 py-2.5 rounded-full border border-white/10 hover:bg-white/5 transition-colors"
                               style={{
-                                borderRadius: '60px',
-                                border: '1px solid rgba(255, 255, 255, 0.50)',
-                                background: 'linear-gradient(90deg, #FFC54D 0%, #FFD784 100%)',
-                                padding: '8px 16px'
+                                background: 'linear-gradient(90deg, #7F5AF0 0%, #9D66FF 100%)',
                               }}
-                              onClick={() => {
-                                try { navigate('/gallery'); } catch { window.location.href = '/gallery'; }
-                              }}
+                              onClick={() => navigate('/gallery')}
                             >
                               View more
                             </button>
@@ -1545,7 +1511,7 @@ export default function GenerateImage() {
         {mediaMode === 'image' && (
         <div className={desktopGridClass}>
           {/* Left – Controls (50%) */}
-          <div className="space-y-5 px-1 sm:px-6">
+          <div className="lg:col-span-6 space-y-3 sm:space-y-6">
             <div className="rounded-[12px] bg-[rgba(255,255,255,0.08)] p-[3px] ring-1 ring-white/6">
               <div className="grid grid-cols-2 gap-[3px]">
                 <button
@@ -1565,21 +1531,21 @@ export default function GenerateImage() {
             </div>
 
             {/* Character & Prompt */}
-            <div className="relative min-h-0">
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <div className="shrink-0">
+            <div className="px-1 sm:px-6 py-0 min-h-0 relative">
+              <div className="flex flex-col sm:flex-row items-center sm:items-stretch gap-4">
+                <div className="sm:min-w-[144px]">
                   {!character ? (
-                    <button onClick={() => navigate('/generate-image/characters')} className="h-[144px] w-[144px] sm:h-[180px] sm:w-[180px]">
+                    <button onClick={() => navigate('/generate-image/characters')} className="h-[144px] w-[144px]">
                       <Card
                         noBase
-                        className={`h-[144px] w-[144px] min-h-0 flex items-center justify-center rounded-[24px] border-[1.8px] border-dashed border-[#B8A3F6] p-3 sm:h-[180px] sm:w-[180px] ${isDark ? 'bg-[rgba(255,255,255,0.03)]' : 'bg-[var(--hl-surface)]'}`}
+                        className={`h-[144px] w-[144px] min-h-0 flex items-center justify-center rounded-2xl border-[1.8px] border-dashed border-[#B8A3F6] p-3 ${isDark ? 'bg-black' : 'bg-white'}`}
                       >
-                        <div className="flex flex-col items-center gap-3">
+                        <div className="flex flex-col items-center gap-2">
                           <div className="grid h-12 w-12 place-items-center rounded-full bg-white/6 ring-1 ring-white/10 text-white">
                             <img src={PickCharacterIcon} alt="Pick character" className="h-8 w-8" />
                           </div>
                           <div
-                            className="whitespace-nowrap rounded-[12px] px-4 py-2 text-sm font-medium text-white shadow-[0_10px_30px_rgba(127,90,240,0.28)]"
+                            className="whitespace-nowrap rounded-xl px-3 py-2 text-xs font-medium text-white shadow-md"
                             style={{ background: 'linear-gradient(180deg, #7F5AF0 0%, #9D66FF 100%)' }}
                           >
                             Pick a Character
@@ -1588,160 +1554,90 @@ export default function GenerateImage() {
                       </Card>
                     </button>
                   ) : (
-                    <button
-                      type="button"
-                      onClick={() => navigate('/generate-image/characters')}
-                      className="relative h-[144px] w-[144px] overflow-hidden rounded-[24px] border border-[#B8A3F6]/60 shadow-[0_0_0_1px_rgba(184,163,246,0.12)] sm:h-[180px] sm:w-[180px]"
+                    <Card
+                      noBase
+                      className="relative h-[144px] w-[144px] overflow-hidden rounded-2xl border border-[#B8A3F6]/60 shadow-sm p-0 min-h-0"
                     >
                       {character.image_url_s3 ? (
                         <img src={character.image_url_s3} alt={character.name || character.username} className="h-full w-full object-cover object-top" />
                       ) : (
                         <div className="h-full w-full bg-[linear-gradient(135deg,rgba(127,90,240,0.45),rgba(0,0,0,0))]" />
                       )}
-                      <div className="absolute inset-x-0 bottom-0 h-[65px] bg-gradient-to-t from-black/80 to-transparent" />
-                      <div className="absolute bottom-[10px] left-[12px] right-[12px] truncate text-left text-[16px] leading-6 text-white/95">
-                        {character.name || character.username}
+                      {/* Name overlay matches HL simplified style */}
+                      <div className="absolute inset-x-0 bottom-0 px-3 pb-3">
+                        <div className="truncate text-left text-sm font-medium text-white/95 leading-tight">
+                          {character.name || character.username}
+                        </div>
                       </div>
-                      <span className="absolute right-[10px] top-[10px] flex h-10 w-10 items-center justify-center rounded-full bg-[#7f5af0] text-white shadow-[0_4px_20px_#7f5af0]">
+                      <button
+                        type="button"
+                        onClick={() => navigate('/generate-image/characters')}
+                        className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white shadow-sm hover:bg-black/80 transition-colors"
+                      >
                         <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M16.667 9.167a6.667 6.667 0 1 0-1.95 4.717" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                           <path d="M16.667 4.167v5h-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                      </span>
-                    </button>
-                  )}
-                </div>
-
-                {/* Prompt container: large area to the right of the character picker */}
-                <div className={`relative min-h-[184px] flex-1 overflow-visible rounded-[16px] px-[18px] py-[18px] ${cardSurfaceClass}`}>
-                  <div className="flex items-start gap-4">
-                    <PromptGlyph className="mt-[2px] h-5 w-5 text-white/70" />
-                    <textarea
-                      value={prompt}
-                      onChange={(e) => setPrompt(e.target.value)}
-                      rows={2}
-                      placeholder="Describe the image you want to generate..."
-                      className="min-h-[48px] w-full resize-none bg-transparent text-[16px] leading-6 text-white placeholder-white/35 focus:outline-none"
-                    />
-                  </div>
-                  <div className="absolute bottom-[14px] right-[18px] flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handlePromptAction('image')}
-                      className="flex h-[36px] w-[36px] items-center justify-center rounded-[12px] border border-white/10 bg-white/[0.02] text-white/80 transition-colors hover:bg-white/[0.06]"
-                      aria-label="Refresh image prompt"
-                    >
-                      <img src={PromptActionIcon} alt="" className="h-4 w-4 opacity-90" />
-                    </button>
-                    {renderPromptDropdown('image')}
-                  </div>
-                </div>
-              </div>
-
-              {/* Prompts dropdown in bottom-right to match Figma */}
-              {/* Prompts dropdown positioned with small offsets to match Figma */}
-              <div className="hidden">
-                <div className="relative inline-block text-left">
-                  <div>
-                    <Button
-                      variant="ghost"
-                      // compact on mobile, slightly larger on sm+
-                      className="bg-[#241e19] text-white rounded-[8px] text-sm flex items-center gap-2 px-3 h-8 sm:h-9 cta-compact border border-white/10"
-                      onClick={() => setShowPrompts((s) => !s)}
-                    >
-                      <span>Prompts</span>
-                      {/* small triangular caret - uses CSS border trick */}
-                      <span className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-white/80 transform translate-y-0.5" aria-hidden />
-                    </Button>
-                  </div>
-
-                  {/* Dropdown menu - force open downward using absolute top-full */}
-                  {showPrompts && (
-                    <div
-                      className="absolute right-0 top-full mt-1 w-56 p-2 z-50 max-h-[400px] overflow-y-auto"
-                      style={{
-                        borderRadius: '5px',
-                        border: '0.5px solid var(--secondary, #C09B62)',
-                        background: 'rgba(255, 255, 255, 0.08)',
-                        backdropFilter: 'blur(20px)'
-                      }}
-                    >
-                      {/* Dropdown items: Show gender-aware category labels */}
-                      {/* Display categories based on selected character gender */}
-                      {/* Female/Trans characters show female categories, Male shows male categories */}
-                      {/* No character selected shows all categories (female + male) */}
-                      {getAvailableCategories().map((category, idx) => {
-                        const isFirst = idx === 0;
-                        return (
-                          <button
-                            key={`${category.gender}-${category.key}`}
-                            onClick={() => handleCategorySelect(category.key, category.gender)}
-                            className={`w-full text-left transition-colors duration-150 flex items-center gap-3 ${isFirst ? 'rounded-[4px] bg-[var(--primary)] text-[var(--hl-black)] font-semibold' : 'rounded-md text-white/90 hover:bg-white/5'}`}
-                            style={{ padding: '4px 10px', marginBottom: '2px' }}
-                          >
-                            {/* Leading icon - plus icon for category selection */}
-                            {isFirst ? (
-                              <span className="inline-grid place-items-center w-8 h-8 rounded-full bg-[var(--hl-gold)] text-[var(--hl-black)] text-lg">+</span>
-                            ) : (
-                              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-transparent border border-white/6 text-white text-lg">+</span>
-                            )}
-
-                            <span className={`block text-sm leading-5`} style={{ fontWeight: isFirst ? 700 : 600 }}>{category.label}</span>
-                          </button>
-                        );
-                      })}
-
-                      {/* Separator line before Regenerate Prompt */}
-                      <div className="my-2 h-px bg-white/10" />
-
-                      {/* Regenerate Prompt button - always shown at the bottom */}
-                      {/* Uses shuffle icon and gold text to stand out */}
-                      {/* Regenerates a new prompt from the last selected category */}
-                      <button
-                        onClick={() => handleRegeneratePrompt()}
-                        className="w-full text-left transition-colors duration-150 flex items-center gap-3 rounded-md text-white/90 hover:bg-white/5"
-                        style={{ padding: '4px 10px' }}
-                      >
-                        {/* Shuffle icon for regenerate */}
-                        <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-transparent text-[var(--hl-gold)] text-lg">⟲</span>
-                        <span className="block text-sm leading-5" style={{ fontWeight: 600, color: 'var(--hl-gold)' }}>Regenerate Prompt</span>
                       </button>
-                    </div>
+                    </Card>
                   )}
                 </div>
-              </div>
-            </div>
 
-            {/* Negative Prompt (collapsible) */}
-            <div className="space-y-3">
-              <label className="block text-[18px] font-normal leading-7 text-white">Negative Prompt (what to avoid in the image)</label>
-              <div className={`relative min-h-[134px] px-[18px] pb-[50px] pt-[18px] ${cardSurfaceClass}`}>
-                <div className="flex items-start gap-4">
-                  <PromptGlyph className="mt-[2px] h-5 w-5 text-white/70" />
+                {/* Prompt container matches HL sizing */}
+                <Card className="flex-1 min-h-[120px] p-4 rounded-2xl w-full bg-white/[0.05] ring-1 ring-white/10">
                   <textarea
-                    value={negPrompt}
-                    onChange={(e) => setNegPrompt(e.target.value)}
-                    rows={3}
-                    className="min-h-[66px] w-full resize-none bg-transparent text-[16px] leading-6 text-white placeholder-white/30 focus:outline-none"
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    rows={4}
+                    placeholder="Describe the image you want to generate..."
+                    className="w-full h-full resize-none bg-transparent text-[13px] sm:text-sm text-white placeholder-white/35 focus:outline-none"
                   />
-                </div>
-                <div className="absolute bottom-[14px] right-[18px] flex h-[36px] w-[36px] items-center justify-center rounded-[12px] text-white/70">
-                  <PromptGlyph className="h-4 w-4 text-white/70" />
-                </div>
+                </Card>
+              </div>
+
+              {/* Prompts button matches HL position relative to the cards */}
+              <div className="absolute right-3 bottom-2 sm:right-10 sm:bottom-3">
+                {renderPromptDropdown('image')}
               </div>
             </div>
 
-            {/* Suggestions - always visible */}
-            <div className="space-y-3">
-              <label className="block text-[16px] font-normal text-white">Suggestions</label>
-              <div className="flex flex-wrap items-center gap-5">
+            {/* Negative Prompt (matches HL spacing) */}
+            <div className="px-1 sm:px-6 space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="block text-sm font-normal text-white">Negative Prompt (what to avoid in the image)</label>
+                <button
+                  type="button"
+                  onClick={() => setNegOpen((s) => !s)}
+                  className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white px-2 py-1 rounded-md"
+                >
+                  <span>{negOpen ? 'Hide' : 'Show'}</span>
+                  <svg className={`w-4 h-4 transform transition-transform ${negOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 8l5 5 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
+              
+              {negOpen && (
+                <textarea
+                  value={negPrompt}
+                  onChange={(e) => setNegPrompt(e.target.value)}
+                  rows={3}
+                  className="w-full rounded-xl bg-black/40 px-4 py-3 text-[13px] sm:text-sm text-white placeholder-white/30 ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-[#7f5af0]"
+                />
+              )}
+            </div>
+
+            {/* Suggestions - matches HL spacing and sizing */}
+            <div className="px-1 sm:px-6 space-y-3">
+              <label className="block text-sm font-semibold text-white">Suggestions</label>
+              <div className="flex flex-wrap items-center gap-3">
                 {(["Outfit", "Pose", "Action", "Accessories"] as SuggestionTab[]).map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`flex h-[44px] items-center justify-center rounded-[8px] border px-[30px] text-[15px] transition-all ${activeTab === tab
-                      ? "border-white/20 text-white"
-                      : "border-white/14 bg-[rgba(255,255,255,0.1)] text-white hover:bg-white/12"
+                    className={`flex h-8 sm:h-9 items-center justify-center rounded-lg border px-4 text-xs sm:text-sm transition-all ${activeTab === tab
+                      ? "border-transparent text-white"
+                      : "border-white/10 bg-white/5 text-white/80 hover:bg-white/10"
                     }`}
                     style={activeTab === tab ? { background: '#7f5af0' } : undefined}
                   >
@@ -1750,16 +1646,22 @@ export default function GenerateImage() {
                 ))}
               </div>
 
-              <div className="mt-4 flex items-start gap-4 overflow-x-auto overflow-y-visible pb-2 gen-scrollbar">
+              <div className="mt-5 flex items-center gap-0 overflow-x-auto overflow-y-visible pb-2 gen-scrollbar">
                 {imageTabAssets.map((asset) => {
                   const currentKey = activeTab;
                   return (
                     <button
                       key={asset.url}
-                      className="relative inline-flex shrink-0 flex-col items-center overflow-visible"
+                      className="relative inline-flex shrink-0 flex-col items-center overflow-visible px-0.5"
                       onClick={() => {
                         setSelectedAssetMap((m) => {
                           const prev = m[currentKey] || [];
+                          // Accessories can be multi-select; others are single-select
+                          if (currentKey === 'Accessories') {
+                            const exists = prev.includes(asset.label);
+                            const next = exists ? prev.filter((x) => x !== asset.label) : [...prev, asset.label];
+                            return { ...m, [currentKey]: next };
+                          }
                           const isSame = prev[0] === asset.label;
                           return { ...m, [currentKey]: isSame ? [] : [asset.label] };
                         });
@@ -1772,71 +1674,66 @@ export default function GenerateImage() {
               </div>
             </div>
 
-            {/* Number of images */}
-            <div className="space-y-4">
-              <label className="block text-[16px] font-normal text-white">Number of images</label>
+            {/* Number of images - matches HL grid gap and button style */}
+            <div className="px-1 sm:px-6 space-y-3">
+              <label className="block text-sm font-normal text-white">Number of images</label>
 
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
+              <div className="grid grid-cols-5 gap-3">
                 {IMAGE_COUNT_OPTIONS.map((n) => {
                   const active = count === n;
                   return (
                     <button
                       key={n}
                       onClick={() => setCount(n)}
-                      className={`inline-flex h-[46px] w-full items-center justify-center gap-2 rounded-[8px] border text-[16px] transition-all ${active
-                        ? 'border-transparent text-white'
-                        : 'border-white/10 bg-[rgba(255,255,255,0.1)] text-white hover:bg-[rgba(255,255,255,0.14)]'
+                      className={`inline-flex h-8 sm:h-9 items-center justify-center gap-2 rounded-lg border text-xs sm:text-sm font-semibold transition-all ${active
+                        ? 'border-[#7f5af0] text-white'
+                        : 'border-white/10 bg-[#141414] text-white hover:bg-[#181818]'
                       }`}
-                      style={active ? { background: '#7f5af0' } : undefined}
+                      style={active ? { background: 'rgba(127,90,240,0.3)' } : undefined}
                     >
-                      <ImageCountIcon value={n} active={active} />
-                      <span className="leading-6">{n}</span>
+                      <img src={GenerateImageIcon} alt="" className="h-4 w-4" aria-hidden />
+                      <span>{n}</span>
                     </button>
                   );
                 })}
               </div>
             </div>
 
-            {/* Generate button: align with other p-6 sections and use slightly thinner height per Figma */}
-            <div className="pt-2">
+            {/* Generate button: matches HL thinner height and full width */}
+            <div className="px-1 sm:px-6 pt-2">
               <Button
                 variant="primary"
                 size="md"
-                className="flex h-[64px] w-full items-center justify-center gap-[10px] rounded-[12px] border border-white/20 text-white"
+                className="flex h-10 sm:h-12 w-full items-center justify-center gap-2 rounded-full text-sm sm:text-base font-semibold border border-white/20"
                 onClick={generate}
                 disabled={generating}
                 style={{
-                  background: 'linear-gradient(90deg, #d9b2ff 0%, #7f5af0 38%, #9d66ff 64%, #f48db5 100%)',
-                  boxShadow: 'inset 0 0 8px rgba(227,222,255,0.2), inset 0 20px 20px rgba(202,172,255,0.3), inset 0 1px 2px rgba(255,255,255,1), inset 0 8px 11px rgba(255,255,255,0.1)'
+                  background: 'linear-gradient(90deg, #7F5AF0 0%, #9D66FF 100%)',
+                  boxShadow: '0 4px 15px rgba(127,90,240,0.3)'
                 }}
               >
                 {generating ? (
                   <span className="inline-flex items-center gap-2"><IconSpinner className="w-4 h-4 animate-spin" />Generating...</span>
                 ) : (
                   <>
-                    <img src={GenerateImageIcon} alt="Generate" className="h-5 w-5 sm:h-6 sm:w-6" />
-                    <span className="text-[20px] font-medium text-white">Generate Now</span>
+                    <img src={GenerateImageIcon} alt="" className="h-5 w-5 sm:h-6 sm:w-6" />
+                    <span>Generate Now</span>
                   </>
                 )}
               </Button>
-              {/* Button is always enabled; generation can proceed without selecting a character. */}
             </div>
           </div>
 
           {/* Right – Generated Images (50%) */}
-          {/* Apply a small negative top margin at large screens so the gallery lines up with the character picker */}
-          <div className="xl:pt-[6px]">
-            <div className="px-0 mb-5 xl:hidden">
+          <div className="lg:col-span-6 lg:-mt-10">
+            <div className="px-0 mb-3 block xl:hidden">
               <h3 className={panelTitleClass}>Generated Images &amp; Videos</h3>
-              <p className="mt-2 text-sm text-white/55">Your previously generated media. They are stored forever.</p>
+              <p className="mt-1 text-xs text-white/50">Your previously generated media. They are stored forever.</p>
             </div>
             <div className="px-0 mt-0">
-              {/* Loading / Error / Empty states for gallery from backend */}
               {galleryLoading ? (
                 <div className="text-white/70">Loading images…</div>
               ) : galleryError ? (
-                // If backend returns a 404-like message such as "No media found",
-                // show the same EmptyGenerated card (matches Figma) instead of the raw error text.
                 /no media found/i.test(String(galleryError)) ? (
                   <EmptyGenerated />
                 ) : (
@@ -1854,7 +1751,7 @@ export default function GenerateImage() {
                             const isVideo = ((img.mime_type || img.content_type || '') || '').toString().startsWith('video') || (url && /\.(mp4|webm|ogg)$/i.test(url));
 
                             return (
-                              <div key={key} className="rounded-xl overflow-hidden border border-white/10 relative">
+                              <div key={key} className="rounded-xl overflow-hidden border border-white/10 relative group">
                                 <button type="button" onClick={() => setViewer(img)} className="w-full block">
                                   {url ? (
                                     isVideo ? (
@@ -1866,11 +1763,10 @@ export default function GenerateImage() {
                                     <div className="aspect-[4/5] bg-black/20" />
                                   )}
                                 </button>
-                                {/* Download button overlay similar to Gallery */}
                                 <button
                                   type="button"
                                   onClick={(e) => { e.stopPropagation(); if (url) downloadAndSave(url); }}
-                                  className="absolute right-2 bottom-2 inline-flex items-center justify-center w-8 h-8 rounded-full bg-black/60 text-white opacity-95 hover:opacity-100 focus:opacity-100 transition-shadow shadow-sm"
+                                  className="absolute right-2 bottom-2 inline-flex items-center justify-center w-8 h-8 rounded-full bg-black/60 text-white opacity-0 group-hover:opacity-100 transition-opacity"
                                   aria-label="Download"
                                   disabled={!url || !!(downloading && url && downloading === url)}
                                 >
@@ -1885,21 +1781,15 @@ export default function GenerateImage() {
                           })}
                       </div>
 
-                      {/* View more / Show less controls */}
                       {galleryImages.length > 9 && (
-                        <div className="mt-3 flex justify-center">
+                        <div className="mt-4 flex justify-center">
                           <button
                             type="button"
-                            className="text-sm font-semibold text-[var(--hl-black)] shadow-md"
+                            className="text-xs font-semibold text-white px-5 py-2.5 rounded-full border border-white/10 hover:bg-white/5 transition-colors"
                             style={{
-                              borderRadius: '60px',
-                              border: '1px solid rgba(255, 255, 255, 0.50)',
-                              background: 'linear-gradient(90deg, #FFC54D 0%, #FFD784 100%)',
-                              padding: '8px 16px'
+                              background: 'linear-gradient(90deg, #7F5AF0 0%, #9D66FF 100%)',
                             }}
-                            onClick={() => {
-                              try { navigate('/gallery'); } catch { window.location.href = '/gallery'; }
-                            }}
+                            onClick={() => navigate('/gallery')}
                           >
                             View more
                           </button>

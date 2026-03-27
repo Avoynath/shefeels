@@ -20,19 +20,29 @@ const SiteFooter: React.FC<{ gender?: string }> = ({ gender }) => {
   return (
     <footer className={`w-full pb-20 md:pb-0 ${
       isDark 
-        ? "bg-linear-to-r from-[#2b1a3d] to-[#0c0c0e]" 
-        : "bg-linear-to-r from-[#e8d8f8] via-purple-50 to-pink-50"
+        ? "bg-linear-to-r from-[#170B2E] to-[#0c0c0e]" 
+        : "bg-linear-to-r from-[#F5F1FF] via-purple-50 to-pink-50"
     }`}>
       <div className="mx-auto w-full max-w-screen-2xl px-3 sm:px-4 md:px-6 py-8 md:px-8 md:py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
-          <div>
+          <div className="md:col-span-2">
             <div className="flex items-center gap-3">
-              <img src={footerLogo} alt="honey love" className="h-8" />
+              <img 
+                src={footerLogo} 
+                alt="SheFeels" 
+                className="block shrink-0" 
+                style={{ width: "93.866px", height: "44.262px", flexShrink: 0 }}
+              />
             </div>
-            <p className={`mt-3 text-sm ${isDark ? "text-white/80" : "text-gray-600"}`}>
+            <p className={`mt-3 text-sm max-w-md ${isDark ? "text-white/80" : "text-gray-600"}`}>
               SheFeels AI offers unlimited &amp; realistic AI {label}, nsfw ai chat online, and interactive AI companion fun.
             </p>
+            <div className={`mt-4 text-xs ${isDark ? "text-white/40" : "text-gray-400"}`}>
+              <p>JLHL MANAGEMENT LTD (HE 484306)</p>
+              <p>Georgiou Karaiskaki 11-13, Carisa Salonica Court, Office 102</p>
+              <p>7560 Pervolia, Larnaca, Cyprus</p>
+            </div>
           </div>
 
           {/* Resources */}
@@ -40,7 +50,9 @@ const SiteFooter: React.FC<{ gender?: string }> = ({ gender }) => {
             <h5 className={`font-semibold ${isDark ? "text-white" : "text-gray-900"}`}>Resources</h5>
             <ul className={`mt-3 space-y-2 text-sm ${isDark ? "text-white/70" : "text-gray-600"}`}>
               <li><Link to="/contact-center" className="hover:underline">Contact us</Link></li>
+              <li><Link to="/help-center" className="hover:underline">Help Center</Link></li>
               <li><Link to="/terms-of-service" className="hover:underline">Terms of Service</Link></li>
+              <li><Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link></li>
             </ul>
           </div>
 
@@ -67,14 +79,13 @@ const SiteFooter: React.FC<{ gender?: string }> = ({ gender }) => {
             ? "border-white/10 text-white/60" 
             : "border-gray-200 text-gray-500"
         }`}>
-          <div>© All rights reserved.</div>
+          <div>© 2026 shefeels.ai. All rights reserved.</div>
           <div className="flex flex-wrap gap-4">
-            <Link to="/legal" className="hover:underline">Legal</Link>
-            <Link to="/terms-of-service" className="hover:underline">Terms of Service</Link>
-            <Link to="/refund-policy" className="hover:underline">Refund Policy</Link>
-            <Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link>
-            <Link to="/contact-center" className="hover:underline">Contact Center</Link>
-            <Link to="/help-center" className="hover:underline">Help Center</Link>
+            <Link to="/legal" className="hover:underline">Legal Documentation</Link>
+            <Link to="/terms-of-service" className="hover:underline">Terms</Link>
+            <Link to="/privacy-policy" className="hover:underline">Privacy</Link>
+            <Link to="/cookies-notice" className="hover:underline">Cookies</Link>
+            <Link to="/dmca-policy" className="hover:underline">DMCA</Link>
           </div>
           <div className={`flex gap-3 ${isDark ? "text-white/60" : "text-gray-500"}`}>
             <span className="w-6 h-6 block">

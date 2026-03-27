@@ -344,11 +344,7 @@ function OptionCard({
               {label}
             </span>
           </div>
-          {selected && (
-            <span className="absolute right-3 top-3 inline-flex h-8 min-w-8 items-center justify-center rounded-full bg-(--sf-purple-light) px-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-white shadow-[0_10px_20px_rgba(88,52,176,0.35)]">
-              On
-            </span>
-          )}
+          {/* Selected indicator removed per user request */}
         </div>
       ) : emoji ? (
         <div className={`w-full ${fullHeight ? 'h-full min-h-0' : 'aspect-3/4'} flex flex-col items-center justify-center gap-2 p-4`}>
@@ -852,8 +848,8 @@ export default function CreateCharacter() {
   }, []);
 
   // Main heading larger, but subheadings consistently smaller
-  const pageShellClass = "mx-auto w-full max-w-[1602px] px-1 pb-10 pt-2 sm:px-2 sm:pb-12 sm:pt-4";
-  const heading = `text-[28px] sm:text-[36px] lg:text-[44px] font-semibold leading-[1.06] ${isDark ? "text-white" : "text-gray-900"}`;
+  const pageShellClass = "mx-auto w-full max-w-[1152px] px-1 pb-10 pt-2 sm:px-2 sm:pb-12 sm:pt-4";
+  const heading = `text-2xl sm:text-3xl lg:text-4xl font-semibold leading-[1.06] ${isDark ? "text-white" : "text-gray-900"}`;
   const subheading = `text-lg sm:text-xl font-semibold text-(--primary) text-center`; // For "Choose..." titles
   // const sub = `text-sm ${isDark ? "text-white/60" : "text-gray-600"}`;
   const hint = `text-xs ${isDark ? "text-(--hl-gold)" : "text-(--hl-gold-strong)"}`;
@@ -1635,24 +1631,24 @@ export default function CreateCharacter() {
         canonical="/create-character"
       />
       {/* Page header (rendered outside of the main rounded container to match Figma) */}
-      <div className="mb-6 px-1 sm:px-6">
+      <div className="mb-5 px-1 sm:px-4">
         {/* Mobile gender pills placed above the heading */}
         <MobileGenderPills value={gender} onChange={(g) => setGender(g)} />
         <h1 className={heading}>
-          <span style={{ color: 'var(--Grays-White, var(--Grays-White, #FFF))' }}>Create Your </span>
-                    <span style={{ color: 'var(--Grays-White, var(--Grays-White, #FFF))' }}>
+          <span style={{ color: 'var(--Grays-White, #FFF)' }}>Create Your </span>
+          <span style={{ color: 'var(--sf-purple-light)' }}>
             {`own AI ${gender === 'Male' ? 'Boy' : gender === 'Female' ? 'Girl' : 'Companion'}`}
           </span>
         </h1>
-        <p className={`mt-3 font-medium ${isDark ? 'text-white/72' : 'text-gray-700'} text-sm md:text-base`}>
+        <p className={`mt-2.5 font-medium ${isDark ? 'text-white/70' : 'text-gray-700'} text-xs sm:text-sm md:text-base`}>
           She will do whatever you want. It's yours
         </p>
       </div>
 
       {/* Add a subtle golden border around the main content to match Figma */}
-      <div className={`${step === 0 ? 'max-w-[1040px]' : 'max-w-[1360px]'} mx-auto w-full rounded-[24px] ${step === 0 ? 'p-3 sm:p-5 md:p-6 pb-4' : 'p-4 sm:p-6 md:p-8'} border ${step === 0 ? '' : 'flex flex-col min-h-[70vh]'} ${isDark
-        ? "bg-[#050505] border-[rgba(127,90,240,0.28)] shadow-[0_0_0_1px_rgba(127,90,240,0.08),0_18px_60px_rgba(0,0,0,0.35)]"
-        : "bg-white border-[rgba(127,90,240,0.16)] shadow-[0_18px_60px_rgba(0,0,0,0.08)]"
+      <div className={`${step === 0 ? 'max-w-3xl' : 'max-w-6xl'} mx-auto w-full rounded-[24px] ${step === 0 ? 'p-2 sm:p-4 md:p-5 pb-3' : 'p-3 sm:p-6 md:p-8'} border-2 ${step === 0 ? '' : 'flex flex-col min-h-[70vh]'} ${isDark
+        ? "bg-[#050505] border-[#7F5AF0]/20 shadow-[0_0_0_1px_rgba(127,90,240,0.06),0_15px_50px_rgba(0,0,0,0.3)]"
+        : "bg-white border-[#7F5AF0]/12 shadow-[0_15px_50px_rgba(0,0,0,0.06)]"
         }`}>
         {/* Progress dots: centered on mobile, right-aligned on md+ (keep desktop unchanged) */}
         <div className="flex items-center justify-center md:justify-end">
@@ -1660,13 +1656,13 @@ export default function CreateCharacter() {
         </div>
 
         {/* Step content */}
-        <div className={`${step === 0 ? 'mt-3' : 'mt-8 flex-1'}`}>
+        <div className={`${step === 0 ? 'mt-2' : 'mt-7 flex-1'}`}>
           {/* Step 0: Style */}
           {step === 0 && (
             <div>
-              <div className="mt-3 grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-5 items-start justify-center">
+              <div className="mt-2 grid grid-cols-2 sm:grid-cols-2 gap-2.5 sm:gap-4 items-start justify-center">
                 <div className="flex justify-center w-full">
-                  <div className="aspect-9/16 sm:aspect-2/3 w-full max-w-48 sm:max-w-72">
+                  <div className="aspect-9/16 sm:aspect-2/3 w-full max-w-[188px] sm:max-w-[260px]">
                     <OptionCard
                       label={"Realistic"}
                       selected={form.style === "Realistic"}
@@ -1680,7 +1676,7 @@ export default function CreateCharacter() {
                 </div>
 
                 <div className="flex justify-center w-full">
-                  <div className="aspect-9/16 sm:aspect-2/3 w-full max-w-48 sm:max-w-72">
+                  <div className="aspect-9/16 sm:aspect-2/3 w-full max-w-[188px] sm:max-w-[260px]">
                     <OptionCard
                       label={"Anime"}
                       selected={form.style === "Anime"}
@@ -1718,7 +1714,6 @@ export default function CreateCharacter() {
               </div>
 
               <Section title="Age">
-                <div className={`rounded-[20px] border px-4 py-4 sm:px-5 ${isDark ? 'border-white/10 bg-[rgba(255,255,255,0.03)]' : 'border-gray-200 bg-gray-50'}`}>
                 <div className="flex items-center gap-4">
                   <span className={isDark ? "text-white/70" : "text-gray-600"}>18+</span>
                   <input
@@ -1727,11 +1722,12 @@ export default function CreateCharacter() {
                     max={60}
                     value={form.age}
                     onChange={(e) => setForm({ ...form, age: Number(e.target.value) })}
-                    className="w-full accent-[#9d66ff]"
+                    className="w-full accent-(--sf-purple-light)"
                   />
-                  <span className={`font-semibold w-12 text-right ${isDark ? "text-[#d9b2ff]" : "text-[#7f5af0]"
-                    }`}>{form.age}</span>
-                </div>
+                  <span className={isDark ? "text-white/70" : "text-gray-600"}>60</span>
+                  <div className={`shrink-0 h-10 min-w-10 flex items-center justify-center rounded-xl font-bold ${isDark ? 'bg-white/10 text-white' : 'bg-gray-100 text-black'}`}>
+                    {form.age}
+                  </div>
                 </div>
               </Section>
 
@@ -2040,8 +2036,8 @@ export default function CreateCharacter() {
                       <span className="text-4xl opacity-60">🔒</span>
                     </div>
                   </div>
-                  <div className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl" style={{ background: 'rgba(255, 197, 77, 0.10)' }}>
-                    <span className="text-(--hl-gold) text-sm">🔒</span>
+                  <div className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl" style={{ background: 'rgba(127, 90, 240, 0.10)' }}>
+                    <span className="text-(--sf-purple-light) text-sm">🔒</span>
                     <p className={`text-xs font-medium ${isDark ? 'text-white/70' : 'text-gray-600'}`}>Your AI will remain private. Only you will see it</p>
                   </div>
                 </div>
@@ -2057,7 +2053,7 @@ export default function CreateCharacter() {
                         type="text" 
                         value={form.name} 
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        className={`flex-1 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-(--hl-gold)/50 transition-colors text-base font-medium ${isDark ? "bg-black/40 ring-1 ring-white/10 text-white placeholder-white/30" : "bg-gray-100 ring-1 ring-gray-300 text-black placeholder-gray-400"}`} 
+                        className={`flex-1 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-(--sf-purple-light)/50 transition-colors text-base font-medium ${isDark ? "bg-black/40 ring-1 ring-white/10 text-white placeholder-white/30" : "bg-gray-100 ring-1 ring-gray-300 text-black placeholder-gray-400"}`} 
                         placeholder={isGeneratingMetadata ? "Generating name..." : "Enter name"}
                       />
                       <button 
@@ -2077,8 +2073,8 @@ export default function CreateCharacter() {
                         }}
                         className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform hover:scale-105 active:scale-95 shadow-sm shrink-0"
                         style={{
-                          background: 'linear-gradient(180deg, #FFC54D 0%, #FFE2A5 100%)',
-                          border: '1px solid var(--hl-gold, #FFC54D)',
+                          background: 'linear-gradient(180deg, #7F5AF0 0%, #9d66ff 100%)',
+                          border: '1px solid var(--sf-purple-light)',
                         }}
                       >
                         <span className="text-black text-lg font-bold">↻</span>
@@ -2087,13 +2083,12 @@ export default function CreateCharacter() {
                   </div>
 
                   {/* Personality Attributes */}
-                  <h3 className={`text-base font-semibold mb-2 ${isDark ? "text-white" : "text-black"}`}>Personality Attributes</h3>
-                  <div className={`p-4 sm:p-5 rounded-[20px] ${isDark ? "bg-[#111] border border-(--hl-gold)/10" : "bg-white border border-gray-200 shadow-sm"}`}>
+                  <div className={`p-4 sm:p-5 rounded-[20px] ${isDark ? "bg-[#111] border border-(--sf-purple-light)/10" : "bg-white border border-gray-200 shadow-sm"}`}>
                     
                     {/* Looking for */}
                     <div className="mb-4">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="text-(--hl-gold) text-base">💛</span>
+                        <span className="text-(--sf-purple-light) text-base">💜</span>
                         <span className={`text-sm font-semibold ${isDark ? "text-white" : "text-black"}`}>You're looking for</span>
                       </div>
                       <div className={`inline-block px-4 py-2 rounded-xl text-sm font-medium ${isDark ? "bg-white/5 text-white/80 ring-1 ring-white/10" : "bg-gray-100 text-gray-700"}`}>
@@ -2102,17 +2097,17 @@ export default function CreateCharacter() {
                     </div>
 
                     {/* Bio Preview */}
-                    <div className="mb-4 pt-3 border-t border-(--hl-gold)/10">
+                    <div className="mb-4 pt-3 border-t border-(--sf-purple-light)/10">
                       <div className="flex justify-between items-center mb-2">
                         <div className="flex items-center gap-2">
-                          <span className="text-(--hl-gold) text-base">📖</span>
+                          <span className="text-(--sf-purple-light) text-base">📖</span>
                           <span className={`text-sm font-semibold ${isDark ? "text-white" : "text-black"}`}>Bio Preview</span>
                         </div>
                         <button
                           type="button"
                           onClick={() => preGenerateMetadata()}
                           disabled={isGeneratingMetadata}
-                          className="text-[10px] font-bold text-black bg-(--hl-gold) hover:bg-yellow-400 px-2.5 py-1 rounded-full transition-all flex items-center gap-1 shadow-sm active:scale-95 disabled:opacity-50"
+                          className="text-[10px] font-bold text-white bg-(--sf-purple) hover:bg-(--sf-purple-light) px-2.5 py-1 rounded-full transition-all flex items-center gap-1 shadow-sm active:scale-95 disabled:opacity-50"
                         >
                            {isGeneratingMetadata ? '...' : '✨ Regenerate'}
                         </button>

@@ -104,7 +104,7 @@ export const Sidebar: React.FC<Props> = ({ sidebarOpen, sidebarCollapsed, setSid
 		{ label: "Gallery", icon: getIcon(galleryIcon, "Gallery") },
 		{ label: "Help Center", icon: getIcon(helpCenterIcon, "Help Center") },
 		{ label: "Contact Us", icon: getIcon(contactUsIcon, "Contact Us") },
-		{ label: "Discord", icon: getIcon(discordIcon, "Discord") },
+		// { label: "Discord", icon: getIcon(discordIcon, "Discord") },
 	];
 
 	const shellStyle: React.CSSProperties = isDark

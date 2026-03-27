@@ -13,17 +13,14 @@ export default function LegalIndex() {
   const links = [
     { to: "/terms-of-service", label: "Terms of Service" },
     { to: "/privacy-policy", label: "Privacy Policy" },
-    { to: "/refund-policy", label: "Refund Policy" },
-    { to: "/cookies-notice", label: "Cookies Notice" },
+    { to: "/cookies-notice", label: "Cookie Policy" },
     { to: "/dmca-policy", label: "DMCA Policy" },
-    { to: "/community-guidelines", label: "Community Guidelines" },
-    { to: "/blocked-content-policy", label: "Blocked Content Policy" },
-    { to: "/content-removal-policy", label: "Content Removal Policy" },
-    { to: "/complaint-policy", label: "Complaint Policy" },
-    { to: "/affiliate-terms", label: "Affiliate Terms" },
-    { to: "/kyc-policy", label: "KYC Policy" },
-    { to: "/underage-policy", label: "Underage Policy" },
-    { to: "/2257-exemption", label: "18 U.S.C. 2257 Exemption" },
+    { to: "/2257-exemption", label: "18 U.S.C. 2257 Compliance" },
+    { to: "/community-guidelines", label: "Acceptable Use Policy" },
+    { to: "/underage-policy", label: "Age Verification" },
+    { to: "/blocked-content-policy", label: "Child Protection Policy" },
+    { to: "/kyc-policy", label: "Anti-Trafficking Policy" },
+    { to: "/refund-policy", label: "Refund Policy" },
   ];
 
   return (

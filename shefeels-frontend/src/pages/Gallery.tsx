@@ -157,7 +157,7 @@ export default function Gallery() {
 	const { colors, isDark } = useResponsiveTheme();
 	const galleryActionStyle = {
 		border: '1px solid rgba(255,255,255,0.22)',
-		background: 'linear-gradient(90deg, #d9b2ff 0%, #7f5af0 38%, #9d66ff 64%, #f48db5 100%)',
+		background: 'linear-gradient(90deg, #7F5AF0 0%, #B8A3F6 100%)',
 		boxShadow: 'inset 0 0 8px rgba(227,222,255,0.2), inset 0 20px 20px rgba(202,172,255,0.3), inset 0 1px 2px rgba(255,255,255,1), inset 0 8px 11px rgba(255,255,255,0.1)',
 		color: '#fff',
 	} as const;
@@ -266,7 +266,7 @@ export default function Gallery() {
 					const opts: any = { method: 'GET', mode: 'cors', credentials: 'omit' };
 														if (isSameOrApiOrigin(url)) {
 																const headers: Record<string, string> = {};
-																const t = token || localStorage.getItem('hl_token');
+																const t = token || localStorage.getItem('sf_token');
 																if (t) headers['Authorization'] = `Bearer ${String(t).replace(/^bearer\s+/i, '').trim()}`;
 																else if ((import.meta as any).env?.VITE_API_AUTH_TOKEN) {
 																	const envToken = String((import.meta as any).env.VITE_API_AUTH_TOKEN || '');
@@ -289,7 +289,7 @@ export default function Gallery() {
 				const proxyUrl = `${proxyBase}?url=${encodeURIComponent(url)}&name=${encodeURIComponent(getFilenameFromUrl(url))}`;
 				const proxyHeaders: Record<string, string> = {};
 				try {
-															const t = token || localStorage.getItem('hl_token');
+															const t = token || localStorage.getItem('sf_token');
 															if (t) proxyHeaders['Authorization'] = `Bearer ${String(t).replace(/^bearer\s+/i, '').trim()}`;
 															else if ((import.meta as any).env?.VITE_API_AUTH_TOKEN) {
 																const envToken = String((import.meta as any).env.VITE_API_AUTH_TOKEN || '');
@@ -361,7 +361,7 @@ export default function Gallery() {
 
 			const url = buildApiUrl('/characters/media/get-users-character-media');
 			const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-					const t = token || localStorage.getItem('hl_token');
+					const t = token || localStorage.getItem('sf_token');
 					if (t) {
 						headers['Authorization'] = `Bearer ${String(t).replace(/^bearer\s+/i, '').trim()}`;
 					} else if ((import.meta as any).env?.VITE_API_AUTH_TOKEN) {
@@ -446,10 +446,10 @@ export default function Gallery() {
 		fetchGallery(true);
 		const onReload = () => { fetchGallery(true); };
 		window.addEventListener('gallery:reload', onReload);
-		function onStorage(e: StorageEvent) { if (e.key === 'hl_token') { const newVal = e.newValue; if (newVal) fetchGallery(true); } }
+		function onStorage(e: StorageEvent) { if (e.key === 'sf_token') { const newVal = e.newValue; if (newVal) fetchGallery(true); } }
 		window.addEventListener('storage', onStorage);
-		lastTokenRef.current = (() => { try { return localStorage.getItem('hl_token'); } catch { return null; } })();
-		const pollInterval = setInterval(() => { try { const cur = localStorage.getItem('hl_token'); if (cur !== lastTokenRef.current) { if (cur) fetchGallery(true); lastTokenRef.current = cur; } } catch (e) {} }, 1000);
+		lastTokenRef.current = (() => { try { return localStorage.getItem('sf_token'); } catch { return null; } })();
+		const pollInterval = setInterval(() => { try { const cur = localStorage.getItem('sf_token'); if (cur !== lastTokenRef.current) { if (cur) fetchGallery(true); lastTokenRef.current = cur; } } catch (e) {} }, 1000);
 		return () => { window.removeEventListener('gallery:reload', onReload); window.removeEventListener('open:gallery', onOpen); window.removeEventListener('storage', onStorage); clearInterval(pollInterval); };
 	}, [fetchGallery]);
 
@@ -474,7 +474,7 @@ export default function Gallery() {
 	}, [viewer, items]);
 
 	return (
-		<section className={`w-full max-w-7xl mx-auto rounded-xl sm:rounded-2xl border p-4 sm:p-6 lg:p-8 py-6 sm:py-10 theme-transition ${
+		<section className={`w-full max-w-5xl mx-auto rounded-xl sm:rounded-2xl border p-4 sm:p-6 lg:p-8 py-6 sm:py-10 theme-transition ${
 			isDark 
 				? "border-white/10 bg-white/3" 
 				: "border-gray-200 bg-white/80"
@@ -484,7 +484,7 @@ export default function Gallery() {
 					<button
 						onClick={() => navigate(-1)}
 						aria-label="Back"
-						className="rounded-full p-2 flex items-center justify-center text-white transition-transform hover:scale-[1.03]"
+						className="rounded-full p-2 flex items-center justify-center text-white transition-opacity hover:opacity-80"
 						style={galleryActionStyle}
 					>
 						<ChevronLeft className="w-4 h-4" />

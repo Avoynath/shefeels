@@ -10,10 +10,10 @@ import { useToastActions } from '../contexts/ToastContext';
 import { DirectSend } from 'iconsax-react';
 import Button from "../components/Button";
 
-const card = "relative mx-auto w-full max-w-[812px] overflow-hidden rounded-[20px] border border-[rgba(198,244,214,0.3)] bg-black px-[24px] py-[28px] shadow-[0_24px_60px_rgba(0,0,0,0.55)] sm:px-[79px] sm:py-[74px]";
+const card = "relative mx-auto w-full max-w-md overflow-hidden rounded-[20px] border border-[rgba(198,244,214,0.3)] bg-black p-6 shadow-[0_24px_60px_rgba(0,0,0,0.55)] sm:p-8";
 
 const inputClass =
-  "mt-2 h-[70px] w-full rounded-[14px] border border-[rgba(255,255,255,0.3)] bg-[rgba(255,255,255,0.08)] px-5 text-[18px] font-normal leading-[28px] text-white placeholder:text-[rgba(255,255,255,0.3)] outline-none transition focus:border-[#7F5AF0] focus:shadow-[0_0_0_3px_rgba(127,90,240,0.15)]";
+  "mt-1 w-full rounded-[14px] border border-[rgba(255,255,255,0.3)] bg-[rgba(255,255,255,0.08)] px-3 py-2 text-sm font-normal leading-[28px] text-white placeholder:text-[rgba(255,255,255,0.3)] outline-none transition focus:border-[#7F5AF0] focus:shadow-[0_0_0_3px_rgba(127,90,240,0.15)]";
 
 const loginButtonStyle = {
   background: 'linear-gradient(90deg, #d9b2ff 0%, #7f5af0 38%, #9d66ff 64%, #f48db5 100%)',
@@ -269,16 +269,16 @@ export default function Login({ onClose }: { onClose?: () => void } = {}) {
     <div className="px-4 py-12">
       <div className={card} data-modal-card>
         {mode === "sign-in" && (
-          <div className="mx-auto w-full max-w-[653px]">
-            <h2 className="text-[32px] font-medium leading-[40px] text-[#7F5AF0]">Sign In</h2>
-            <form onSubmit={submitSignIn} className="mt-[35px] space-y-4">
+          <div className="mx-auto w-full">
+            <h2 className="text-xl font-medium text-[#7F5AF0] text-center">Sign In</h2>
+            <form onSubmit={submitSignIn} className="mt-6 space-y-4">
               <label className="flex flex-col text-sm">
-                <span className="text-[18px] font-normal leading-[28px] text-white">Email Id</span>
+                <span className="text-xs font-normal text-white">Email Id</span>
                 <input autoFocus value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="Enter email" className={inputClass} />
               </label>
 
               <label className="flex flex-col text-sm">
-                <span className="text-[18px] font-normal leading-[28px] text-white">Password</span>
+                <span className="text-xs font-normal text-white">Password</span>
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -294,7 +294,7 @@ export default function Login({ onClose }: { onClose?: () => void } = {}) {
                     className="absolute right-5 top-1/2 -translate-y-1/2"
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
-                    <img src={HidePasswordIcon} alt="toggle" className="h-6 w-6 opacity-90" />
+                    <img src={HidePasswordIcon} alt="toggle" className="h-4 w-4 opacity-90" />
                   </button>
                 </div>
               </label>
@@ -309,7 +309,7 @@ export default function Login({ onClose }: { onClose?: () => void } = {}) {
               <button
                 disabled={loading}
                 type="submit"
-                className="mt-[42px] h-[70px] w-full rounded-[8px] border border-white/10 px-6 text-[20px] font-medium leading-[28px] text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-6 py-3 w-full rounded-[14px] border border-white/10 px-6 text-base font-medium text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
                 style={loginButtonStyle}
               >
                 {loading ? 'Signing in…' : 'Login'}
@@ -318,7 +318,7 @@ export default function Login({ onClose }: { onClose?: () => void } = {}) {
 
             {error && <div className="mt-3 text-sm text-red-400 text-center">{error}</div>}
 
-            <div className="mt-[22px] flex items-center gap-4 text-center text-[18px] font-normal leading-[28px] text-white">
+            <div className="mt-4 flex items-center gap-4 text-center text-sm font-normal text-white">
               <span className="h-px flex-1 bg-white/18" />
               <span>Or</span>
               <span className="h-px flex-1 bg-white/18" />
@@ -327,22 +327,22 @@ export default function Login({ onClose }: { onClose?: () => void } = {}) {
             <button
               onClick={startGoogleOAuth}
               type="button"
-              className="mt-5 inline-flex h-[70px] w-full items-center justify-center gap-[10px] rounded-[14px] bg-white px-5 text-[20px] font-medium leading-[28px] text-[#292929] transition hover:brightness-95"
+              className="mt-3 inline-flex py-2 w-full items-center justify-center gap-[10px] rounded-[14px] bg-white px-5 text-sm font-medium text-[#292929] transition hover:brightness-95"
             >
-              <img src={GoogleIcon} alt="Google" className="h-8 w-8" />
+              <img src={GoogleIcon} alt="Google" className="h-5 w-5" />
               <span>Continue with Google</span>
             </button>
 
-            <div className="mt-[22px] text-center text-[18px] font-normal leading-[28px] text-white">Don’t have an account? <button className="font-medium text-[#7F5AF0] hover:underline" onClick={() => setMode("sign-up")}>Sign Up</button></div>
+            <div className="mt-6 text-center text-sm font-normal text-white">Don’t have an account? <button className="font-medium text-[#7F5AF0] hover:underline" onClick={() => setMode("sign-up")}>Sign Up</button></div>
           </div>
         )}
 
         {mode === "sign-up" && (
-          <div className="mx-auto w-full max-w-[653px]">
-            <h2 className="text-[32px] font-medium leading-[40px] text-[#7F5AF0]">Create an Account</h2>
-            <form onSubmit={submitSignUp} className="mt-[35px] space-y-4">
+          <div className="mx-auto w-full">
+            <h2 className="text-xl font-medium text-[#7F5AF0] text-center">Create an Account</h2>
+            <form onSubmit={submitSignUp} className="mt-6 space-y-4">
               <label className="flex flex-col text-sm">
-                <span className="text-[18px] font-normal leading-[28px] text-white">Email Id</span>
+                <span className="text-xs font-normal text-white">Email Id</span>
                 <input
                   autoFocus
                   value={email}
@@ -353,7 +353,7 @@ export default function Login({ onClose }: { onClose?: () => void } = {}) {
                 />
               </label>
               <label className="flex flex-col text-sm">
-                <span className="text-[18px] font-normal leading-[28px] text-white">Password</span>
+                <span className="text-xs font-normal text-white">Password</span>
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -369,14 +369,14 @@ export default function Login({ onClose }: { onClose?: () => void } = {}) {
                     className="absolute right-5 top-1/2 -translate-y-1/2"
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
-                    <img src={HidePasswordIcon} alt="toggle" className="h-6 w-6 opacity-90" />
+                    <img src={HidePasswordIcon} alt="toggle" className="h-4 w-4 opacity-90" />
                   </button>
                 </div>
               </label>
               <button
                 disabled={loading}
                 type="submit"
-                className="mt-[42px] h-[70px] w-full rounded-[8px] border border-white/10 px-6 text-[20px] font-semibold leading-[28px] text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-6 py-3 w-full rounded-[14px] border border-white/10 px-6 text-base font-semibold text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
                 style={loginButtonStyle}
               >
                 {loading ? 'Creating...' : 'Sign Up'}
@@ -410,7 +410,7 @@ export default function Login({ onClose }: { onClose?: () => void } = {}) {
               </div>
             )}
 
-            <div className="mt-[22px] flex items-center gap-4 text-center text-[18px] font-normal leading-[28px] text-white">
+            <div className="mt-4 flex items-center gap-4 text-center text-sm font-normal text-white">
               <span className="h-px flex-1 bg-white/18" />
               <span>Or</span>
               <span className="h-px flex-1 bg-white/18" />
@@ -419,13 +419,13 @@ export default function Login({ onClose }: { onClose?: () => void } = {}) {
             <button
               onClick={startGoogleOAuth}
               type="button"
-              className="mt-5 inline-flex h-[70px] w-full items-center justify-center gap-[10px] rounded-[14px] bg-white px-5 text-[20px] font-medium leading-[28px] text-[#292929] transition hover:brightness-95"
+              className="mt-3 inline-flex py-2 w-full items-center justify-center gap-[10px] rounded-[14px] bg-white px-5 text-sm font-medium text-[#292929] transition hover:brightness-95"
             >
-              <img src={GoogleIcon} alt="Google" className="h-8 w-8" />
+              <img src={GoogleIcon} alt="Google" className="h-5 w-5" />
               <span>Continue with Google</span>
             </button>
 
-            <div className="mt-[22px] text-center text-[18px] font-normal leading-[28px] text-white">
+            <div className="mt-6 text-center text-sm font-normal text-white">
               Have an account?{" "}
               <button className="font-medium text-[#7F5AF0] hover:underline" onClick={() => setMode("sign-in")}>
                 Sign In
@@ -481,17 +481,17 @@ export default function Login({ onClose }: { onClose?: () => void } = {}) {
         )}
 
         {mode === "forgot" && (
-          <div className="mx-auto w-full max-w-[653px]">
+          <div className="mx-auto w-full">
             <div className="space-y-[10px]">
-              <h2 className="text-[32px] font-medium leading-[40px] text-[#7F5AF0]">Forgot Password</h2>
-              <p className="text-[18px] font-normal leading-[26px] text-[#C2C2C2]">
+              <h2 className="text-xl font-medium text-[#7F5AF0] text-center">Forgot Password</h2>
+              <p className="text-sm font-normal text-[#C2C2C2] text-center">
                 Please enter your email to reset the password
               </p>
             </div>
 
-            <form onSubmit={sendReset} className="mt-[35px] space-y-[42px]">
+            <form onSubmit={sendReset} className="mt-6 space-y-4">
               <label className="flex flex-col text-sm">
-                <span className="text-[18px] font-normal leading-[28px] text-white">Email Id</span>
+                <span className="text-xs font-normal text-white">Email Id</span>
                 <input
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -504,7 +504,7 @@ export default function Login({ onClose }: { onClose?: () => void } = {}) {
               <button
                 disabled={loading}
                 type="submit"
-                className="h-[70px] w-full rounded-[8px] border border-white/10 px-6 text-[20px] font-semibold leading-[28px] text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
+                className="py-3 w-full rounded-[14px] border border-white/10 px-6 text-base font-semibold text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
                 style={loginButtonStyle}
               >
                 {loading ? 'Sending...' : 'Send'}
@@ -513,7 +513,7 @@ export default function Login({ onClose }: { onClose?: () => void } = {}) {
 
             {error && <div className="mt-3 text-center text-sm text-red-400">{error}</div>}
 
-            <div className="mt-6 text-center text-[18px] font-normal leading-[28px] text-white">
+            <div className="mt-6 text-center text-sm font-normal text-white">
               <button className="font-medium text-[#7F5AF0] hover:underline" onClick={() => setMode("sign-in")}>
                 Back to Sign In
               </button>

@@ -54,18 +54,18 @@ function HelpCardTile({ card }: { card: HelpCard }) {
   return (
     <Link
       to={card.to}
-      className={`group relative flex min-h-[168px] flex-col items-center justify-center overflow-hidden rounded-2xl border px-6 py-7 text-center transition duration-200 ${
+      className={`group relative flex min-h-[132px] flex-col items-center justify-center overflow-hidden rounded-2xl border px-4 py-5 text-center transition duration-200 ${
         card.featured
           ? "border-[#8D67FF]/70 bg-[linear-gradient(180deg,rgba(138,100,255,0.95)_0%,rgba(227,47,137,0.88)_100%)] shadow-[0_18px_70px_rgba(129,92,240,0.22)]"
           : "border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0.08)_100%)] hover:border-[#8D67FF]/35 hover:bg-[linear-gradient(180deg,rgba(255,255,255,0.15)_0%,rgba(255,255,255,0.1)_100%)]"
       }`}
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.16),transparent_55%)] opacity-80" />
-      <div className="relative flex h-11 w-11 items-center justify-center rounded-full bg-[rgba(255,197,77,0.18)] text-[#FFB260]">
-        <Sparkles className="h-5 w-5" />
+      <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-[rgba(129,92,240,0.18)] text-(--sf-purple-light)">
+        <Sparkles className="h-4 w-4" />
       </div>
-      <h2 className="relative mt-5 text-[28px] font-medium leading-8 text-white">{card.title}</h2>
-      <p className="relative mt-3 max-w-[295px] text-[17px] leading-[25px] tracking-[0.02em] text-white/70">
+      <h2 className="relative mt-3 text-[18px] font-semibold leading-6 text-white">{card.title}</h2>
+      <p className="relative mt-1.5 max-w-[295px] text-[13px] leading-relaxed tracking-[0.01em] text-white/70">
         {card.description}
       </p>
     </Link>
@@ -86,45 +86,45 @@ export default function HelpCenter() {
   }, [query]);
 
   return (
-    <div className="mx-auto w-full max-w-[1670px] px-0 pb-12 pt-5 md:pt-8">
-      <div className="rounded-[28px] border border-white/6 bg-[linear-gradient(180deg,#15131F_0%,#120F19_100%)] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] md:p-8">
-        <h1 className="text-[34px] font-semibold leading-[1.15] text-white md:text-[48px]">Help Center</h1>
+    <div className="mx-auto w-full max-w-6xl px-1 sm:px-4 md:px-6 pt-1 pb-6 sm:pt-2 sm:pb-10 md:pb-16">
+      <div className="rounded-[24px] border border-white/6 bg-[linear-gradient(180deg,#15131F_0%,#120F19_100%)] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.35)] md:p-6">
+        <h1 className="text-[22px] font-semibold tracking-tight text-white md:text-[28px]">Help Center</h1>
 
-        <section className="relative mt-7 overflow-hidden rounded-[24px] border border-white/5 bg-[linear-gradient(180deg,rgba(20,17,29,0.98)_0%,rgba(16,13,24,0.98)_55%,rgba(58,15,41,0.62)_100%)] px-5 py-8 md:px-12 md:py-12">
+        <section className="relative mt-5 overflow-hidden rounded-[20px] border border-white/5 bg-[linear-gradient(180deg,rgba(20,17,29,0.98)_0%,rgba(16,13,24,0.98)_55%,rgba(58,15,41,0.62)_100%)] px-4 py-6 md:px-8 md:py-8">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_28%,rgba(127,90,240,0.32),transparent_34%)]" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(180deg,transparent_0%,rgba(132,29,83,0.18)_100%)]" />
 
           <div className="relative mx-auto max-w-[1160px]">
             <div className="text-center">
-              <h2 className="text-[34px] font-semibold leading-[1.15] text-white md:text-[54px]">
+              <h2 className="text-[22px] font-semibold tracking-tight text-white md:text-[30px]">
                 Looking for help?
               </h2>
             </div>
 
-            <div className="mx-auto mt-8 flex max-w-[520px] flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mx-auto mt-7 flex max-w-[480px] flex-col gap-3 sm:flex-row sm:items-center">
               <label htmlFor="help-center-search" className="sr-only">
                 Search help articles
               </label>
               <div className="relative flex-1">
-                <Search className="pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/25" />
+                <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/25" />
                 <input
                   id="help-center-search"
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search here"
-                  className="h-14 w-full rounded-full border border-white/10 bg-[rgba(255,255,255,0.06)] pl-12 pr-4 text-[15px] text-white outline-none transition placeholder:text-white/25 focus:border-[#8D67FF]/65 focus:bg-[rgba(255,255,255,0.08)]"
+                  className="h-11 w-full rounded-full border border-white/10 bg-[rgba(255,255,255,0.06)] pl-11 pr-4 text-[14px] text-white outline-none transition placeholder:text-white/25 focus:border-[#8D67FF]/65 focus:bg-[rgba(255,255,255,0.08)]"
                 />
               </div>
               <button
                 type="button"
-                className="h-14 rounded-full bg-[linear-gradient(90deg,#7F5AF0_0%,#8D67FF_100%)] px-8 text-[15px] font-semibold text-white shadow-[0_10px_30px_rgba(127,90,240,0.28)] transition hover:brightness-110"
+                className="h-11 rounded-full bg-[linear-gradient(90deg,#7F5AF0_0%,#8D67FF_100%)] px-7 text-[14px] font-semibold text-white shadow-[0_10px_30px_rgba(127,90,240,0.28)] transition hover:brightness-110"
               >
                 Search Now
               </button>
             </div>
 
-            <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3 xl:gap-5">
+            <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {filteredCards.map((card) => (
                 <HelpCardTile key={card.id} card={card} />
               ))}

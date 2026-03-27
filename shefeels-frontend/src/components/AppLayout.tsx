@@ -960,7 +960,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
                             }}
                             aria-expanded={sortMenuOpen}
                           >
-                            <span>Short</span>
+                            <span>Sort</span>
                             <img src={sortMenuIcon} alt="" className="h-4 w-4 shrink-0 opacity-80" aria-hidden="true" />
                           </button>
                           {sortMenuOpen && (

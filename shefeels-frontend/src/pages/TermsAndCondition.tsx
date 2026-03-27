@@ -14,22 +14,11 @@ function H2({ id, children }: PropsWithChildren<{ id: string }>) {
     <h2
       id={id}
       className={`text-lg sm:text-xl font-semibold tracking-tight ${
-        isDark ? "text-[var(--hl-gold)]" : "text-[var(--hl-gold)]"
+        isDark ? "text-[#B8A3F6]" : "text-[#7B57F0]"
       }`}
     >
       {children}
     </h2>
-  );
-}
-
-function Bullet({ children }: PropsWithChildren) {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-  
-  return (
-    <li className={`pl-2 text-sm leading-relaxed ${
-      isDark ? "text-white/70" : "text-gray-700"
-    }`}>{children}</li>
   );
 }
 
@@ -43,19 +32,6 @@ function BodyText({ children }: PropsWithChildren) {
     }`}>
       {children}
     </div>
-  );
-}
-
-function BodyParagraph({ children }: PropsWithChildren) {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-  
-  return (
-    <p className={`text-sm leading-relaxed ${
-      isDark ? "text-white/70" : "text-gray-700"
-    }`}>
-      {children}
-    </p>
   );
 }
 
@@ -77,10 +53,9 @@ type Section = {
   id: string;
   title: string;
   body?: ReactNode;
-  bullets?: string[];
 };
 
-const effectiveDate = "11/11/25"; // Replace when you finalize the effective date
+const effectiveDate = "March 17, 2026";
 
 const sections: Section[] = [
   {
@@ -88,168 +63,221 @@ const sections: Section[] = [
     title: "1. Introduction",
     body: (
       <BodyText>
-        <p>
-          Welcome to HoneyLove (“HoneyLove,” “we,” “our,” or “us”). HoneyLove provides access to AI-powered tools,
-          software, and online services through https://honeylove.ai (the “Platform”).
-        </p>
-        <p>
-          These Terms of Service (“Terms”) constitute a binding agreement between you (“you,” “your,” “User”) and:
-        </p>
-        <ul className="list-disc pl-5 space-y-1">
-          <li>
-            <strong>HONEY SYS LLC</strong>, a Delaware limited liability company, responsible for payment processing and
-            customer transactions.
-          </li>
-          <li>
-            <strong>Honey Prod Limited</strong>, a Hong Kong company, owner of the intellectual property and parent company of
-            HONEY SYS LLC.
-          </li>
-        </ul>
-        <p>
-          By accessing or using the Platform, you agree to these Terms and our Privacy Policy. If you do not agree, do not
-          use HoneyLove.
-        </p>
+        <p>Welcome to shefeels.ai ("Platform", "Service", "we", "us", or "our"). The Service is owned and operated by JLHL MANAGEMENT LTD, a company incorporated in the Republic of Cyprus under Registration Number HE 484306, with its registered office at Georgiou Karaiskaki, 11-13, Carisa Salonica Court, Office 102, 7560, Pervolia, Larnaca, Cyprus.</p>
+        <p>These Terms of Service ("Terms") govern your access to and use of the shefeels.ai website, applications, AI companions, and all related services. By accessing or using the Service, you agree to be bound by these Terms. If you do not agree to these Terms, you must not access or use the Service.</p>
+        <p>shefeels.ai provides AI-powered companionship through conversational agents designed to simulate conversation, emotional connection, and interaction. Our Service includes AI-generated text, images, and video content. The Service is strictly intended for users who are at least 18 years of age (or the age of majority in their jurisdiction, whichever is higher).</p>
       </BodyText>
     ),
   },
   {
     id: "eligibility",
-    title: "2. Eligibility",
-    bullets: [
-      "You must be at least 18 years old (or the age of majority in your jurisdiction) to use the Platform.",
-      "By using HoneyLove, you represent and warrant that you meet these requirements and have the legal capacity to enter into this agreement.",
-    ],
+    title: "2. Eligibility and Age Requirement",
+    body: (
+      <BodyText>
+        <p>2.1. You must be at least 18 years of age (or the age of legal majority in your jurisdiction) to access or use the Service. By using the Service, you represent and warrant that you meet this age requirement.</p>
+        <p>2.2. We employ age verification measures including, but not limited to, age confirmation during registration and verification through payment information. We reserve the right to implement additional age verification mechanisms at any time.</p>
+        <p>2.3. If we discover or have reason to believe that a user is under 18 years of age, we will immediately terminate their account and delete all associated data without prior notice.</p>
+      </BodyText>
+    ),
   },
   {
     id: "account",
-    title: "3. Account Registration",
-    bullets: [
-      "To use certain features, you must create an account and provide accurate information.",
-      "You are responsible for maintaining the confidentiality of your login credentials and for all activities under your account.",
-      "Notify us immediately of unauthorized use of your account.",
-    ],
-  },
-  {
-    id: "services",
-    title: "4. Services",
-    bullets: [
-      "HoneyLove provides AI-based software tools, applications, and online platforms.",
-      "We may update, improve, or discontinue services at any time without prior notice.",
-      "Access to some features requires a paid subscription.",
-    ],
-  },
-  {
-    id: "payments",
-    title: "5. Payments and Subscriptions",
+    title: "3. Account Registration and Security",
     body: (
       <BodyText>
-        <p>
-          All payments are processed by HONEY SYS LLC, 254 Chapman Rd, Ste 208 #24555, Newark, Delaware 19702, USA.
-        </p>
-        <ul className="list-disc pl-5 space-y-1">
-          <li>Fees, billing cycles, and subscription terms are disclosed at the point of purchase.</li>
-          <li>By purchasing, you authorize us to charge your payment method on a recurring basis until cancellation.</li>
-          <li>Subscriptions automatically renew unless you cancel prior to the renewal date.</li>
-        </ul>
+        <p>3.1. To access certain features of the Service, you must create an account. You agree to provide accurate, current, and complete information during registration and to update such information to keep it accurate.</p>
+        <p>3.2. You are responsible for maintaining the confidentiality of your account credentials. You agree to notify us immediately of any unauthorized use of your account.</p>
+        <p>3.3. You may not transfer, sell, or share your account with any other person. Each account is for a single user only.</p>
+        <p>3.4. We reserve the right to suspend or terminate your account at any time if we reasonably believe you have violated these Terms.</p>
       </BodyText>
     ),
   },
   {
-    id: "ip",
-    title: "6. Intellectual Property",
+    id: "companions",
+    title: "4. The Service — AI Companions",
     body: (
       <BodyText>
-        <p>
-          All intellectual property rights in the Platform, software, trademarks, and content belong to Honey Prod Limited,
-          Unit 1603, 16th Floor, The L. Plaza, 367–375 Queen's Road Central, Sheung Wan, Hong Kong.
-        </p>
-        <ul className="list-disc pl-5 space-y-1">
-          <li>
-            Users are granted a limited, non-exclusive, non-transferable, revocable license to access and use HoneyLove for
-            personal, non-commercial purposes.
-          </li>
-          <li>
-            You may not copy, modify, distribute, sell, or lease any part of our services without written consent.
-          </li>
-        </ul>
+        <p>4.1. shefeels.ai provides AI companions that simulate conversation and companionship. You acknowledge and agree to the following:</p>
+        <BodyList>
+          <li>(a) Our AI companions are not human. They do not have consciousness, emotions, or sentience. They are software programs generating responses based on algorithms and training data.</li>
+          <li>(b) Responses generated by AI companions may not always be accurate, appropriate, or complete. AI-generated content should not be relied upon as factual information.</li>
+          <li>(c) AI companions cannot and do not provide medical, legal, financial, therapeutic, or any other form of professional advice. If you require professional advice, consult a qualified professional.</li>
+          <li>(d) All AI-generated images and video content are synthetic. They do not depict real individuals. No real person was photographed, filmed, or harmed in the creation of any visual content.</li>
+          <li>(e) The Service is designed for entertainment, companionship, and personal enjoyment only.</li>
+          <li>(f) We make no guarantees about the availability, reliability, continuity, or performance of our AI companions or the Service.</li>
+        </BodyList>
+        <p>4.2. The AI companions may include features such as persistent memory, proactive messaging, and personalized interactions. These features are designed to enhance the user experience and do not constitute evidence of sentience or consciousness.</p>
       </BodyText>
     ),
   },
   {
-    id: "acceptable-use",
-    title: "7. Acceptable Use",
-    bullets: [
-      "Do not use the Platform for unlawful, harmful, or abusive purposes.",
-      "Do not upload, share, or generate content that violates laws, infringes intellectual property, or contains harassment, hate speech, or explicit illegal material.",
-      "Do not attempt to hack, disrupt, or reverse engineer the Platform.",
-      "Violation of these rules may result in suspension or termination of your account.",
-    ],
+    id: "conduct",
+    title: "5. User Conduct and Acceptable Use",
+    body: (
+      <BodyText>
+        <p>5.1. By using the Service, you agree that you will NOT:</p>
+        <BodyList>
+          <li>(a) Use the Service for any illegal or unauthorized purpose under the laws of your jurisdiction, the Republic of Cyprus, or the European Union;</li>
+          <li>(b) Attempt to probe, scan, test vulnerabilities of, or circumvent security measures of our systems or networks;</li>
+          <li>(c) Attempt to reverse engineer, decompile, disassemble, or otherwise derive the source code of any part of the Service;</li>
+          <li>(d) Attempt to manipulate, trick, or exploit the AI into generating content that depicts minors in any sexual or suggestive context;</li>
+          <li>(e) Use the Service to generate content that promotes violence, terrorism, self-harm, or harm against any identifiable real person;</li>
+          <li>(f) Upload, transmit, or share content depicting real minors in any context;</li>
+          <li>(g) Share, redistribute, sell, or publicly display AI-generated content from the Service without our express written consent;</li>
+          <li>(h) Download, scrape, or systematically extract media (images, videos, audio) from the Service through automated or manual means;</li>
+          <li>(i) Use the Service to harass, threaten, stalk, or abuse any person, including through the AI companions;</li>
+          <li>(j) Impersonate any person or entity, or falsely represent your affiliation with any person or entity;</li>
+          <li>(k) Use the Service in any manner that could damage, disable, overburden, or impair the Service or interfere with any other party’s use of the Service;</li>
+          <li>(l) Use bots, scripts, automation tools, or any other automated means to access or interact with the Service without our express written consent.</li>
+        </BodyList>
+        <p>5.2. We reserve the right to investigate potential violations of these Terms and to take any action we deem appropriate, including termination of your account and referral to law enforcement authorities, without prior notice.</p>
+      </BodyText>
+    ),
   },
   {
-    id: "termination",
-    title: "8. Termination and Suspension",
-    bullets: [
-      "We may suspend or terminate your access at our discretion if you violate these Terms or engage in conduct harmful to HoneyLove or other users.",
-      "Upon termination, your license to use our services ends immediately.",
-    ],
+    id: "subscriptions",
+    title: "6. Subscriptions and Payments",
+    body: (
+      <BodyText>
+        <p>6.1. shefeels.ai offers free and premium subscription tiers. By purchasing a premium subscription, you agree to pay the applicable fees as displayed at the time of purchase.</p>
+        <p>6.2. Subscriptions automatically renew at the end of each billing cycle (monthly, quarterly, or annually) unless cancelled by you before the renewal date. You may cancel your subscription at any time through your account settings.</p>
+        <p>6.3. After cancellation, your premium access will remain active until the end of the current billing period. No refunds or credits are provided for partial billing periods.</p>
+        <p>6.4. Token packs and other one-time purchases are non-refundable once credited to your account.</p>
+        <p>6.5. We reserve the right to change our subscription fees and token pricing upon 30 days’ prior notice. Such notice will be provided via email to the address associated with your account and/or via a prominent notice within the Service.</p>
+        <p>6.6. All payments are processed through third-party payment processors. We do not store your full credit card or payment details on our servers.</p>
+        <p>6.7. You are responsible for any applicable taxes, duties, or charges imposed by your jurisdiction in connection with your use of the Service.</p>
+      </BodyText>
+    ),
   },
   {
-    id: "disclaimers",
-    title: "9. Disclaimers",
-    bullets: [
-      "HoneyLove is provided ‘as is’ and ‘as available’ without warranties of any kind.",
-      "We do not guarantee uninterrupted service, error-free operation, or accuracy of AI-generated outputs.",
-      "Use of HoneyLove is at your own risk.",
-    ],
+    id: "refund-policy",
+    title: "7. Refund Policy",
+    body: (
+      <BodyText>
+        <p>7.1. Subscriptions: Upon cancellation, your subscription remains active until the end of the current billing period. We do not provide refunds or credits for any partial subscription periods.</p>
+        <p>7.2. One-Time Purchases: All one-time purchases, including token packs, image tokens, and premium add-ons, are final and non-refundable once delivered to your account.</p>
+        <p>7.3. Exceptional Circumstances: We may consider refunds on a case-by-case basis in the event of documented billing errors, duplicate charges, or significant service malfunctions. All such requests must be submitted to support@shefeels.ai within 14 days of the relevant transaction. Refund requests will be evaluated at our sole discretion.</p>
+        <p>7.4. Chargebacks: Filing a fraudulent or unwarranted chargeback with your payment provider constitutes a violation of these Terms and may result in immediate account termination and pursuit of legal remedies.</p>
+      </BodyText>
+    ),
+  },
+  {
+    id: "delivery",
+    title: "8. Service Delivery",
+    body: (
+      <BodyText>
+        <p>8.1. All services and products offered on shefeels.ai are delivered digitally to your account within the Service. No physical goods are shipped.</p>
+        <p>8.2. Access to premium features is granted immediately after payment is successfully processed.</p>
+        <p>8.3. Token packs are credited to your account instantly upon successful purchase.</p>
+        <p>8.4. In the event of technical delays in the delivery of digital content, we will endeavor to resolve the issue within 24 hours.</p>
+      </BodyText>
+    ),
+  },
+  {
+    id: "intellectual-property",
+    title: "9. Intellectual Property",
+    body: (
+      <BodyText>
+        <p>9.1. The Service, including all software, algorithms, AI models, design, text, graphics, logos, icons, and underlying technology, is the property of JLHL MANAGEMENT LTD or its licensors and is protected by international intellectual property laws.</p>
+        <p>9.2. User Input: You retain ownership of the text content you input into the Service. By using the Service, you grant us a worldwide, non-exclusive, royalty-free, sublicensable license to use, reproduce, and process your input solely for the purpose of providing, improving, and maintaining the Service.</p>
+        <p>9.3. AI-Generated Content: AI-generated text, images, and video content produced by the Service are owned by JLHL MANAGEMENT LTD. You receive a limited, non-exclusive, non-transferable, revocable license to view and use such content for personal, non-commercial purposes only. Any commercial use requires our explicit written authorization.</p>
+        <p>9.4. You may not copy, reproduce, distribute, sell, license, or create derivative works from any part of the Service or AI-generated content without our express written consent.</p>
+      </BodyText>
+    ),
+  },
+  {
+    id: "takedown",
+    title: "10. Content Reporting and Takedown",
+    body: (
+      <BodyText>
+        <p>10.1. shefeels.ai is committed to maintaining a safe, lawful, and ethical platform. If you encounter content that you believe is illegal, violates these Terms, or infringes upon any third party’s rights, please report it to legal@shefeels.ai.</p>
+        <p>10.2. We will review and investigate all reported complaints and aim to respond within seven (7) business days. Where we determine that content is illegal, it will be removed promptly.</p>
+        <p>10.3. All content on shefeels.ai is 100% AI-generated. No real persons are depicted. However, if you believe that AI-generated content bears an unintentional resemblance to your likeness and you wish to request its removal, please contact legal@shefeels.ai with supporting evidence. We will review such requests in good faith and take appropriate action.</p>
+      </BodyText>
+    ),
+  },
+  {
+    id: "disclaimer",
+    title: "11. Disclaimer of Warranties",
+    body: (
+      <BodyText>
+        <p>THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, OR STATUTORY, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.</p>
+        <p>WE DO NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, TIMELY, SECURE, ERROR-FREE, OR THAT DEFECTS WILL BE CORRECTED, OR THAT THE SERVICE OR THE SERVERS THAT MAKE IT AVAILABLE ARE FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS.</p>
+        <p>WE MAKE NO WARRANTIES REGARDING THE QUALITY, ACCURACY, COMPLETENESS, OR RELIABILITY OF ANY CONTENT GENERATED BY THE AI COMPANIONS.</p>
+      </BodyText>
+    ),
   },
   {
     id: "liability",
-    title: "10. Limitation of Liability",
-    bullets: [
-      "To the fullest extent permitted by law, HoneyLove, HONEY SYS LLC, and Honey Prod Limited are not liable for indirect, incidental, special, or consequential damages.",
-      "Our total liability to you for any claims related to the Platform shall not exceed the amount you paid in the 12 months preceding the claim.",
-    ],
-  },
-  {
-    id: "governing-law",
-    title: "11. Governing Law",
+    title: "12. Limitation of Liability",
     body: (
-      <BodyList>
-        <li>For payment-related matters, these Terms are governed by the laws of Delaware, USA.</li>
-        <li>For intellectual property and ownership matters, these Terms are governed by the laws of Hong Kong.</li>
-        <li>You agree to submit to the exclusive jurisdiction of the courts located in Delaware or Hong Kong, as applicable.</li>
-      </BodyList>
+      <BodyText>
+        <p>12.1. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, JLHL MANAGEMENT LTD, ITS AFFILIATES, OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, AND LICENSORS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, GOODWILL, SERVICE INTERRUPTION, COMPUTER DAMAGE, SYSTEM FAILURE, OR THE COST OF SUBSTITUTE SERVICES, ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF THE SERVICE.</p>
+        <p>12.2. IN NO EVENT SHALL OUR TOTAL AGGREGATE LIABILITY EXCEED THE AMOUNT YOU HAVE PAID TO US IN THE TWELVE (12) MONTHS IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO THE CLAIM.</p>
+        <p>12.3. THE LIMITATIONS IN THIS SECTION APPLY REGARDLESS OF THE LEGAL THEORY ON WHICH THE CLAIM IS BASED, INCLUDING CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY, OR OTHERWISE.</p>
+      </BodyText>
     ),
   },
   {
-    id: "changes",
-    title: "12. Changes to These Terms",
+    id: "indemnification",
+    title: "13. Indemnification",
     body: (
-      <BodyParagraph>
-        We may update these Terms from time to time. The updated version will be posted on https://honeylove.ai with a new
-        effective date. Continued use of the Platform constitutes acceptance of the revised Terms.
-      </BodyParagraph>
+      <BodyText>
+        <p>You agree to indemnify, defend, and hold harmless JLHL MANAGEMENT LTD, its affiliates, officers, directors, employees, agents, and licensors from and against any and all claims, damages, losses, liabilities, costs, and expenses (including reasonable attorneys’ fees) arising out of or relating to: (a) your use of the Service; (b) your violation of these Terms; (c) your violation of any rights of any third party; or (d) any content you submit to the Service.</p>
+      </BodyText>
+    ),
+  },
+  {
+    id: "governing-law",
+    title: "14. Governing Law and Dispute Resolution",
+    body: (
+      <BodyText>
+        <p>14.1. These Terms shall be governed by and construed in accordance with the laws of the Republic of Cyprus, without regard to its conflict of law provisions.</p>
+        <p>14.2. Any dispute arising out of or in connection with these Terms or the Service shall first be attempted to be resolved through good-faith negotiation between the parties. If negotiation fails, the dispute shall be submitted to the exclusive jurisdiction of the courts of Larnaca, Republic of Cyprus.</p>
+        <p>14.3. Nothing in this section prevents either party from seeking injunctive or equitable relief in any court of competent jurisdiction.</p>
+      </BodyText>
+    ),
+  },
+  {
+    id: "modifications",
+    title: "15. Modifications to Terms",
+    body: (
+      <BodyText>
+        <p>15.1. We reserve the right to modify these Terms at any time. Material changes will be communicated to you via email or a prominent notice within the Service at least 30 days before they take effect.</p>
+        <p>15.2. Your continued use of the Service after the effective date of any modifications constitutes your acceptance of the modified Terms. If you do not agree to the modified Terms, you must stop using the Service and close your account.</p>
+      </BodyText>
+    ),
+  },
+  {
+    id: "severability",
+    title: "16. Severability",
+    body: (
+      <BodyText>
+        <p>If any provision of these Terms is found to be invalid, illegal, or unenforceable by a court of competent jurisdiction, the remaining provisions shall remain in full force and effect.</p>
+      </BodyText>
+    ),
+  },
+  {
+    id: "entire-agreement",
+    title: "17. Entire Agreement",
+    body: (
+      <BodyText>
+        <p>These Terms, together with the Privacy Policy, Cookie Policy, and any other policies referenced herein, constitute the entire agreement between you and JLHL MANAGEMENT LTD with respect to the Service.</p>
+      </BodyText>
     ),
   },
   {
     id: "contact",
-    title: "13. Contact Information",
+    title: "18. Contact Information",
     body: (
       <BodyText>
+        <p>For any questions regarding these Terms:</p>
         <div>
-          <strong>HONEY SYS LLC</strong><br />
-          254 Chapman Rd, Ste 208 #24555<br />
-          Newark, Delaware 19702, USA<br />
-          EIN: 39-4239108
-        </div>
-        <div>
-          <strong>Honey Prod Limited</strong><br />
-          Unit 1603, 16th Floor, The L. Plaza<br />
-          367–375 Queen's Road Central, Sheung Wan, Hong Kong<br />
-          Company No.: 78640969
-        </div>
-        <div>
-          📧 Email: <a className="underline" href="mailto:support@honeylove.ai">support@honeylove.ai</a>
+          <strong>JLHL MANAGEMENT LTD</strong><br />
+          Registration Number: HE 484306<br />
+          Georgiou Karaiskaki, 11-13, Carisa Salonica Court, Office 102<br />
+          7560, Pervolia, Larnaca, Cyprus<br />
+          Email: <a className="underline" href="mailto:legal@shefeels.ai">legal@shefeels.ai</a>
         </div>
       </BodyText>
     ),
@@ -266,17 +294,17 @@ export default function TermsAndConditions() {
   return (
     <>
       <SEOHead 
-        title="Terms of Service - SheFeels AI"
-        description="Read HoneyLove's Terms of Service and understand our legal agreements, user obligations, and service policies for our AI-powered platform."
-        keywords="terms of service, terms and conditions, legal agreement, HoneyLove, AI platform, user agreement"
-        canonical="/terms-and-conditions"
+        title="Terms of Service - SheFeels.ai"
+        description="Read shefeels.ai's Terms of Service and understand our legal agreements, user obligations, and service policies for our AI-powered platform."
+        keywords="terms of service, terms and conditions, legal agreement, shefeels, AI platform, user agreement"
+        canonical="/terms-of-service"
       />
       <div className="max-w-7xl mx-auto px-6 py-10">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className={heading}>Terms of Service</h1>
-          <p className={sub}>Effective Date: {effectiveDate}</p>
+          <p className={sub}>Last updated: {effectiveDate}</p>
         </div>
       </div>
 
@@ -290,13 +318,6 @@ export default function TermsAndConditions() {
                 <div key={s.id} className="space-y-3">
                   <H2 id={s.id}>{s.title}</H2>
                   {s.body}
-                  {s.bullets && (
-                    <ul className="list-disc list-outside pl-5 space-y-2">
-                      {s.bullets.map((b, i) => (
-                        <Bullet key={`${s.id}-${i}`}>{b}</Bullet>
-                      ))}
-                    </ul>
-                  )}
                 </div>
               ))}
             </div>
@@ -341,7 +362,7 @@ export default function TermsAndConditions() {
                     ? "ring-white/10 hover:ring-white/30 hover:bg-white/5" 
                     : "ring-gray-200 hover:ring-gray-300 hover:bg-gray-100"
                 }`}>Help Center</Link>
-                <Link to="/contact-center" className="rounded-xl px-4 py-2 text-sm font-semibold text-black bg-gradient-to-b from-[var(--hl-gold)] to-[var(--hl-gold-strong)] shadow-lg hover:from-[var(--hl-gold)] hover:to-[var(--hl-gold-strong)] active:scale-[0.98]">Contact Us</Link>
+                <Link to="/contact-center" className="rounded-xl px-4 py-2 text-sm font-semibold text-white bg-gradient-to-b from-[#7B57F0] to-[#A75DE6] shadow-lg active:scale-[0.98]">Contact Us</Link>
               </div>
           </Card>
         </aside>

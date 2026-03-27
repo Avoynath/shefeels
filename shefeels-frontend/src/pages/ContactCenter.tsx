@@ -46,121 +46,147 @@ export default function ContactCenter() {
       setMessage("");
     } catch (err) {
       console.error("Contact submit failed", err);
-      showError("Submission failed", "Please email support@honeylove.ai directly.");
+      showError("Submission failed", "Please email support@shefeels.ai directly.");
     } finally {
       setIsSubmitting(false);
     }
   }
 
   const fieldClassName =
-    "mt-2 h-[68px] rounded-[18px] border border-white/20 bg-[rgba(255,255,255,0.06)] px-5 text-[16px] text-white placeholder:text-white/45 outline-none transition focus:border-white/35 focus:bg-[rgba(255,255,255,0.1)]";
+    "mt-1 w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none transition focus:border-[#7f5af0]/50 focus:bg-white/10 focus:ring-1 focus:ring-[#7f5af0]/30";
 
   return (
-    <div className="mx-auto w-full max-w-[1280px] px-4 pb-10 pt-4 sm:px-6 sm:pb-14 sm:pt-8">
-      <div className="overflow-hidden rounded-[22px] border border-[rgba(129,92,240,0.45)] bg-[radial-gradient(circle_at_20%_100%,rgba(93,24,45,0.55),transparent_35%),linear-gradient(180deg,rgba(26,20,35,0.98)_0%,rgba(11,11,14,0.98)_100%)] shadow-[0_40px_120px_rgba(0,0,0,0.55)]">
-        <div className="grid grid-cols-1 gap-8 px-6 py-7 sm:px-10 sm:py-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:px-12 lg:py-14">
-          <section className="flex flex-col">
-            <div>
-              <div className="max-w-[470px] text-[42px] font-semibold leading-[1.18] text-white sm:text-[56px]">
-                Let&apos;s discuss
-                <br />
-                on <span className="text-[#815CF0]">something cool</span>
-                <br />
-                together
+    <div className="mx-auto w-full max-w-6xl px-1 sm:px-4 md:px-0 pt-2 pb-8 sm:pt-4 sm:pb-12 md:pb-20">
+      <div className="overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] backdrop-blur-md">
+        <div className="rounded-[20px] bg-black/60 p-1 sm:p-3 ring-1 ring-white/5">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-4 sm:p-8 lg:p-12">
+            {/* Left Column: Info */}
+            <section className="lg:col-span-6 flex flex-col justify-center">
+              <div>
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-white">
+                  Connect with
+                  <br />
+                  <span className="bg-gradient-to-r from-[#B8A3F6] to-[#E53170] bg-clip-text text-transparent">SheFeels AI</span>
+                  <br />
+                  Support
+                </h1>
+                <p className="mt-4 text-sm text-white/60 max-w-md">
+                  We're here to help you get the most out of your AI experience. Reach out with any questions or feedback.
+                </p>
               </div>
-            </div>
 
-            <div className="mt-8 space-y-8 sm:mt-12">
-              <div className="flex items-center gap-4 text-white">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-transparent text-[#815CF0]">
-                  <img src={EmailIcon} alt="email" className="h-5 w-5" />
+              <div className="mt-8 space-y-6 sm:mt-12">
+                <div className="flex items-center gap-4 text-white">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#7f5af0]/10 border border-[#7f5af0]/20 text-[#B8A3F6]">
+                    <img src={EmailIcon} alt="email" className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-wider text-white/40 font-bold">Email Us</div>
+                    <span className="text-lg font-medium text-white/90">support@shefeels.ai</span>
+                  </div>
                 </div>
-                <span className="text-[20px] font-medium tracking-[-0.01em]">support@honeylove.ai</span>
-              </div>
 
-              <div className="flex max-w-[380px] items-center gap-4 rounded-[16px] border border-[rgba(129,92,240,0.78)] bg-transparent px-[6px] py-5 text-white">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-transparent text-[#815CF0]">
-                  <img src={PhoneIcon} alt="phone" className="h-5 w-5" />
+                <div className="flex items-start gap-4 text-white">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#7f5af0]/10 border border-[#7f5af0]/20 text-[#B8A3F6]">
+                    <img src={AddressIcon} alt="address" className="h-5 w-5" />
+                  </div>
+                  <div className="flex flex-col">
+                    <div className="text-[10px] uppercase tracking-wider text-white/40 font-bold mb-1">Registered Office</div>
+                    <span className="text-sm font-semibold text-white">JLHL MANAGEMENT LTD</span>
+                    <span className="text-xs text-white/60 leading-relaxed mt-1">
+                      Georgiou Karaiskaki 11-13,<br />
+                      Carisa Salonica Court, Office 102,<br />
+                      7560 Pervolia, Larnaca, Cyprus
+                    </span>
+                  </div>
                 </div>
-                <span className="text-[18px] font-medium">+123 456 789</span>
               </div>
+            </section>
 
-              <div className="flex items-center gap-4 text-white">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-transparent text-[#815CF0]">
-                  <img src={AddressIcon} alt="address" className="h-5 w-5" />
+            {/* Right Column: Form */}
+            <section className="lg:col-span-6 lg:ml-auto w-full max-w-md">
+              <div className="rounded-[24px] bg-gradient-to-b from-white/10 to-transparent p-[1px]">
+                <div className="rounded-[24px] bg-[#0d0d0d] p-6 sm:p-8">
+                  <form className="space-y-4" onSubmit={handleSubmit}>
+                    <label className="flex flex-col">
+                      <span className="text-xs font-semibold text-white/50 px-1 uppercase tracking-wider">Interested in...</span>
+                      <select
+                        className={fieldClassName}
+                        value={interest}
+                        onChange={(e) => setInterest(e.target.value)}
+                        required
+                      >
+                        <option value="General Support" className="text-black">General Support</option>
+                        <option value="Billing" className="text-black">Billing</option>
+                        <option value="Partnerships" className="text-black">Partnerships</option>
+                        <option value="Press" className="text-black">Press</option>
+                        <option value="Technical" className="text-black">Technical Issue</option>
+                      </select>
+                    </label>
+
+                    <label className="flex flex-col">
+                      <span className="text-xs font-semibold text-white/50 px-1 uppercase tracking-wider">Email</span>
+                      <input
+                        className={fieldClassName}
+                        placeholder="your@email.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        type="email"
+                        required
+                      />
+                    </label>
+
+                    <label className="flex flex-col">
+                      <span className="text-xs font-semibold text-white/50 px-1 uppercase tracking-wider">Name</span>
+                      <input
+                        className={fieldClassName}
+                        placeholder="John Doe"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                      />
+                    </label>
+
+                    <label className="flex flex-col">
+                      <span className="text-xs font-semibold text-white/50 px-1 uppercase tracking-wider">Message</span>
+                      <textarea
+                        rows={4}
+                        className="mt-1 w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none transition focus:border-[#7f5af0]/50 focus:bg-white/10"
+                        placeholder="How can we help you?"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        required
+                      />
+                    </label>
+
+                    <div className="pt-2">
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full flex items-center justify-center gap-3 rounded-xl py-4 shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
+                        style={{ 
+                          background: 'linear-gradient(90deg, #7F5AF0 0%, #9D66FF 100%)',
+                          color: 'white' 
+                        }}
+                      >
+                        <span className="text-sm font-bold uppercase tracking-widest">
+                          {isSubmitting ? "Sending..." : "Send Message"}
+                        </span>
+                        <img src={sendIcon} alt="send" className="h-4 w-4 brightness-0 invert" />
+                      </Button>
+                    </div>
+                    <p className="text-[10px] text-center text-white/30 mt-4">
+                      By contact us, you agree to our Terms of Service and Privacy Policy.
+                    </p>
+                  </form>
                 </div>
-                <span className="text-[20px] font-medium tracking-[-0.01em]">123 Street 456 House</span>
               </div>
-            </div>
-          </section>
-
-          <section className="rounded-[28px] bg-[linear-gradient(180deg,#7B57F0_0%,#A75DE6_38%,#F03078_100%)] p-6 shadow-[0_24px_80px_rgba(129,92,240,0.3)] sm:p-8">
-            <form className="space-y-5" onSubmit={handleSubmit}>
-              <label className="flex flex-col">
-                <span className="mb-2 text-[16px] font-medium text-white">I&apos;m interested in...</span>
-                <select
-                  className={fieldClassName}
-                  value={interest}
-                  onChange={(e) => setInterest(e.target.value)}
-                  required
-                >
-                  <option value="SEO" className="text-black">SEO</option>
-                  <option value="General Support" className="text-black">General Support</option>
-                  <option value="Billing" className="text-black">Billing</option>
-                  <option value="Partnerships" className="text-black">Partnerships</option>
-                  <option value="Press" className="text-black">Press</option>
-                </select>
-              </label>
-
-              <label className="flex flex-col">
-                <span className="mb-2 text-[16px] font-medium text-white">Email Id</span>
-                <input
-                  className={fieldClassName}
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  type="email"
-                  required
-                />
-              </label>
-
-              <label className="flex flex-col">
-                <span className="mb-2 text-[16px] font-medium text-white">Name</span>
-                <input
-                  className={fieldClassName}
-                  placeholder="Enter name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-              </label>
-
-              <label className="flex flex-col">
-                <span className="mb-2 text-[16px] font-medium text-white">Message</span>
-                <textarea
-                  rows={3}
-                  className="mt-0 min-h-[132px] rounded-[18px] border border-white/20 bg-[rgba(255,255,255,0.06)] px-5 py-5 text-[16px] text-white placeholder:text-white/45 outline-none transition focus:border-white/35 focus:bg-[rgba(255,255,255,0.1)]"
-                  placeholder="Enter email"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  required
-                />
-              </label>
-              <div className="pt-4">
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="inline-flex min-w-[268px] items-center justify-center gap-4 rounded-[16px] border-none bg-white px-10 py-5"
-                  style={{ color: "#111111" }}
-                >
-                  <span className="text-[18px] font-medium text-black">{isSubmitting ? "Sending..." : "Send Message"}</span>
-                  <img src={sendIcon} alt="send" className="h-5 w-5 brightness-0" />
-                </Button>
-              </div>
-            </form>
-          </section>
+            </section>
+          </div>
         </div>
       </div>
     </div>
+  );
+}
   );
 }

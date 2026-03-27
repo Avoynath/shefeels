@@ -8,7 +8,7 @@ function BodyText({ children }: { children: React.ReactNode }) {
   const isDark = theme === "dark";
   
   return (
-    <div className={`space-y-2 text-sm leading-relaxed ${
+    <div className={`space-y-4 text-sm leading-relaxed ${
       isDark ? "text-white/70" : "text-gray-700"
     }`}>
       {children}
@@ -31,189 +31,203 @@ function BodyList({ children }: { children: React.ReactNode }) {
 
 type Section = { id: string; title: string; body: React.ReactNode };
 
-const effectiveDate = "11/11/25"; // Update when finalized
+const effectiveDate = "March 17, 2026";
 
 const sections: Section[] = [
   {
-    id: "who-we-are",
-    title: "1. Who We Are",
+    id: "introduction",
+    title: "1. Introduction",
     body: (
       <BodyText>
-        <p>
-          <strong>HONEY SYS LLC</strong>, a Delaware limited liability company, acts as the data controller for customer
-          payment information and account management.
-        </p>
-        <p>
-          <strong>Honey Prod Limited</strong>, a Hong Kong company, acts as the data controller for intellectual property,
-          service ownership, and overall platform operations.
-        </p>
-        <p>
-          For any privacy-related questions, please contact: <a className="underline" href="mailto:support@honeylove.ai">support@honeylove.ai</a>
-        </p>
+        <p>JLHL MANAGEMENT LTD (Registration Number HE 484306), a company incorporated in the Republic of Cyprus with its registered office at Georgiou Karaiskaki, 11-13, Carisa Salonica Court, Office 102, 7560, Pervolia, Larnaca, Cyprus, is the data controller for personal data processed through shefeels.ai ("Platform", "Service", "we", "us", or "our").</p>
+        <p>This Privacy Policy explains how we collect, use, store, share, and protect your personal data when you use our Service. We are committed to processing your data in compliance with the General Data Protection Regulation (EU) 2016/679 ("GDPR"), the Cyprus Law 125(I)/2018 on the Protection of Natural Persons with Regard to the Processing of Personal Data, and the California Consumer Privacy Act ("CCPA").</p>
+        <p>By accessing or using shefeels.ai, you acknowledge that you have read and understood this Privacy Policy. If you do not agree with our data practices, please do not use the Service.</p>
       </BodyText>
     ),
   },
   {
-    id: "information-we-collect",
-    title: "2. Information We Collect",
+    id: "data-we-collect",
+    title: "2. Data We Collect",
     body: (
-      <BodyList>
-        <li><strong>Account Information:</strong> Name, email, username, password.</li>
-        <li><strong>Payment Information:</strong> Credit/debit card details and billing information (processed by third-party providers, handled by HONEY SYS LLC).</li>
-        <li><strong>Usage Data:</strong> Interactions with the Platform, logs, device identifiers, and IP addresses.</li>
-        <li><strong>Content Data:</strong> Inputs, outputs, or files you upload to the Platform.</li>
-        <li><strong>Communication Data:</strong> Support requests, feedback, or other correspondence.</li>
-      </BodyList>
-    ),
-  },
-  {
-    id: "how-we-use",
-    title: "3. How We Use Your Information",
-    body: (
-      <BodyList>
-        <li>Providing and improving services.</li>
-        <li>Processing payments and managing subscriptions.</li>
-        <li>Communicating with you about updates, security, and support.</li>
-        <li>Ensuring compliance with laws and policies.</li>
-        <li>Analyzing usage trends to enhance the Platform.</li>
-      </BodyList>
+      <BodyText>
+        <p><strong>2.1 Data You Provide to Us</strong></p>
+        <BodyList>
+          <li>Email address</li>
+          <li>Username</li>
+          <li>Password (stored in hashed form only)</li>
+          <li>Date of birth</li>
+          <li>Payment data (processed and stored by third-party payment processors; we do not store full payment details on our servers)</li>
+          <li>Support messages and communications</li>
+          <li>Chat messages you send to AI companions</li>
+        </BodyList>
+        <p><strong>2.2 Data Collected Automatically</strong></p>
+        <BodyList>
+          <li>IP address</li>
+          <li>Browser type and version</li>
+          <li>Operating system</li>
+          <li>Device information</li>
+          <li>Usage data (pages visited, features used, interaction patterns)</li>
+          <li>Cookies and similar tracking technologies</li>
+          <li>Referral URL</li>
+        </BodyList>
+        <p><strong>2.3 Service-Generated Data</strong></p>
+        <BodyList>
+          <li>AI memory data (encrypted at rest and in transit)</li>
+          <li>Preference data derived from your interactions</li>
+          <li>AI-generated content (text, images, and video produced during your sessions)</li>
+        </BodyList>
+      </BodyText>
     ),
   },
   {
     id: "legal-bases",
-    title: "4. Legal Bases for Processing (GDPR Users)",
+    title: "3. Legal Bases for Processing",
     body: (
-      <BodyList>
-        <li>Performance of a contract (providing services you requested).</li>
-        <li>Legitimate interests (service improvement, security).</li>
-        <li>Legal obligations (compliance with financial/accounting rules).</li>
-        <li>Consent (marketing communications, cookies).</li>
-      </BodyList>
+      <BodyText>
+        <p>In accordance with GDPR Article 6, we process your personal data on the following legal bases:</p>
+        <BodyList>
+          <li><strong>Performance of a Contract (Art. 6(1)(b)):</strong> Processing necessary to provide the Service, manage your account, process payments, and deliver AI companion features.</li>
+          <li><strong>Legitimate Interests (Art. 6(1)(f)):</strong> Processing necessary for fraud prevention, security, service improvement, and analytics, where our interests do not override your fundamental rights and freedoms.</li>
+          <li><strong>Consent (Art. 6(1)(a)):</strong> Processing based on your explicit consent, including marketing communications and non-essential cookies. You may withdraw consent at any time.</li>
+          <li><strong>Legal Obligation (Art. 6(1)(c)):</strong> Processing necessary to comply with applicable legal requirements, including tax obligations, fraud reporting, and law enforcement requests.</li>
+        </BodyList>
+      </BodyText>
     ),
   },
   {
-    id: "sharing",
-    title: "5. Sharing of Information",
+    id: "how-we-use",
+    title: "4. How We Use Your Data",
     body: (
-      <div className="text-sm text-white/70 space-y-2">
-        <ul className="list-disc pl-5 space-y-1">
-          <li>Payment processors for subscription handling (on behalf of HONEY SYS LLC).</li>
-          <li>Service providers who support platform operations (cloud hosting, analytics, security).</li>
-          <li>Legal authorities when required by law.</li>
-          <li>Corporate affiliates (Honey Prod Limited and subsidiaries).</li>
-        </ul>
-        <p>We do not sell your personal data.</p>
-      </div>
+      <BodyText>
+        <p>We use the personal data we collect for the following purposes:</p>
+        <BodyList>
+          <li>Providing, operating, and maintaining the Service</li>
+          <li>Creating and managing your account</li>
+          <li>Processing payments and subscriptions</li>
+          <li>Powering AI companion features, including conversation, memory, and personalized interactions</li>
+          <li>Personalizing your experience and improving the Service</li>
+          <li>Communicating with you about your account, support requests, and service updates</li>
+          <li>Detecting, preventing, and addressing fraud, abuse, and security issues</li>
+          <li>Complying with legal obligations and regulatory requirements</li>
+          <li>Sending marketing communications (only with your explicit consent; you may opt out at any time)</li>
+        </BodyList>
+      </BodyText>
     ),
   },
   {
-    id: "transfers",
-    title: "6. International Data Transfers",
+    id: "data-sharing",
+    title: "5. Data Sharing",
     body: (
-      <p className="text-sm text-white/70">
-        Your data may be transferred and stored in the United States, Hong Kong, and other jurisdictions where we or our
-        providers operate. We use safeguards such as contractual protections (e.g., Standard Contractual Clauses) for
-        international transfers.
-      </p>
+      <BodyText>
+        <p>We do NOT sell your personal data to third parties.</p>
+        <p>We may share your data with the following categories of recipients, strictly as necessary:</p>
+        <BodyList>
+          <li><strong>Payment Processors:</strong> CCBill and BTCPay Server, for processing subscription and one-time payments.</li>
+          <li><strong>Cloud Infrastructure:</strong> Amazon Web Services (AWS), for hosting, storage, and computing services.</li>
+          <li><strong>Email Services:</strong> Resend.com, for transactional and service-related email communications.</li>
+          <li><strong>Analytics:</strong> Privacy-focused analytics tools only. We do not use Google Analytics or any analytics service that tracks users across third-party websites.</li>
+          <li><strong>Legal Authorities:</strong> Law enforcement or regulatory bodies when required by applicable law or to protect our legal rights.</li>
+          <li><strong>Professional Advisors:</strong> Legal, accounting, and other professional advisors as necessary for our business operations.</li>
+        </BodyList>
+      </BodyText>
     ),
   },
   {
-    id: "retention",
+    id: "international-transfers",
+    title: "6. International Transfers",
+    body: (
+      <BodyText>
+        <p>Your personal data may be transferred to and processed in countries outside the European Economic Area (EEA), including the United States (for AWS cloud infrastructure). When such transfers occur, we ensure appropriate safeguards are in place, including:</p>
+        <BodyList>
+          <li>European Commission adequacy decisions</li>
+          <li>Standard Contractual Clauses (SCCs) approved by the European Commission</li>
+          <li>Data Processing Agreements (DPAs) with all service providers</li>
+        </BodyList>
+      </BodyText>
+    ),
+  },
+  {
+    id: "data-retention",
     title: "7. Data Retention",
     body: (
-      <ul className="list-disc pl-5 space-y-2 text-sm text-white/70">
-        <li><strong>Account and usage data:</strong> retained as long as you maintain an account.</li>
-        <li><strong>Payment data:</strong> retained as required by financial regulations (typically 7 years).</li>
-        <li><strong>Support and communication data:</strong> retained for up to 2 years.</li>
-        <li>You may request deletion of your account and associated data (subject to legal obligations).</li>
-      </ul>
+      <BodyText>
+        <p>We retain your personal data only for as long as necessary to fulfill the purposes described in this Privacy Policy, unless a longer retention period is required by law:</p>
+        <BodyList>
+          <li><strong>Account Data:</strong> Retained for the duration of your account plus 12 months after account deletion.</li>
+          <li><strong>Payment Records:</strong> Retained for 7 years in compliance with Cyprus tax law.</li>
+          <li><strong>Conversations and AI Memory:</strong> Retained for the duration of your account. Deleted within 30 days of account deletion.</li>
+          <li><strong>Server Logs:</strong> Retained for 12 months.</li>
+          <li><strong>Marketing Consent Records:</strong> Retained for the duration of consent validity plus 3 years.</li>
+        </BodyList>
+      </BodyText>
     ),
   },
   {
-    id: "your-rights",
-    title: "8. Your Rights",
+    id: "gdpr-rights",
+    title: "8. Your Rights Under GDPR",
     body: (
-      <div className="text-sm text-white/70 space-y-2">
-        <ul className="list-disc pl-5 space-y-1">
-          <li>Access your personal data.</li>
-          <li>Request correction or deletion.</li>
-          <li>Restrict or object to processing.</li>
-          <li>Request portability of your data.</li>
-          <li>Withdraw consent at any time.</li>
-        </ul>
-        <p>
-          To exercise rights, contact: <a className="underline" href="mailto:support@honeylove.ai">support@honeylove.ai</a>
-        </p>
-      </div>
+      <BodyText>
+        <p>Under the GDPR (Articles 15–21 and Article 7(3)), you have the following rights regarding your personal data:</p>
+        <BodyList>
+          <li><strong>Right of Access (Art. 15):</strong> You have the right to obtain confirmation...</li>
+          <li><strong>Right to Rectification (Art. 16):</strong> You have the right to request correction...</li>
+          <li><strong>Right to Erasure (Art. 17):</strong> You have the right to request deletion...</li>
+          <li>...and more. Please contact privacy@shefeels.ai for the full list.</li>
+        </BodyList>
+        <p>To exercise any of these rights, please contact us at <a className="underline" href="mailto:privacy@shefeels.ai">privacy@shefeels.ai</a>. We will respond to your request within 30 days.</p>
+        <p>Right to Lodge a Complaint: You have the right to lodge a complaint with the Cyprus Commissioner for the Protection of Personal Data at <a className="underline" href="https://www.dataprotection.gov.cy" target="_blank" rel="noreferrer">www.dataprotection.gov.cy</a>.</p>
+      </BodyText>
     ),
   },
   {
-    id: "cookies",
-    title: "9. Cookies and Tracking",
+    id: "ccpa-rights",
+    title: "9. Your Rights Under CCPA",
     body: (
-      <div className="text-sm text-white/70 space-y-2">
-        <p>We use cookies and similar technologies for:</p>
-        <ul className="list-disc pl-5 space-y-1">
-          <li>Authentication and login security.</li>
-          <li>Service functionality.</li>
-          <li>Analytics and performance.</li>
-          <li>Marketing (with your consent, where required).</li>
-        </ul>
-        <p>You can manage cookie preferences through your browser settings.</p>
-      </div>
+      <BodyText>
+        <p>If you are a California resident, you have the right to know what data we collect, request deletion, and opt-out of sales (though we do not sell data).</p>
+        <p>To exercise your CCPA rights, please contact us at <a className="underline" href="mailto:privacy@shefeels.ai">privacy@shefeels.ai</a>.</p>
+      </BodyText>
     ),
   },
   {
-    id: "children",
+    id: "children-privacy",
     title: "10. Children’s Privacy",
     body: (
-      <p className="text-sm text-white/70">
-        HoneyLove is not intended for individuals under 18. We do not knowingly collect data from children. If we learn we
-        have collected personal information from a minor, we will delete it.
-      </p>
+      <BodyText>
+        <p>shefeels.ai is not intended for use by anyone under the age of 18. We do not knowingly collect personal data from individuals under 18 years of age. If we become aware that we have collected personal data from a person under 18, we will take immediate steps to delete that data and terminate the associated account.</p>
+      </BodyText>
     ),
   },
   {
-    id: "security",
-    title: "11. Security",
+    id: "security-measures",
+    title: "11. Security Measures",
     body: (
-      <p className="text-sm text-white/70">
-        We implement industry-standard safeguards (encryption, access controls, monitoring) to protect your personal data.
-        However, no system is 100% secure, and we cannot guarantee absolute protection.
-      </p>
+      <BodyText>
+        <p>We implement robust technical and organizational measures to protect your personal data, including TLS 1.2+ encryption, AES-256 encryption at rest, and regular security audits.</p>
+      </BodyText>
     ),
   },
   {
     id: "changes",
-    title: "12. Changes to this Privacy Notice",
+    title: "12. Changes to This Policy",
     body: (
-      <p className="text-sm text-white/70">
-        We may update this Privacy Notice periodically. Updates will be posted on https://honeylove.ai with a revised
-        effective date.
-      </p>
+      <BodyText>
+        <p>We may update this Privacy Policy from time to time. For material changes, we will provide you with at least 30 days’ prior notice.</p>
+      </BodyText>
     ),
   },
   {
     id: "contact",
-    title: "13. Contact Us",
+    title: "13. Contact Information",
     body: (
-      <div className="text-sm text-white/70 space-y-3">
+      <BodyText>
+        <p>For any questions or concerns about this Privacy Policy, please contact our Data Protection Officer:</p>
         <div>
-          <strong>HONEY SYS LLC</strong><br />
-          254 Chapman Rd, Ste 208 #24555<br />
-          Newark, Delaware 19702, USA<br />
-          EIN: 39-4239108
+          <strong>JLHL MANAGEMENT LTD</strong><br />
+          Georgiou Karaiskaki, 11-13, Carisa Salonica Court, Office 102, 7560, Pervolia, Larnaca, Cyprus<br />
+          Email: <a className="underline" href="mailto:privacy@shefeels.ai">privacy@shefeels.ai</a>
         </div>
-        <div>
-          <strong>Honey Prod Limited</strong><br />
-          Unit 1603, 16th Floor, The L. Plaza<br />
-          367–375 Queen's Road Central, Sheung Wan, Hong Kong<br />
-          Company No.: 78640969
-        </div>
-        <div>
-          📧 Email: <a className="underline" href="mailto:support@honeylove.ai">support@honeylove.ai</a>
-        </div>
-      </div>
+      </BodyText>
     ),
   },
 ];
@@ -230,8 +244,8 @@ export default function PrivacyPolicy() {
     <div className="max-w-7xl mx-auto px-6 py-10">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className={heading}>Privacy Notice</h1>
-          <p className={sub}>Effective Date: {effectiveDate}</p>
+          <h1 className={heading}>Privacy Policy</h1>
+          <p className={sub}>Last updated: {effectiveDate}</p>
         </div>
       </div>
 
@@ -242,7 +256,7 @@ export default function PrivacyPolicy() {
               {sections.map((s) => (
                 <section key={s.id} id={s.id} className="space-y-3">
                   <h2 className={`text-lg sm:text-xl font-semibold tracking-tight ${
-                    isDark ? "text-[var(--hl-gold)]" : "text-[var(--hl-gold)]"
+                    isDark ? "text-[#B8A3F6]" : "text-[#7B57F0]"
                   }`}>{s.title}</h2>
                   {s.body}
                 </section>

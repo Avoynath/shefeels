@@ -488,102 +488,51 @@ export default function Homepage() {
 				keywords="AI companion, AI characters, virtual companion, custom AI character, artificial intelligence chat"
 				canonical="/"
 			/>
-			<main className={`min-h-screen flex flex-col ${isDark ? 'bg-[#000000] text-white' : 'bg-gray-50 text-gray-900'}`}>
-				<div className="container mx-auto px-0 md:px-4 py-4 md:py-8 max-w-330 grow">
-					<header className="mb-4 md:mb-8">
-						<div className="flex flex-col gap-4 md:gap-8">
-							<div className="text-center hidden md:block">
-								<h1 className={`text-3xl md:text-4xl font-bold mb-3 leading-tight ${isDark ? 'text-white' : 'text-gray-900'}`} style={{ fontWeight: 800, letterSpacing: '-0.02em' }}>
-									<span className="text-(--sf-purple)">SheFeels</span> Characters
-								</h1>
-								<p className={`text-base md:text-lg max-w-3xl mx-auto ${isDark ? 'text-white/70' : 'text-gray-600'}`}>
-									Our AI girlfriend bot expert, guys emotionally incline, and uniquely trained to understand you.
-								</p>
-							</div>
-
-							<div className="md:flex md:flex-row md:items-center md:gap-4">
-								{/* Section header and filter pills removed from here — they are now managed in AppLayout for better persistence and layout control */}
-							</div>
+			<div className="w-full max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-10">
+				<header className="mb-4 md:mb-8">
+					<div className="flex flex-col gap-4 md:gap-8">
+						<div className="text-center hidden md:block">
+							<h1 className={`text-3xl md:text-4xl font-bold mb-3 leading-tight ${isDark ? 'text-white' : 'text-gray-900'}`} style={{ fontWeight: 800, letterSpacing: '-0.02em' }}>
+								<span className="text-[#7F5AF0]">SheFeels</span> Characters
+							</h1>
+							<p className={`text-base md:text-lg max-w-3xl mx-auto ${isDark ? 'text-white/70' : 'text-gray-600'}`}>
+								Our AI girlfriend bot expert, designed for emotional connection and uniquely trained to understand you.
+							</p>
 						</div>
-					</header>
+					</div>
+				</header>
 
-					{loading && (
-						<LoadingSpinner
-							size="lg"
-							text="Loading your perfect AI companions..."
-						/>
-					)}
+				{loading && (
+					<LoadingSpinner
+						size="lg"
+						text="Loading your perfect AI companions..."
+					/>
+				)}
 
-					{error && (
-						<div className="text-center text-red-400">Error loading characters: {error}</div>
-					)}
+				{error && (
+					<div className="text-center text-red-400">Error loading characters: {error}</div>
+				)}
 
-					{!loading && !error && characters.length === 0 && (
-						<div className={`text-center ${isDark ? 'text-white/60' : 'text-gray-600'}`}>
-							No characters found.
-						</div>
-					)}
+				{!loading && !error && characters.length === 0 && (
+					<div className={`text-center ${isDark ? 'text-white/60' : 'text-gray-600'}`}>
+						No characters found.
+					</div>
+				)}
 
-					{!loading && !error && filteredCharacters.length > 0 && (
-						<>
-							{(() => {
-								if (useVirtualScrolling) {
-									return (
-										<>
-											<VirtualScroll
-												items={rows}
-												itemHeight={560} // Updated for 376:519 card ratio plus row spacing
-												containerHeight={800} // Height of the scrollable container
-												renderItem={renderRow}
-												className="w-full"
-												overscan={3}
-											/>
-											{filteredCharacters.length > limitedCharacters.length && (
-												<div className="mt-6 flex justify-center">
-													<LoadMoreButton onClick={handleLoadMore} />
-												</div>
-											)}
-										</>
-									);
-								}
+				{!loading && !error && filteredCharacters.length > 0 && (
+					<>
+						{(() => {
+							if (useVirtualScrolling) {
 								return (
 									<>
-										<div
-											className="grid gap-3 md:gap-6 lg:gap-8 px-4 md:px-0"
-											style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
-										>
-											{limitedCharacters.map((c) => {
-												const id = getCharacterId(c);
-												const counts = countsMap[id] || { likes: 0, messages: 0 };
-												const isLiked = !!likeStatusMap[id];
-												const isLiking = !!likingMap[id];
-												return (
-													<article
-														key={id || c.id}
-														className="transition-all duration-200"
-													>
-														<CharacterCard
-															name={c.name}
-															age={c.age}
-															img={c.webp_image_url_s3 || c.image_url_s3}
-															gif={c.gif_url_s3}
-															webp={c.animated_webp_url_s3}
-															bio={c.bio}
-															onClick={() => openCharacterChat(c)}
-															showOptions={false}
-															alignActionsSpread={true}
-															likesCount={counts.likes}
-															messageCount={counts.messages}
-															onLike={() => handleLikeClick(id)}
-															isLiked={isLiked}
-															likeDisabled={isLiked || isLiking}
-															onMediaError={() => handleCharacterMediaError(c)}
-														/>
-													</article>
-												);
-											})}
-										</div>
-										{/* Load More button */}
+										<VirtualScroll
+											items={rows}
+											itemHeight={560}
+											containerHeight={800}
+											renderItem={renderRow}
+											className="w-full"
+											overscan={3}
+										/>
 										{filteredCharacters.length > limitedCharacters.length && (
 											<div className="mt-6 flex justify-center">
 												<LoadMoreButton onClick={handleLoadMore} />
@@ -591,58 +540,55 @@ export default function Homepage() {
 										)}
 									</>
 								);
-							})()}
-						</>
-					)}
-				</div>
-
-				{/* Full-width footer (spans edge-to-edge) */}
-				<footer className="w-full mt-auto bg-linear-to-r from-[#2b1a3d] to-[#0c0c0e] text-gray-100">
-					<div className="max-w-330 mx-auto px-4 py-12">
-						<div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-							<div>
-								<div className="flex items-center gap-3 mb-4">
-									<div className="w-10 h-10 rounded-md bg-(--sf-purple) flex items-center justify-center font-bold text-white">SF</div>
-									<span className="text-xl font-semibold">SheFeels AI</span>
-								</div>
-								<p className="text-sm text-white/70">Chat with AI companions tailored to your preferences. Create custom characters and enjoy personalized conversations.</p>
-							</div>
-							{/*
-							<div>
-								<h4 className="font-semibold mb-3">Features</h4>
-								<ul className="text-sm space-y-2 text-white/80">
-									<li>Cum Facial Generator</li>
-									<li>AI Chatbot</li>
-									<li>NSFW Image Generator</li>
-									<li>Create Custom Characters</li>
-								</ul>
-							</div>
-							*/}
-							<div>
-								<h4 className="font-semibold mb-3">Resources</h4>
-								<ul className="text-sm space-y-2 text-white/80">
-									{/* <li>About</li> */}
-									{/* <li>Press & announcements</li> */}
-									<li>Contact us</li>
-									<li>Terms of use</li>
-								</ul>
-							</div>
-							<div>
-								<h4 className="font-semibold mb-3">Social Media</h4>
-								<ul className="text-sm space-y-2 text-white/80">
-									<li>SheFeels AI on Instagram</li>
-									<li>SheFeels AI on Facebook</li>
-									<li>SheFeels AI on Twitter</li>
-								</ul>
-							</div>
-						</div>
-						<div className="border-t border-white/10 mt-8 pt-6 text-sm text-white/70 flex flex-col md:flex-row justify-between items-center gap-4">
-							<div>© All rights reserved.</div>
-							<div>Terms &amp; Condition · Refund Policy · Privacy Policy</div>
-						</div>
-					</div>
-				</footer>
-			</main>
+							}
+							return (
+								<>
+									<div
+										className="grid gap-3 md:gap-6 lg:gap-8"
+										style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
+									>
+										{limitedCharacters.map((c) => {
+											const id = getCharacterId(c);
+											const counts = countsMap[id] || { likes: 0, messages: 0 };
+											const isLiked = !!likeStatusMap[id];
+											const isLiking = !!likingMap[id];
+											return (
+												<article
+													key={id || c.id}
+													className="transition-all duration-200"
+												>
+													<CharacterCard
+														name={c.name}
+														age={c.age}
+														img={c.webp_image_url_s3 || c.image_url_s3}
+														gif={c.gif_url_s3}
+														webp={c.animated_webp_url_s3}
+														bio={c.bio}
+														onClick={() => openCharacterChat(c)}
+														showOptions={false}
+														alignActionsSpread={true}
+														likesCount={counts.likes}
+														messageCount={counts.messages}
+														onLike={() => handleLikeClick(id)}
+														isLiked={isLiked}
+														likeDisabled={isLiked || isLiking}
+														onMediaError={() => handleCharacterMediaError(c)}
+													/>
+												</article>
+											);
+										})}
+									</div>
+									{filteredCharacters.length > limitedCharacters.length && (
+										<div className="mt-6 flex justify-center">
+											<LoadMoreButton onClick={handleLoadMore} />
+										</div>
+									)}
+								</>
+							);
+						})()}
+					</>
+				)}
+			</div>
 		</>
 	);
 }
