@@ -51,39 +51,39 @@ function MessageBubbleText({ m, showTime = true, onMeasure, isContinuation = fal
 
   // spacing + shape based on continuation
   const bubbleGap = 2;
-  const paddingTop = 13;
-  const paddingBottom = 13;
-  const borderRadius = isContinuation ? 8 : 14;
+  const paddingTop = 9;
+  const paddingBottom = 9;
+  const borderRadius = isContinuation ? 8 : 12;
 
   return (
     <div
       ref={outerRef}
       className={`bubble flex ${isMe ? 'justify-end' : 'justify-start'}`}
       style={{
-        maxWidth: 'min(74%, 390px)',
+        maxWidth: 'min(78%, 420px)',
         alignSelf: isMe ? 'flex-end' : 'flex-start',
         boxSizing: 'border-box',
-        paddingRight: isMe ? 8 : undefined,
-        paddingLeft: isMe ? undefined : 8,
+        paddingRight: isMe ? 6 : undefined,
+        paddingLeft: isMe ? undefined : 6,
         display: 'flex',
         marginBottom: 0,
       }}
     >
       <div
         ref={containerRef}
-        className={`flex flex-col text-[13px] leading-relaxed ${textColor}`}
+        className={`flex flex-col text-[14px] leading-relaxed ${textColor}`}
         style={{
           position: 'relative',
           maxWidth: '100%',
           display: 'inline-flex',
           flexDirection: 'column',
-          minWidth: 56,
+          minWidth: 44,
           background,
           boxShadow: bubbleShadow,
           borderRadius,
           paddingTop,
-          paddingLeft: 17,
-          paddingRight: 17,
+          paddingLeft: 13,
+          paddingRight: 13,
           paddingBottom,
           wordBreak: 'break-word',
           overflowWrap: 'break-word',

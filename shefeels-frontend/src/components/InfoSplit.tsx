@@ -80,38 +80,51 @@ const InfoSplit: React.FC<Props> = ({ gender, style = "realistic" }) => {
         : figmaDefaultSplit;
 
   return (
-    <section className="mx-auto w-full max-w-screen-2xl px-3 sm:px-4 md:px-6 py-2">
-      <h2 className="mb-6 text-center text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight text-white">
-        {content.heading}
-      </h2>
+    <section className="mx-auto w-full max-w-screen-2xl px-3 sm:px-4 md:px-6 py-8">
+      <div className="relative grid grid-cols-1 gap-6 rounded-[24px] p-6 ring-1 md:grid-cols-[1fr_340px] md:p-10 theme-transition bg-[#0c0c0e] ring-white/10 overflow-hidden">
+        {/* Background Gradients (SheFeels Purple/Pink) */}
+        <div className="pointer-events-none absolute inset-0 rounded-[24px] opacity-[0.25] [background:radial-gradient(100%_90%_at_10%_20%,rgba(127,90,240,0.2),transparent_35%),radial-gradient(90%_120%_at_100%_0%,rgba(229,49,112,0.15),transparent_55%)]" />
+        
+        {/* Left Side - Content */}
+        <div className="relative z-10 flex flex-col justify-center">
+          <h2 className="mb-8 text-2xl md:text-3xl lg:text-4xl font-bold leading-tight text-white max-w-xl">
+            {content.heading}
+          </h2>
 
-      <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-[1fr_380px] md:gap-8">
-        <div className="overflow-hidden rounded-[20px]">
-          <img
-            src={imageSrc}
-            alt=""
-            aria-hidden="true"
-            className="h-[200px] w-full rounded-[20px] object-cover md:h-[320px]"
-          />
-        </div>
-
-        <div className="flex max-w-[721px] flex-col">
-          {content.points.map((point, index) => (
-            <div
-              key={point.title}
-              className={`relative pl-[31px] ${index < content.points.length - 1 ? "mb-5 border-b border-dashed border-white/16 pb-5" : ""}`}
-            >
-              <div>
-                <span className="absolute left-0 top-[8px] h-[9px] w-[11px] rounded-[2px] bg-white" />
-                <h3 className="text-lg md:text-xl font-semibold leading-snug tracking-[0.02em] text-white">
+          <div className="flex flex-col gap-6 max-w-2xl">
+            {content.points.map((point) => (
+              <div key={point.title} className="group relative pl-6">
+                {/* Accent line/dot picker */}
+                <div className="absolute left-0 top-[6px] h-full w-[2px] bg-white/10 group-last:h-[12px]">
+                  <div className="h-[12px] w-full rounded-full bg-[#815CF0] shadow-[0_0_12px_rgba(129,92,240,0.6)]" />
+                </div>
+                
+                <h3 className="text-lg md:text-xl font-semibold leading-snug text-white group-hover:text-[#9A7AF4] transition-colors">
                   {point.title}
                 </h3>
-                <p className="mt-2 text-xs md:text-sm leading-relaxed text-white/70">
+                <p className="mt-2 text-sm md:text-[15px] leading-relaxed text-white/60">
                   {point.text}
                 </p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        {/* Right Side - Image Card */}
+        <div className="relative z-10 mx-auto md:ml-auto w-full max-w-[340px]">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[28px] shadow-2xl ring-1 ring-white/10">
+            <img
+              src={imageSrc}
+              alt={content.heading}
+              className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+            />
+            {/* Visual overlay gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#7F5AF0]/10 via-transparent to-[#E53170]/5" />
+          </div>
+          
+          {/* Decorative element behind image */}
+          <div className="absolute -z-10 -bottom-4 -right-4 h-full w-full rounded-[28px] border-2 border-white/5 opacity-40 translate-x-1 translate-y-1" />
         </div>
       </div>
     </section>

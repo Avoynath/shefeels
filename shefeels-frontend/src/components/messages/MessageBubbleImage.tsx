@@ -50,7 +50,7 @@ function MessageBubbleImage({ m, showTime = true, onMeasure }: { m: Message; sho
       <div ref={containerRef} className="relative inline-block group overflow-hidden rounded-2xl" style={{ display: 'inline-block', transform: 'translateZ(0)' }}>
         <button type="button" onClick={() => { try { window.dispatchEvent(new CustomEvent('open:media', { detail: { url: isVideo ? url : (animatedUrl || gifUrl || url), isVideo } })); } catch (e) {} }} className="block">
           {isVideo ? (
-            <video src={url} controls muted loop playsInline crossOrigin="anonymous" onLoadedMetadata={(e) => { try { const h = Math.ceil((e.currentTarget as HTMLVideoElement).getBoundingClientRect().height); if (onMeasure) onMeasure(h); } catch (err) {} }} style={{ maxWidth: 'min(460px, 76vw)', maxHeight: '332px', width: 'auto', height: 'auto', objectFit: 'cover' }} />
+            <video src={url} controls muted loop playsInline crossOrigin="anonymous" onLoadedMetadata={(e) => { try { const h = Math.ceil((e.currentTarget as HTMLVideoElement).getBoundingClientRect().height); if (onMeasure) onMeasure(h); } catch (err) {} }} style={{ maxWidth: 'min(380px, 72vw)', maxHeight: '280px', width: 'auto', height: 'auto', objectFit: 'cover' }} />
           ) : (
             <LazyImage
               src={animatedUrl || gifUrl || url}
@@ -59,7 +59,7 @@ function MessageBubbleImage({ m, showTime = true, onMeasure }: { m: Message; sho
               loading="lazy"
               isAnimated={hasAnimated}
               loopInterval={hasAnimated ? 3500 : 0}
-              style={{ maxWidth: 'min(460px, 76vw)', maxHeight: '332px', width: 'auto', height: 'auto', objectFit: 'cover' }}
+              style={{ maxWidth: 'min(380px, 72vw)', maxHeight: '280px', width: 'auto', height: 'auto', objectFit: 'cover' }}
             />
           )}
         </button>

@@ -102,7 +102,7 @@ export default function ChatSidebar({
   }, [selected?.id]);
   return (
     <div
-      className={`${isMobile ? (mobileView === 'details' ? 'flex w-full' : 'hidden') : 'w-101.5 xl:w-101.5 2xl:w-101.5 flex'} ${isDark ? "border-white/8" : "border-gray-200"} flex-col h-full shrink-0 relative z-0`}
+      className={`${isMobile ? (mobileView === 'details' ? 'flex w-full' : 'hidden') : 'w-[330px] flex'} ${isDark ? "border-white/8" : "border-gray-200"} flex-col h-full shrink-0 relative z-0`}
       style={{ background: '#000' }}
     >
       {isMobile && (
@@ -154,7 +154,7 @@ export default function ChatSidebar({
         <div className="flex-1 overflow-y-auto min-h-0 chat-scroll">
           <div className="space-y-4 pr-3 pb-5 pt-0">
             <div className="relative">
-              <div className={`relative h-114.5 w-full overflow-hidden ${isDark ? "bg-white/2" : "bg-gray-100"}`}>
+              <div className={`relative aspect-[4/5] md:h-84 w-full overflow-hidden ${isDark ? "bg-white/2" : "bg-gray-100"}`}>
                 {currentMedia?.url ? (
                   // For animated media, render as image with LazyImage which handles animation properly
                   <LazyImage src={currentMedia.url} alt={currentCharacterData?.profile?.name || ''} className="w-full h-full object-cover object-center" loading="lazy" isAnimated={currentMedia.type === 'animated'} loopInterval={currentMedia.type === 'animated' ? 3500 : 0} />
@@ -168,7 +168,7 @@ export default function ChatSidebar({
 
                 <div className="absolute left-0 right-0 bottom-5 md:bottom-6 z-20 px-4 md:px-5 pb-0">
                   <div className="flex flex-col gap-1">
-                    <div className="text-[34px] leading-10 md:text-[42px] md:leading-[1.2] font-semibold text-white">{currentCharacterData?.profile?.name}{typeof currentCharacterData?.profile?.age === 'number' && currentCharacterData?.profile?.age ? `, ${currentCharacterData?.profile?.age}` : ''}</div>
+                    <div className="text-xl md:text-2xl font-semibold text-white">{currentCharacterData?.profile?.name}{typeof currentCharacterData?.profile?.age === 'number' && currentCharacterData?.profile?.age ? `, ${currentCharacterData?.profile?.age}` : ''}</div>
                     <div className="flex items-center gap-2 flex-nowrap">
                       {socialItems
                         .filter((it: any) => {
@@ -206,9 +206,9 @@ export default function ChatSidebar({
                 )}
               </div>
             </div>
-            <div className="px-4 md:px-5 -mt-5"><p className="text-[16px] leading-6 md:text-[20px] md:leading-7 text-white">{currentCharacterData?.profile?.bio}</p></div>
+            <div className="px-4 md:px-5 -mt-5"><p className="text-sm md:text-base text-white">{currentCharacterData?.profile?.bio}</p></div>
             <div className="px-4 md:px-5 space-y-3">
-              <button onClick={() => { try { const char = { id: selected?.id, name: currentCharacterData?.profile?.name, age: currentCharacterData?.profile?.age, image_url_s3: currentCharacterData?.imageUrl, } as any; navigate('/generate-image', { state: { character: char } }); } catch (e) { } }} className="w-full h-15 py-2.5 font-semibold flex items-center justify-center gap-2 text-white transition-all" style={{ background: 'linear-gradient(90deg,#815CF0 0%, #CFA8F9 100%)', border: '1px solid rgba(255, 255, 255, 0.50)', borderRadius: '8px' }}>
+              <button onClick={() => { try { const char = { id: selected?.id, name: currentCharacterData?.profile?.name, age: currentCharacterData?.profile?.age, image_url_s3: currentCharacterData?.imageUrl, } as any; navigate('/generate-image', { state: { character: char } }); } catch (e) { } }} className="w-full h-12 py-2.5 font-semibold flex items-center justify-center gap-2 text-white transition-all" style={{ background: 'linear-gradient(90deg,#815CF0 0%, #CFA8F9 100%)', border: '1px solid rgba(255, 255, 255, 0.50)', borderRadius: '8px' }}>
                 <img src={chatNowIcon} alt="" aria-hidden className="h-5 w-5" />
                 <span>Generate Now</span>
               </button>
@@ -228,12 +228,12 @@ export default function ChatSidebar({
 
             <div className="px-0 space-y-4">
               <div className="border-t border-white/8 px-4 md:px-5 pt-4">
-                <h3 className="text-[24px] leading-7 md:text-[28px] md:leading-8 font-medium text-[#815CF0] mb-2">Gallery</h3>
+                <h3 className="text-lg md:text-xl font-medium text-[#815CF0] mb-2">Gallery</h3>
                 {ChatGallery ? <ChatGallery characterId={selected?.id} key={galleryRefreshKey} /> : null}
               </div>
 
               <div className="border-t border-white/8 px-4 md:px-5 pt-4">
-                <h3 className="text-[24px] leading-7 md:text-[28px] md:leading-8 font-medium text-[#815CF0] mb-3">Details</h3>
+                <h3 className="text-lg md:text-xl font-medium text-[#815CF0] mb-3">Details</h3>
                 <div className="grid grid-cols-2 gap-x-2 gap-y-2">
                   {(currentCharacterData?.profile?.details || []).filter((detail: any) => detail?.value && detail.value !== '—' && detail.value.trim() !== '').map((detail: any) => (
                     <div key={`${detail.label}-${detail.value}`} className="flex items-center gap-2.5">
@@ -249,8 +249,8 @@ export default function ChatSidebar({
                         );
                       })()}
                       <div className="min-w-0">
-                        <div className={`text-[11px] md:text-[12px] uppercase tracking-[0.14em] ${theme === 'dark' ? 'text-white/60' : 'text-(--text-muted)'}`}>{detail.label}</div>
-                        <div className={`text-[14px] md:text-[16px] font-semibold ${theme === 'dark' ? 'text-white' : 'text-(--text-primary)'} leading-tight truncate`}>{detail.value}</div>
+                        <div className={`text-[10px] md:text-[11px] uppercase tracking-[0.14em] ${theme === 'dark' ? 'text-white/60' : 'text-(--text-muted)'}`}>{detail.label}</div>
+                        <div className={`text-[13px] md:text-[15px] font-semibold ${theme === 'dark' ? 'text-white' : 'text-(--text-primary)'} leading-tight truncate`}>{detail.value}</div>
                       </div>
                     </div>
                   ))}
@@ -258,7 +258,7 @@ export default function ChatSidebar({
               </div>
 
               <div className="mb-2 border-t border-white/8 px-4 md:px-5 pt-4">
-                <h3 className="text-[24px] leading-7 md:text-[28px] md:leading-8 font-medium text-[#815CF0] mb-2">Her Traits</h3>
+                <h3 className="text-lg md:text-xl font-medium text-[#815CF0] mb-2">Her Traits</h3>
                 <div className="space-y-3">
                   {((currentCharacterData?.profile?.traits || []) as any[]).filter((trait: any) => trait?.value && trait.value !== '—' && trait.value.trim() !== '').map((trait: any) => (
                     <div key={trait.label} className="flex items-center gap-2.5">
@@ -281,8 +281,8 @@ export default function ChatSidebar({
                         );
                       })()}
                       <div className="min-w-0">
-                        <div className={`text-[11px] md:text-[12px] uppercase tracking-[0.14em] ${theme === 'dark' ? 'text-white/60' : 'text-(--text-muted)'}`}>{trait.label}</div>
-                        <div className={`text-[14px] md:text-[16px] font-semibold ${theme === 'dark' ? 'text-white' : 'text-(--text-primary)'} leading-snug`}>{trait.value}</div>
+                        <div className={`text-[10px] md:text-[11px] uppercase tracking-[0.14em] ${theme === 'dark' ? 'text-white/60' : 'text-(--text-muted)'}`}>{trait.label}</div>
+                        <div className={`text-[13px] md:text-[15px] font-semibold ${theme === 'dark' ? 'text-white' : 'text-(--text-primary)'} leading-snug`}>{trait.value}</div>
                       </div>
                     </div>
                   ))}
