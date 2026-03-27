@@ -56,12 +56,12 @@ export default function ChatCenterPanel({
               ←
             </button>
           )}
-          <button type="button" onClick={() => { if (isMobile) setMobileView('details'); }} className="rounded-full" aria-label="Open profile">
-            <AvatarImg hue={selected.hue} size={isMobile ? 56 : 64} online={selected.isOnline} imageUrl={currentCharacterData?.imageUrl} />
+          <button type="button" onClick={() => { if (isMobile) setMobileView('details'); }} className="rounded-full flex-shrink-0" aria-label="Open profile">
+            <AvatarImg hue={selected.hue} size={40} online={selected.isOnline} imageUrl={currentCharacterData?.imageUrl} />
           </button>
           <div onClick={() => { if (isMobile) setMobileView('details'); }} className="cursor-pointer select-none min-w-0">
-            <div className={`truncate font-semibold text-[20px] leading-7 md:text-[24px] md:leading-8 ${isDark ? 'text-white' : 'text-gray-900'}`}>{selected.name}</div>
-            {selected.isOnline && <div className="text-[12px] leading-4 md:text-[14px] md:leading-5 text-emerald-400 font-medium">Online</div>}
+            <div className={`truncate font-semibold text-[15px] ${isDark ? 'text-white' : 'text-gray-900'}`}>{selected.name}</div>
+            {selected.isOnline && <div className="text-[12px] text-emerald-400 font-medium leading-tight">Online</div>}
           </div>
         </div>
         <div className={`flex items-center gap-2 md:gap-3 ${isDark ? 'text-white/85' : 'text-gray-600'}`}>

@@ -483,8 +483,8 @@ export default function Homepage() {
 	return (
 		<>
 			<SEOHead
-				title="HoneyLove — AI Characters & Virtual Companions"
-				description="Chat with AI companions on HoneyLove. Create custom characters, enjoy personalized conversations, and discover virtual companions tailored to you."
+				title="SheFeels — AI Characters & Virtual Companions"
+				description="Chat with AI companions on SheFeels. Create custom characters, enjoy personalized conversations, and discover virtual companions tailored to you."
 				keywords="AI companion, AI characters, virtual companion, custom AI character, artificial intelligence chat"
 				canonical="/"
 			/>
@@ -494,7 +494,7 @@ export default function Homepage() {
 						<div className="flex flex-col gap-4 md:gap-8">
 							<div className="text-center hidden md:block">
 								<h1 className={`text-3xl md:text-4xl font-bold mb-3 leading-tight ${isDark ? 'text-white' : 'text-gray-900'}`} style={{ fontWeight: 800, letterSpacing: '-0.02em' }}>
-									<span className="text-(--hl-gold)">HoneyLove</span> Characters
+									<span className="text-(--sf-purple)">SheFeels</span> Characters
 								</h1>
 								<p className={`text-base md:text-lg max-w-3xl mx-auto ${isDark ? 'text-white/70' : 'text-gray-600'}`}>
 									Our AI girlfriend bot expert, guys emotionally incline, and uniquely trained to understand you.
@@ -597,13 +597,13 @@ export default function Homepage() {
 				</div>
 
 				{/* Full-width footer (spans edge-to-edge) */}
-				<footer className="w-full mt-auto bg-linear-to-r from-[#2b1a0f] to-[#1a1209] text-gray-100">
+				<footer className="w-full mt-auto bg-linear-to-r from-[#2b1a3d] to-[#0c0c0e] text-gray-100">
 					<div className="max-w-330 mx-auto px-4 py-12">
 						<div className="grid grid-cols-1 md:grid-cols-4 gap-8">
 							<div>
 								<div className="flex items-center gap-3 mb-4">
-									<div className="w-10 h-10 rounded-md bg-(--hl-gold) flex items-center justify-center font-bold text-(--hl-black)">hl</div>
-									<span className="text-xl font-semibold">honey love</span>
+									<div className="w-10 h-10 rounded-md bg-(--sf-purple) flex items-center justify-center font-bold text-white">SF</div>
+									<span className="text-xl font-semibold">SheFeels AI</span>
 								</div>
 								<p className="text-sm text-white/70">Chat with AI companions tailored to your preferences. Create custom characters and enjoy personalized conversations.</p>
 							</div>
@@ -630,9 +630,9 @@ export default function Homepage() {
 							<div>
 								<h4 className="font-semibold mb-3">Social Media</h4>
 								<ul className="text-sm space-y-2 text-white/80">
-									<li>Homey Love AI on Instagram</li>
-									<li>Homey Love AI on Facebook</li>
-									<li>Homey Love AI on Twitter</li>
+									<li>SheFeels AI on Instagram</li>
+									<li>SheFeels AI on Facebook</li>
+									<li>SheFeels AI on Twitter</li>
 								</ul>
 							</div>
 						</div>

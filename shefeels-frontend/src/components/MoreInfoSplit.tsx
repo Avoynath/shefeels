@@ -11,9 +11,9 @@ const MoreInfoSplit: React.FC<Props> = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="mx-auto w-full max-w-[1602px] px-4 py-12 sm:px-6 md:px-0 md:py-[60px]">
+    <section className="mx-auto w-full max-w-screen-2xl px-3 sm:px-4 md:px-6 py-6">
       <div
-        className="relative overflow-hidden rounded-[20px] border border-white/16 px-6 py-10 md:min-h-[514px] md:px-[60px] md:py-[60px]"
+        className="relative overflow-hidden rounded-[20px] border border-white/16 px-6 py-8 md:px-10 md:py-10"
         style={{
           background:
             "radial-gradient(86% 128% at 50% 0%, rgba(149,113,255,0.2) 0%, rgba(11,8,19,0.98) 28%, rgba(0,0,0,1) 42%, rgba(86,18,42,0.94) 100%)",
@@ -21,19 +21,19 @@ const MoreInfoSplit: React.FC<Props> = () => {
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(149,113,255,0.12),transparent_24%),linear-gradient(180deg,transparent_0%,rgba(229,49,112,0.08)_100%)]" />
         <div className="relative mx-auto flex max-w-[1482px] flex-col items-center justify-center gap-10 text-center md:gap-[40px]">
-          <h2 className="w-full text-[30px] font-bold leading-[1.2] text-white md:text-[40px] md:leading-[50px]">
+          <h2 className="w-full text-3xl md:text-4xl font-extrabold leading-tight tracking-tight text-white">
             Start Generating Without Limits
           </h2>
 
           <div className="flex w-full flex-col items-center gap-8 md:gap-[50px]">
-            <p className="max-w-[1454px] text-[18px] leading-[30px] tracking-[-0.01em] text-white/82 md:text-[20px] md:leading-[32px]">
+            <p className="max-w-4xl text-sm md:text-base leading-relaxed tracking-[-0.01em] text-white/82">
               Build a custom companion, shape the fantasy, and jump straight into a faster, hotter workflow made around chat, image generation, and private roleplay.
             </p>
 
             <button
               type="button"
               onClick={() => navigate("/generate-image")}
-              className="inline-flex h-[62px] w-full max-w-[250px] items-center justify-center gap-[10px] rounded-[12px] border px-[32px] text-[18px] font-semibold leading-[28px] text-white transition hover:brightness-110"
+              className="inline-flex h-10 w-full max-w-[200px] items-center justify-center gap-2 rounded-full border px-6 text-sm font-semibold text-white transition hover:brightness-110"
               style={{
                 background: 'linear-gradient(90deg, #d9b2ff 0%, #7f5af0 38%, #9d66ff 64%, #f48db5 100%)',
                 borderColor: 'rgba(255,255,255,0.20)',

@@ -44,19 +44,19 @@ const FAQRow: React.FC<Row> = ({ q, a }) => {
       <button
         type="button"
         onClick={() => setOpen((value) => !value)}
-        className="flex min-h-[86px] w-full items-center justify-between gap-6 px-6 py-5 text-left"
+        className="flex w-full items-center justify-between gap-6 px-4 py-3 text-left"
       >
-        <span className="flex-1 text-[18px] font-normal leading-[30px] text-white md:text-[22px]">
+        <span className="flex-1 text-base font-medium leading-snug text-white">
           {q}
         </span>
-        <span className={`grid h-10 w-10 shrink-0 place-items-center text-[42px] leading-none text-white transition-transform ${open ? "rotate-45" : ""}`}>
+        <span className={`grid h-8 w-8 shrink-0 place-items-center text-2xl leading-none text-white transition-transform ${open ? "rotate-45" : ""}`}>
           +
         </span>
       </button>
       <div
         ref={ref}
         style={{ maxHeight: height, opacity: open ? 1 : 0 }}
-        className="overflow-hidden px-6 pb-5 text-[15px] leading-6 text-white/70 transition-all duration-300"
+        className="overflow-hidden px-4 pb-3 text-sm leading-relaxed text-white/70 transition-all duration-300"
       >
         {a}
       </div>
@@ -66,12 +66,12 @@ const FAQRow: React.FC<Row> = ({ q, a }) => {
 
 const FAQSection: React.FC<{ gender?: string }> = () => {
   return (
-    <section className="mx-auto w-full max-w-[1196px] px-4 py-12 sm:px-6 md:px-0 md:py-[60px]">
-      <h2 className="mb-10 text-center text-[30px] font-bold leading-[1.2] text-white md:mb-[40px] md:text-[40px] md:leading-[50px]">
+    <section className="mx-auto w-full max-w-5xl px-6 py-2">
+      <h2 className="mb-10 text-center text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight text-white">
         Frequently Asked Questions
       </h2>
 
-      <div className="space-y-[25px]">
+      <div className="space-y-4">
         {FAQ_ROWS.map((row) => (
           <FAQRow key={row.q} {...row} />
         ))}

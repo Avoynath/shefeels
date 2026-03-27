@@ -588,17 +588,17 @@ export const Header: React.FC<Props> = ({
             {(!user || !(user as any).hasActiveSubscription) && promoConfig && promoConfig.offer_enabled && (
               <button
                 onClick={() => navigate('/premium')}
-                className="hidden md:inline-flex h-[72px] min-w-[332px] items-center justify-between gap-3 rounded-[20px] px-5 text-white transition-all duration-200 hover:scale-[1.02]"
+                className="hidden md:inline-flex items-center gap-3 px-4 sm:px-5 py-1 h-9 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.02]"
                 style={{
+                  borderRadius: 50,
                   background: 'linear-gradient(90deg, #B88CFF 0%, #815CF0 52%, #7F5AF0 100%)',
-                  boxShadow: '0 0 24px rgba(127, 90, 240, 0.38), inset 0 1px 0 rgba(255,255,255,0.18)'
+                  boxShadow: '0 2px 26px 0 rgba(127, 90, 240, 0.60)'
                 }}
               >
-                <span className="inline-flex items-center gap-3">
-                  <img src={premiumIcon} alt="" className="h-8 w-8 brightness-0 invert" />
-                  <span className="text-[17px] font-medium leading-none whitespace-nowrap">Get Premium</span>
-                </span>
-                <span className="inline-flex items-center rounded-full bg-white px-4 py-2 text-[16px] font-semibold leading-none text-[#1B1B1F] whitespace-nowrap">
+                <img src={premiumIcon} alt="" className="h-5 w-5 brightness-0 invert" />
+                <span className="hidden xs:inline">{promoConfig?.premium_button_text || 'Get Premium'}</span>
+                <span className="xs:hidden">Premium</span>
+                <span className="inline-flex items-center rounded-full bg-white/90 px-2 py-0.5 text-[11px] font-semibold text-[#815CF0]">
                   {promoConfig?.offer_badge_text || '70% off'}
                 </span>
               </button>
@@ -608,11 +608,7 @@ export const Header: React.FC<Props> = ({
             {!isAuthenticated ? (
               <button
                 onClick={() => { onOpenAuth ? onOpenAuth() : navigate('/login'); }}
-                className="hidden md:inline-flex h-[72px] min-w-[160px] items-center justify-center rounded-[20px] px-8 text-[18px] font-medium text-white transition-all duration-200 hover:scale-[1.02]"
-                style={{
-                  background: 'linear-gradient(180deg, rgba(91, 69, 78, 0.92) 0%, rgba(58, 39, 49, 0.92) 100%)',
-                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)'
-                }}
+                className={`rounded-xl px-4 py-1.5 h-8 text-sm font-medium transition theme-transition ${compactButton}`}
               >
                 Login
               </button>

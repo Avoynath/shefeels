@@ -1,5 +1,5 @@
 /**
- * API Client for Honey Love AI Friend Chatbot
+ * API Client for  AI Friend Chatbot
  * 
  * This module provides a comprehensive API service layer that handles:
  * - Authentication with Bearer tokens stored securely in memory

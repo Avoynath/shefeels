@@ -17,8 +17,8 @@ interface SEOHeadProps {
 }
 
 export default function SEOHead({
-  title = "HoneyLove AI - Create & Chat with AI Characters | NSFW AI Companions",
-  description = "Experience the ultimate AI companion with HoneyLove AI. Create custom AI characters, chat with realistic AI girlfriends and boyfriends. Premium NSFW AI chat experience with unlimited conversations.",
+  title = "SheFeels AI - Create & Chat with AI Characters | NSFW AI Companions",
+  description = "Experience the ultimate AI companion with SheFeels AI. Create custom AI characters, chat with realistic AI girlfriends and boyfriends. Premium NSFW AI chat experience with unlimited conversations.",
   keywords = "AI girlfriend, AI boyfriend, AI chat, NSFW AI, AI companion, character AI, virtual girlfriend, virtual boyfriend, AI roleplay, custom AI characters",
   canonical,
   ogTitle,
@@ -64,7 +64,7 @@ export default function SEOHead({
     updateMetaTag('og:description', ogDescription || description, true);
     updateMetaTag('og:url', ogUrl || window.location.href, true);
     updateMetaTag('og:type', 'website', true);
-    updateMetaTag('og:site_name', 'HoneyLove AI', true);
+    updateMetaTag('og:site_name', 'SheFeels AI', true);
     
     if (ogImage) {
       updateMetaTag('og:image', ogImage, true);

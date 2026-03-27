@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTheme } from "../contexts/ThemeContext";
 import footerLogo from "../assets/figma/home/footer/footer-logo.svg";
 import socialInstagram from "../assets/figma/home/footer/social-instagram-custom.svg";
 import socialFacebook from "../assets/figma/home/footer/social-facebook.svg";
@@ -9,109 +10,85 @@ import paymentBank from "../assets/figma/home/footer/payment-bank.svg";
 import paymentAmex from "../assets/figma/home/footer/payment-amex.svg";
 import paymentCard from "../assets/figma/home/footer/payment-card.png";
 
-const FEATURE_LINKS = [
-  { label: "Cum Facial Generator", to: "/cum-facial-generator" },
-  { label: "AI Sex Simulator", to: "/ai-sex-simulator" },
-  { label: "NSFW AI Image Generator", to: "/nsfw-ai-image-generator" },
-  { label: "AI Slut", to: "/ai-slut" },
-  { label: "NSFW AI Chatbot", to: "/nsfw-ai-chatbot" },
-];
+const SiteFooter: React.FC<{ gender?: string }> = ({ gender }) => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+  const isMale = gender === 'Male';
+  const isFemale = gender === 'Female';
+  const label = isMale ? 'boyfriend' : isFemale ? 'girlfriend' : 'companion';
 
-const RESOURCE_LINKS = [
-  { label: "About", to: "/about" },
-  { label: "Press & announcements", to: "/press" },
-  { label: "Careers at Finder", to: "/careers" },
-  { label: "Contact us", to: "/contact-center" },
-  { label: "Terms of use", to: "/terms-of-service" },
-];
-
-const FOOTER_LEGAL_LINKS = [
-  { label: "Terms & Condition", to: "/terms-of-service" },
-  { label: "Refund Policy", to: "/refund-policy" },
-  { label: "Privacy Policy", to: "/privacy-policy" },
-];
-
-const SocialIconButton = ({ children }: { children: React.ReactNode }) => (
-  <span className="inline-flex h-7 w-7 items-center justify-center rounded-[16px] bg-white/10">
-    {children}
-  </span>
-);
-
-const SOCIAL_LINKS = [
-  { label: "Instagram", icon: <img src={socialInstagram} alt="" className="h-[14px] w-[14px]" /> },
-  { label: "Facebook", icon: <img src={socialFacebook} alt="" className="h-[14px] w-[14px]" /> },
-  { label: "Twiter", icon: <img src={socialX} alt="" className="h-[14px] w-[14px]" /> },
-  { label: "Instagram", icon: <img src={socialInstagram} alt="" className="h-[14px] w-[14px]" /> },
-];
-
-const SiteFooter: React.FC<{ gender?: string }> = () => {
   return (
-    <footer className="w-full border-t border-[#815cf0] bg-[radial-gradient(86%_128%_at_50%_0%,rgba(149,113,255,0.2)_0%,rgba(11,8,19,0.98)_28%,rgba(0,0,0,1)_42%,rgba(86,18,42,0.94)_100%)] pb-20 md:pb-0">
-      <div className="w-full px-4 pt-10 sm:px-6 md:px-[34px] md:pt-[50px]">
-        <div className="flex flex-col gap-10 md:gap-12">
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-[311px_1fr] md:gap-[178px]">
-            <div className="flex flex-col gap-5">
-              <img src={footerLogo} alt="honey love" className="h-[60px] w-[127px]" />
-              <p className="max-w-[300px] text-[16px] leading-7 tracking-[0.02em] text-white">
-                HoneyLove AI offers unlimited and realistic AI companions, uncensored chats, and immersive roleplay.
-              </p>
+    <footer className={`w-full pb-20 md:pb-0 ${
+      isDark 
+        ? "bg-linear-to-r from-[#2b1a3d] to-[#0c0c0e]" 
+        : "bg-linear-to-r from-[#e8d8f8] via-purple-50 to-pink-50"
+    }`}>
+      <div className="mx-auto w-full max-w-screen-2xl px-3 sm:px-4 md:px-6 py-8 md:px-8 md:py-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Brand */}
+          <div>
+            <div className="flex items-center gap-3">
+              <img src={footerLogo} alt="honey love" className="h-8" />
             </div>
-
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 md:gap-[134px]">
-              <div className="max-w-[243px]">
-                <h5 className="text-[20px] font-semibold leading-7 text-white">Features</h5>
-                <ul className="mt-6 space-y-2 text-[16px] leading-[22px] text-white">
-                  {FEATURE_LINKS.map((item) => (
-                    <li key={item.label}>
-                      <Link to={item.to}>{item.label}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="max-w-[196px]">
-                <h5 className="text-[20px] font-semibold leading-7 text-white">Resources</h5>
-                <ul className="mt-6 space-y-2 text-[16px] leading-[22px] text-white">
-                  {RESOURCE_LINKS.map((item) => (
-                    <li key={item.label}>
-                      <Link to={item.to}>{item.label}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="max-w-[228px]">
-                <h5 className="text-[20px] font-semibold leading-7 text-white">Social Media</h5>
-                <ul className="mt-6 space-y-2 text-[16px] leading-[22px] text-white">
-                  {SOCIAL_LINKS.map((item, index) => (
-                    <li key={`${item.label}-${index}`} className="flex items-center gap-2">
-                      <SocialIconButton>{item.icon}</SocialIconButton>
-                      <span>{item.label}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            <p className={`mt-3 text-sm ${isDark ? "text-white/80" : "text-gray-600"}`}>
+              SheFeels AI offers unlimited &amp; realistic AI {label}, nsfw ai chat online, and interactive AI companion fun.
+            </p>
           </div>
 
-          <div className="flex flex-col gap-5 border-t border-white/20 py-5 text-[15px] text-white/80 md:flex-row md:items-center md:justify-between">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-[110px]">
-              <span className="leading-[22px]">© All rights reserved.</span>
-              <div className="flex flex-wrap items-center gap-6 md:gap-[110px]">
-                {FOOTER_LEGAL_LINKS.map((item) => (
-                  <Link key={item.label} to={item.to} className="leading-7">
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
+          {/* Resources */}
+          <div>
+            <h5 className={`font-semibold ${isDark ? "text-white" : "text-gray-900"}`}>Resources</h5>
+            <ul className={`mt-3 space-y-2 text-sm ${isDark ? "text-white/70" : "text-gray-600"}`}>
+              <li><Link to="/contact-center" className="hover:underline">Contact us</Link></li>
+              <li><Link to="/terms-of-service" className="hover:underline">Terms of Service</Link></li>
+            </ul>
+          </div>
 
-            <div className="flex items-center gap-4">
-              <img src={dmcaBadge} alt="DMCA" className="h-10 w-[97px] rounded-[6px] object-cover" />
-              <img src={paymentBank} alt="Bank" className="h-10 w-[60px]" />
-              <img src={paymentAmex} alt="Amex" className="h-10 w-[60px]" />
-              <img src={paymentCard} alt="Card" className="h-10 w-[58px] rounded-[8px] object-cover" />
-            </div>
+          {/* Social Media */}
+          <div>
+            <h5 className={`font-semibold ${isDark ? "text-white" : "text-gray-900"}`}>Social Media</h5>
+            <ul className={`mt-3 space-y-2 text-sm ${isDark ? "text-white/70" : "text-gray-600"}`}>
+              <li className="flex items-center gap-2">
+                <img src={socialInstagram} alt="" className="w-4 h-4" /> SheFeels AI on Instagram
+              </li>
+              <li className="flex items-center gap-2">
+                <img src={socialFacebook} alt="" className="w-4 h-4" /> SheFeels AI on Facebook
+              </li>
+              <li className="flex items-center gap-2">
+                <img src={socialX} alt="" className="w-4 h-4" /> SheFeels AI on Twitter
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className={`mt-8 border-t pt-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs ${
+          isDark 
+            ? "border-white/10 text-white/60" 
+            : "border-gray-200 text-gray-500"
+        }`}>
+          <div>© All rights reserved.</div>
+          <div className="flex flex-wrap gap-4">
+            <Link to="/legal" className="hover:underline">Legal</Link>
+            <Link to="/terms-of-service" className="hover:underline">Terms of Service</Link>
+            <Link to="/refund-policy" className="hover:underline">Refund Policy</Link>
+            <Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link>
+            <Link to="/contact-center" className="hover:underline">Contact Center</Link>
+            <Link to="/help-center" className="hover:underline">Help Center</Link>
+          </div>
+          <div className={`flex gap-3 ${isDark ? "text-white/60" : "text-gray-500"}`}>
+            <span className="w-6 h-6 block">
+              <img src={dmcaBadge} alt="DMCA" className="w-6 h-6 rounded object-cover" />
+            </span>
+            <span className="w-6 h-6 block">
+              <img src={paymentBank} alt="Bank" className="w-6 h-6" />
+            </span>
+            <span className="w-6 h-6 block">
+              <img src={paymentAmex} alt="Amex" className="w-6 h-6" />
+            </span>
+            <span className="w-6 h-6 block">
+              <img src={paymentCard} alt="Card" className="w-6 h-6 rounded object-cover" />
+            </span>
           </div>
         </div>
       </div>

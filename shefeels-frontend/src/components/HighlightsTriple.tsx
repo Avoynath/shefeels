@@ -15,21 +15,21 @@ const CARDS = [
 
 const HighlightsTriple: React.FC<{ gender?: string }> = () => {
   return (
-    <section className="mx-auto w-full max-w-[1602px] px-4 py-12 sm:px-6 md:px-0 md:py-[50px]">
-      <h2 className="mb-10 text-center text-[30px] font-bold leading-[1.2] text-white md:mb-[50px] md:text-[40px] md:leading-[50px]">
+    <section className="mx-auto w-full max-w-screen-2xl px-3 sm:px-4 md:px-6 py-2">
+      <h2 className="mb-8 text-center text-2xl md:text-2xl lg:text-3xl font-semibold leading-tight text-white">
         Visual Highlights That Keep The Mood
       </h2>
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:justify-between lg:gap-[60px]">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {CARDS.map((card) => (
           <article key={card.image} className="flex flex-col gap-7 lg:max-w-[736px]">
             <img
               src={card.image}
               alt=""
               aria-hidden="true"
-              className="h-[240px] w-full rounded-[20px] object-cover md:h-[300px] lg:h-[300px] lg:w-[736px]"
+              className="h-[200px] w-full rounded-[20px] object-cover md:h-[240px]"
             />
-            <p className="text-[18px] leading-[30px] text-white md:text-[20px] md:leading-[32px]">
+            <p className="text-sm md:text-base leading-relaxed text-white">
               {card.text}
             </p>
           </article>

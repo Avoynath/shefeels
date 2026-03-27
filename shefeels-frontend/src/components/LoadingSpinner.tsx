@@ -30,7 +30,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   };
 
   const spinnerClass = `${sizeClasses[size]} animate-spin ${
-    isDark ? 'text-[var(--hl-gold)]' : 'text-[var(--hl-gold)]'
+    isDark ? 'text-(--sf-purple)' : 'text-(--sf-purple)'
   }`;
 
   const containerClass = fullScreen 

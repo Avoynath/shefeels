@@ -29,7 +29,7 @@ type Props = {
 };
 
 export const Sidebar: React.FC<Props> = ({ sidebarOpen, sidebarCollapsed, setSidebarCollapsed, setSidebarOpen, selectedItem, setSelectedItem }) => {
-	const expandedSidebarWidth = 250;
+	const expandedSidebarWidth = 240;
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { theme } = useTheme();
@@ -144,33 +144,33 @@ export const Sidebar: React.FC<Props> = ({ sidebarOpen, sidebarCollapsed, setSid
 
 			{/* Mobile Drawer */}
 			<div
-				className={`md:hidden fixed top-0 left-0 bottom-0 z-[60] w-full transform transition-transform duration-200 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
-				style={{ width: `min(${expandedSidebarWidth}px, 85vw)`, height: '100dvh' }}
+				className={`md:hidden fixed top-0 left-0 bottom-0 z-[60] w-64 transform transition-transform duration-200 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+				style={{ height: '100dvh' }}
 				role="dialog"
 				aria-modal={sidebarOpen}
 				onKeyDown={(e) => e.key === 'Escape' && setSidebarOpen(false)}
 			>
 				<div style={{ ...shellStyle, minHeight: '100dvh' }} className="flex h-full w-full flex-col overflow-hidden theme-transition">
-					<div className="px-0 pt-5">
-						<div className={`mx-0 flex h-[54px] items-center justify-between border-b px-[30px] ${isDark ? 'border-white/10' : 'border-slate-200'}`}>
-							<div className="flex items-center gap-4">
-								<HambergerMenu size="22" color="currentColor" className={isDark ? "text-white/82" : "text-slate-700"} />
-								<span className={`text-[18px] font-semibold tracking-[-0.02em] ${isDark ? 'text-white' : 'text-slate-900'}`}>Menu</span>
+					<div className="px-4 pt-5 pb-4">
+						<div className={`flex items-center justify-between gap-3 mb-4`}>
+							<div className="flex items-center gap-3">
+								<HambergerMenu size="20" color="currentColor" className={isDark ? "text-white/82" : "text-slate-700"} />
+								<span className={`text-base font-medium ${isDark ? 'text-white' : 'text-slate-900'}`}>Menu</span>
 							</div>
 							<button
 								ref={mobileCloseRef}
 								onClick={() => setSidebarOpen(false)}
 								aria-label="Close menu"
-								className={`grid h-10 w-10 place-items-center rounded-full transition-colors ${isDark ? 'text-white/78 hover:bg-white/8 hover:text-white' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'}`}
+								className={`grid h-9 w-9 place-items-center rounded-md ${isDark ? 'hover:bg-white/10' : 'hover:bg-gray-100'}`}
 							>
-								<ArrowRight2 size="18" color="currentColor" />
+								<ArrowRight2 size="16" color="currentColor" className={isDark ? 'text-white/78' : 'text-slate-700'} />
 							</button>
 						</div>
 					</div>
 
-					<div className="flex min-h-0 flex-1 flex-col pt-4">
-						<nav className="flex-1 overflow-y-auto no-scrollbar pb-4">
-							<ul className="space-y-[6px]">
+					<div className="flex min-h-0 flex-1 flex-col">
+						<nav className="flex-1 overflow-y-auto no-scrollbar px-3 pb-4">
+							<ul className="space-y-1">
 								{renderSidebarItems(false)}
 							</ul>
 						</nav>
@@ -182,34 +182,27 @@ export const Sidebar: React.FC<Props> = ({ sidebarOpen, sidebarCollapsed, setSid
 			<aside
 				onDoubleClick={() => setSidebarCollapsed((v) => !v)}
 				style={{ ...shellStyle, top: "var(--header-h)", height: "calc(100vh - var(--header-h))" } as React.CSSProperties}
-				className={`hidden md:fixed md:left-0 md:z-50 md:block overflow-hidden transition-all duration-300 ease-in-out ${sidebarCollapsed ? "w-[72px]" : "w-[250px]"} theme-transition`}
+				className={`hidden md:fixed md:left-0 md:z-50 md:block overflow-hidden transition-all duration-300 ease-in-out ${sidebarCollapsed ? "w-16" : "w-60"} theme-transition`}
 			>
-				<div className="flex h-full w-full flex-col">
-					<div className="pt-5">
-						<div className={`flex h-[54px] items-center border-b transition-all duration-300 ${isDark ? "border-white/10" : "border-slate-200"} ${sidebarCollapsed ? "justify-center px-0" : "justify-between px-[30px]"}`}>
-							{!sidebarCollapsed && (
-								<div className="flex items-center gap-4">
-									<HambergerMenu size="22" color="currentColor" className={isDark ? "text-white/82" : "text-slate-700"} />
-									<span className={`text-[18px] font-semibold tracking-[-0.02em] ${isDark ? "text-white" : "text-slate-900"}`}>Menu</span>
-								</div>
-							)}
-							<button
-								onClick={() => setSidebarCollapsed((v) => !v)}
-								aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-								className={`grid h-10 w-10 place-items-center rounded-full transition-colors ${isDark ? "text-white/78 hover:bg-white/8 hover:text-white" : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"}`}
-							>
-								<ArrowRight2 size="18" color="currentColor" className={`transition-transform duration-300 ${sidebarCollapsed ? "" : "rotate-180"}`} />
-							</button>
-						</div>
+				<div className={`flex h-full w-full flex-col transition-all duration-300 py-2 ${sidebarCollapsed ? "px-2.5" : "px-3"}`}>
+					<div className={`mb-2 flex items-center h-12 ${sidebarCollapsed ? "justify-center px-0" : "justify-between px-2"}`}>
+						{!sidebarCollapsed && (
+							<div className="flex items-center gap-3">
+								<HambergerMenu size="20" color="currentColor" className={isDark ? "text-white/82" : "text-slate-700"} />
+								<span className={`text-base font-medium ${isDark ? "text-white" : "text-slate-900"}`}>Menu</span>
+							</div>
+						)}
+						<button onClick={() => setSidebarCollapsed((v) => !v)} className={`grid h-9 w-9 place-items-center rounded-md ${isDark ? "hover:bg-white/10" : "hover:bg-gray-100"}`}>
+							<ArrowRight2 size="16" color="currentColor" className={`transition-transform duration-300 ${sidebarCollapsed ? "" : "rotate-180"} ${isDark ? 'text-white/78' : 'text-slate-700'}`} />
+						</button>
 					</div>
 
-					<div className="flex min-h-0 flex-1 flex-col pt-4">
-						<nav className="flex-1 overflow-y-auto no-scrollbar pb-4">
-							<ul className="space-y-[6px]">
-								{renderSidebarItems(sidebarCollapsed)}
-							</ul>
-						</nav>
-					</div>
+					<nav className="flex-1 overflow-y-auto no-scrollbar">
+						<ul className={`space-y-1 py-1 ${sidebarCollapsed ? "px-0" : "px-1"}`}>
+							{renderSidebarItems(sidebarCollapsed)}
+						</ul>
+						<div className={`my-3 border-t ${isDark ? "border-[#815CF0]/22" : "border-[#815CF0]/14"}`} />
+					</nav>
 				</div>
 			</aside>
 		</>

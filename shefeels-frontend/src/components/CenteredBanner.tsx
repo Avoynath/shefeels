@@ -38,7 +38,7 @@ const CenteredBanner: React.FC<Props> = ({ gender }) => {
     default: {
       heading: 'Create AI Companion for Roleplay - NO Filter & NO Limits',
       body:
-        `Login HoneyLove AI, the ultimate free AI companion that breaks all boundaries. Create your perfect AI chat companion for personalized roleplay—customize personality, appearance, and scenarios with zero restrictions. Though you crave flirty chats, deep emotional connections, or wild adventures, HoneyLove AI delivers unfiltered, limitless interactions online. No censorship, no holding back. Join thousands embracing the best AI companions for authentic, judgment-free companionship anytime. Start building your dream AI companion bot now!`
+        `Login SheFeels AI, the ultimate free AI companion that breaks all boundaries. Create your perfect AI chat companion for personalized roleplay—customize personality, appearance, and scenarios with zero restrictions. Though you crave flirty chats, deep emotional connections, or wild adventures, SheFeels AI delivers unfiltered, limitless interactions online. No censorship, no holding back. Join thousands embracing the best AI companions for authentic, judgment-free companionship anytime. Start building your dream AI companion bot now!`
     },
     female: {
       heading: 'An AI Girlfriend App That Feels Like Real Dating',
@@ -53,16 +53,16 @@ const CenteredBanner: React.FC<Props> = ({ gender }) => {
     trans: {
       heading: 'See What Your AI Trans Character Can Do',
       body:
-        `Your AI transgender character is not just a chat partner but it feels like someone who actually understands you. You can talk emotionally, share your mood, and get comforting, natural replies that match your energy. You can also send and receive voice notes, making the connection feel more real and expressive. Whenever you want visuals, Honey Love has stunning HD images of your trans character in seconds, based on the style or pose you choose. And the best part is how personalized the replies make your AI partner listens, adapts, and responds exactly the way you expect, giving you a space where conversations feel warm, safe, and beautifully human.`
+        `Your AI transgender character is not just a chat partner but it feels like someone who actually understands you. You can talk emotionally, share your mood, and get comforting, natural replies that match your energy. You can also send and receive voice notes, making the connection feel more real and expressive. Whenever you want visuals,  has stunning HD images of your trans character in seconds, based on the style or pose you choose. And the best part is how personalized the replies make your AI partner listens, adapts, and responds exactly the way you expect, giving you a space where conversations feel warm, safe, and beautifully human.`
     }
   };
 
   const { heading, body } = texts[variant];
 
   return (
-    <section className="mx-auto w-full max-w-screen-2xl px-4 py-8 sm:px-6 md:py-12">
+    <section className="mx-auto w-full max-w-screen-2xl px-3 sm:px-4 md:px-6 py-8">
       <div
-        className="relative overflow-hidden rounded-[30px] px-4 py-5 md:px-8 md:py-5"
+        className="relative overflow-hidden rounded-2xl px-4 py-5 md:p-8"
         style={{
           backgroundImage:
             'linear-gradient(125deg, #E53170 0%, #FD3985 40%, #E53170 100%)'
@@ -72,17 +72,17 @@ const CenteredBanner: React.FC<Props> = ({ gender }) => {
 
         <div className="relative z-10 grid grid-cols-1 items-center gap-5 lg:grid-cols-[487px_1fr]">
           <div className="text-white">
-            <h2 className="text-[28px] leading-[1.2] font-bold md:text-[36px] md:leading-11.5">
+            <h2 className="text-2xl md:text-3xl font-bold leading-tight">
               Best NSFW AI Chatbot
             </h2>
-            <p className="mt-3 text-[18px] leading-7 text-white/95">
+            <p className="mt-3 text-sm md:text-base leading-relaxed text-white/95">
               {body.split('.')[0] ? `${body.split('.')[0]}.` : body}
             </p>
 
             <button
               type="button"
               onClick={() => { window.location.href = '/chat'; }}
-              className="mt-6 inline-flex h-15 items-center justify-center gap-2 rounded-xl border border-white/50 bg-[#815CF0] px-8 text-[18px] leading-7 font-medium text-white"
+              className="mt-5 inline-flex h-9 items-center justify-center gap-2 rounded-full border border-white/50 bg-[#815CF0] px-5 text-sm font-medium text-white"
             >
               <img src={ChatNowIcon} alt="" className="h-6 w-6" />
               Chat Now
@@ -93,12 +93,12 @@ const CenteredBanner: React.FC<Props> = ({ gender }) => {
             <img src={BANNER_IMAGE_1} alt="" className="hidden h-50 w-38.5 rounded-xl object-cover md:block" />
             <img src={BANNER_IMAGE_2} alt="" className="hidden h-50 w-38.5 rounded-xl object-cover md:block" />
 
-            <div className="relative h-60 w-46 shrink-0 overflow-hidden rounded-xl">
+            <div className="relative h-48 w-36 shrink-0 overflow-hidden rounded-xl">
               <img src={BANNER_IMAGE_CENTER} alt="featured character" className="absolute inset-0 h-full w-full object-cover" />
               <div className="absolute inset-0 bg-linear-to-b from-transparent to-black/40" />
               <div className="absolute bottom-4 left-4 right-4">
-                <p className="text-[18px] leading-6.5 font-semibold text-white">Valentina, 20</p>
-                <span className="mt-2 inline-flex h-8 items-center gap-1 rounded-md bg-[#815CF0] px-3 text-[14px] leading-5 text-white">
+                <p className="text-base leading-snug font-semibold text-white">Valentina, 20</p>
+                <span className="mt-1.5 inline-flex h-7 items-center gap-1 rounded-md bg-[#815CF0] px-2.5 text-xs text-white">
                   <img src={ChatNowIcon} alt="" className="h-4 w-4" />
                   Chat
                 </span>

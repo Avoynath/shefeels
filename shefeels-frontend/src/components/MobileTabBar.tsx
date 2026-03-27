@@ -33,21 +33,21 @@ export const MobileTabBar: React.FC = () => {
       label: 'Explore',
       icon: Discover,
       path: '/',
-      color: 'text-[var(--hl-gold)]',
+      color: 'text-[var(--sf-pink)]',
     },
     {
       id: 'chat',
       label: 'Chat',
       icon: Messages1,
       path: '/chat',
-      color: 'text-[var(--hl-gold)]',
+      color: 'text-[var(--sf-pink)]',
     },
     {
       id: 'generate',
       label: 'Generate',
       icon: MagicStar,
       path: '/generate-image',
-      color: 'text-[var(--hl-gold)]',
+      color: 'text-[var(--sf-pink)]',
       isCenter: true,
     },
     {
@@ -55,14 +55,14 @@ export const MobileTabBar: React.FC = () => {
       label: 'Gallery',
       icon: Gallery,
       path: '/gallery',
-      color: 'text-[var(--hl-gold)]',
+      color: 'text-[var(--sf-pink)]',
     },
     {
       id: 'premium',
       label: hasActiveSub ? 'Buy Token' : 'Premium',
       icon: Crown,
       path: hasActiveSub ? '/buy-tokens' : '/premium',
-      color: 'text-[var(--hl-gold)]',
+      color: 'text-[var(--sf-pink)]',
     },
   ];
 
@@ -105,8 +105,8 @@ export const MobileTabBar: React.FC = () => {
                     width: '56px',
                     height: '56px',
                     background: 'var(--primary-gradient)',
-                    // keep warm glow but rely on existing gold tone
-                    boxShadow: '0 10px 24px rgba(255, 197, 77, 0.28)',
+                    // keep warm glow but rely on brand pink
+                    boxShadow: '0 10px 24px rgba(229, 49, 112, 0.28)',
                   }}
                 >
                   <Icon 
@@ -131,7 +131,7 @@ export const MobileTabBar: React.FC = () => {
               className="group relative flex flex-col items-center justify-center gap-1 pt-1 pb-2 px-3 min-w-[64px] transition-all active:scale-[0.98]"
             >
               {active && (
-                <span className="absolute top-0 h-[2px] w-6 -translate-y-[1px] rounded-full bg-[var(--hl-gold)]" />
+                <span className="absolute top-0 h-[2px] w-6 -translate-y-[1px] rounded-full bg-[var(--sf-pink)]" />
               )}
               <Icon 
                 size="22"

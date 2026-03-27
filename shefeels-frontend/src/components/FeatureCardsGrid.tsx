@@ -18,29 +18,29 @@ const CARD_CONTENT = [
 
 const FeatureCardsGrid: React.FC<{ gender?: string }> = () => {
   return (
-    <section className="mx-auto w-full max-w-[1602px] px-4 py-12 sm:px-6 md:px-0 md:py-[50px]">
-      <h2 className="mb-10 text-center text-[30px] font-bold leading-[1.2] text-white md:mb-[50px] md:text-[40px] md:leading-[50px]">
+    <section className="mx-auto w-full max-w-screen-2xl px-3 sm:px-4 md:px-6 py-2">
+      <h2 className="mb-8 text-center text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight text-white">
         Why This Experience Feels Better
       </h2>
 
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-3 xl:gap-[30px]">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {CARD_CONTENT.map((card) => (
           <article
             key={card.title}
-            className="min-h-[279px] rounded-[20px] p-8"
+            className="rounded-xl p-6"
             style={{ backgroundImage: "linear-gradient(180.136deg, #7f5af0 3.02%, #e53170 98.45%)" }}
           >
             <div className="flex h-full flex-col gap-[26px]">
-              <div className="flex items-center gap-5">
-                <div className="grid h-16 w-16 shrink-0 place-items-center rounded-[47px] bg-white/8">
-                  <img src={FeatureSparkleIcon} alt="" className="h-7 w-7 object-contain" />
+              <div className="flex items-center gap-4">
+                <div className="grid h-12 w-12 shrink-0 place-items-center rounded-[10px] bg-white/8">
+                  <img src={FeatureSparkleIcon} alt="" className="h-8 w-8 object-contain" />
                 </div>
-                <h3 className="max-w-[220px] text-[24px] font-medium leading-9 tracking-[0.02em] text-white md:text-[26px]">
+                <h3 className="text-lg md:text-xl font-semibold leading-snug text-white">
                   {card.title}
                 </h3>
               </div>
 
-              <p className="text-[18px] leading-[30px] tracking-[0.02em] text-white">
+              <p className="text-xs md:text-sm leading-relaxed text-white">
                 {card.text}
               </p>
             </div>

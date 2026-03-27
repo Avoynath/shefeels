@@ -77,12 +77,12 @@ export default function CharacterCard({
   const instanceId = useRef(Symbol("character-card"));
 
   // when menu is open, disable hover transforms to avoid geometry changes that cause flicker
-  const hoverTransform = menuOpen ? '' : 'group-hover:-translate-y-0.5';
+  const hoverTransform = menuOpen ? '' : 'group-hover:scale-[1.02] group-hover:-translate-y-0.5';
   const hoverTheme = menuOpen
     ? ''
     : (isDark
       ? 'group-hover:border-[#8f67ff]/70 group-hover:bg-[radial-gradient(circle_at_50%_0%,_rgba(32,20,60,0.95),_rgba(15,12,24,0.92)_70%)]'
-      : 'group-hover:border-[#d7a555]/70');
+      : 'group-hover:border-[#e53170]/70');
   const cardDepthClass = menuOpen ? 'z-[200]' : 'z-10';
   const likeActionDisabled = likeDisabled || isLiked;
   const interactiveLike = typeof onLike === 'function';
@@ -91,8 +91,8 @@ export default function CharacterCard({
   const showMessagePill = showCountPills;
   const optionsOnLeft = showOptions && optionsPlacement === 'left';
   const pillSizingClass = 'h-[24px] min-h-[24px] leading-none sm:h-[28px] sm:min-h-[28px]';
-  const countTextClass = alignActionsSpread ? 'text-[16px]' : 'text-[14px]';
-  const countIconClass = alignActionsSpread ? 'h-[18px] w-[18px]' : 'h-3.75 w-3.75';
+  const countTextClass = alignActionsSpread ? 'text-[13px] sm:text-[14px]' : 'text-[11px] sm:text-xs';
+  const countIconClass = alignActionsSpread ? 'h-4 w-4 sm:h-[18px] sm:w-[18px]' : 'h-3.75 w-3.75';
   const likedBackground = 'rgba(244, 114, 182, 0.28)';
   const neutralPillBackground = 'transparent';
   const likePillStyle = {
@@ -189,7 +189,7 @@ export default function CharacterCard({
     const compactToneClass = isDark
       ? 'text-white/90 border border-white/10'
       : 'text-black/80 border border-gray-200';
-    const compactButtonClass = `allow-custom-text pill inline-flex items-center justify-center rounded-full ${pillSizingClass} px-2 text-[11px] sm:text-xs font-medium theme-transition ${compactToneClass} hover:!bg-[var(--primary)] hover:!text-black hover:border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary,#FFC54D)]`;
+    const compactButtonClass = `allow-custom-text pill inline-flex items-center justify-center rounded-full ${pillSizingClass} px-2 text-[11px] sm:text-xs font-medium theme-transition ${compactToneClass} hover:!bg-[var(--sf-purple)] hover:!text-white hover:border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sf-purple)]`;
     const buttonClass = isCompactVariant ? compactButtonClass : defaultButtonClass;
     const optionsIconClass = isCompactVariant ? 'h-3 w-3' : 'h-3.5 w-3.5';
     const optionsButtonStyle = isCompactVariant ? { borderRadius: '12px', background: 'rgba(255, 255, 255, 0.12)' } : undefined;
@@ -243,12 +243,13 @@ export default function CharacterCard({
 
   return (
     <div onClick={onClick} className={`group relative transition-all duration-200 ${onClick ? 'cursor-pointer' : ''}`}>
-      <div className={`relative overflow-hidden rounded-[12px] border transition-all duration-300 ${hoverTransform} ${cardDepthClass} ${isDark ? 'border-white/8 bg-black/20' : 'border-black/10 bg-black/10'} ${hoverTheme}`}>
+      <div className={`relative rounded-[18px] p-[1.35px] overflow-visible transition-all duration-300 theme-transition ${hoverTransform} ${cardDepthClass} ${isDark ? 'bg-white/10' : 'bg-white/60'} shadow-md`}>
+        <div className={`relative rounded-2xl overflow-hidden border transition-all duration-300 theme-transition ${isDark ? 'border-white/8 bg-black/20' : 'border-black/10 bg-black/10'} ${hoverTheme}`}>
         <div className="relative">
 
             {/* Image is required for Explore page — fallback removed intentionally */}
             <div
-              className="relative z-10 aspect-376/519 w-full overflow-hidden rounded-[12px] character-media"
+              className="relative z-10 aspect-5/7 md:aspect-6/9 w-full overflow-hidden rounded-2xl character-media"
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
             >
@@ -257,7 +258,7 @@ export default function CharacterCard({
                 key={displayedSrc || 'no-media'}
                 src={optimizeImageUrl(displayedSrc || '')}
                 alt={`${name} character image`}
-                className="h-full w-full rounded-[12px] object-cover object-center transition-filter duration-200 group-hover:brightness-105"
+                className="h-full w-full rounded-2xl object-cover object-center transition-filter duration-200 group-hover:brightness-105"
                 loading={enableLazyLoading ? 'lazy' : 'eager'}
                 isAnimated={Boolean(animatedSrc)}
                 onError={() => {
@@ -275,7 +276,7 @@ export default function CharacterCard({
                    <LazyImage
                     src={optimizeImageUrl(webp || gif || '')}
                     alt={`${name} character animation`}
-                    className="h-full w-full rounded-[12px] object-cover object-center"
+                    className="h-full w-full rounded-2xl object-cover object-center"
                     loading="eager" // Load immediately on hover
                     isAnimated={true}
                     loopInterval={3500}
@@ -483,6 +484,7 @@ export default function CharacterCard({
               )}
             </div>
           )}
+        </div>
         </div>
       </div>
     </div>

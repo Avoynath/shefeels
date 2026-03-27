@@ -84,7 +84,7 @@ const initialBlurSrc = pickPlaceholder('female', 'realistic');
 // Small check badge used by selection cards (keeps build green)
 export function CheckBadge() {
   return (
-    <span className="absolute top-3 right-3 inline-flex items-center justify-center h-7 w-7 rounded-full bg-black/60 text-(--hl-gold) ring-1 ring-(--hl-gold)">
+    <span className="absolute top-3 right-3 inline-flex items-center justify-center h-7 w-7 rounded-full bg-black/60 text-(--sf-purple-light) ring-1 ring-(--sf-purple-light)">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
         <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
@@ -266,48 +266,48 @@ function OptionCard({
 
   // -- Text/Emoji Card Styles --
   const selectedRingText = selected
-    ? "ring-[2px] ring-[#9d66ff] shadow-[0_0_0_1px_rgba(157,102,255,0.35),0_18px_36px_rgba(88,52,176,0.3)]"
+    ? "ring-[3px] ring-(--sf-purple-light) shadow-[0_0_0_1px_var(--sf-purple-light),0_8px_24px_rgba(127,90,240,0.35)]"
     : "ring-1";
 
-  const baseRingText = isDark ? "ring-white/10" : "ring-gray-200/70";
+  const baseRingText = isDark ? "ring-white/8" : "ring-gray-200/60";
 
   // For text cards, we use the original ring logic
   const ringClass = !imageUrl ? (selected ? selectedRingText : baseRingText) : "";
 
   const hoverClass = !readOnly && !selected
     ? isDark
-      ? "hover:ring-white/20 hover:shadow-[0_14px_30px_rgba(0,0,0,0.22)]"
-      : "hover:ring-[#9d66ff]/40 hover:shadow-[0_12px_28px_rgba(88,52,176,0.12)]"
+      ? "hover:ring-(--sf-purple-light)/40 hover:shadow-[0_4px_16px_rgba(127,90,240,0.15)]"
+      : "hover:ring-(--sf-purple-light)/50 hover:shadow-[0_4px_16px_rgba(127,90,240,0.2)]"
     : "";
 
   const focusClass =
-    "focus:outline-none focus-visible:ring-[3px] focus-visible:ring-[#9d66ff] focus-visible:ring-offset-2 " +
+    "focus:outline-none focus-visible:ring-[3px] focus-visible:ring-(--sf-purple-light) focus-visible:ring-offset-2 " +
     (isDark ? "focus-visible:ring-offset-[#000000]" : "focus-visible:ring-offset-white");
 
   const interactive = !readOnly && typeof onClick === 'function';
 
-  // For text/emoji cards: fill with golden color when selected
+  // For text/emoji cards: fill with primary color when selected
   const textCardBg = selected && !imageUrl
-    ? "bg-[linear-gradient(180deg,rgba(127,90,240,0.28)_0%,rgba(157,102,255,0.18)_100%)]"
+    ? "bg-gradient-to-br from-[var(--sf-purple)] to-[var(--sf-pink)]"
     : isDark
-      ? "bg-[rgba(255,255,255,0.05)]"
-      : "bg-white/70";
+      ? "bg-black/30"
+      : "bg-white/60";
 
-  const textColor = isDark ? "text-white/95" : "text-gray-900";
+  const textColor = selected && !imageUrl ? "text-white" : isDark ? "text-white/95" : "text-gray-900";
 
   // -- Image Card Config (User Request) --
   // We apply these styles via inline `style` to match the exact specs provided
   const imageCardStyle: React.CSSProperties = imageUrl ? (
     selected ? {
-      borderRadius: '16px',
-      border: '1.5px solid rgba(157, 102, 255, 0.9)',
+      borderRadius: '10px',
+      border: '1.5px solid var(--sf-purple-light)',
       background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.00) -10%, rgba(0, 0, 0, 0.92) 100%)',
       opacity: 1,
       boxShadow: '0 22px 40px rgba(88, 52, 176, 0.28), inset 0 0 0 1px rgba(217,178,255,0.18)',
     } : {
-      borderRadius: '16px',
-      border: '1px solid rgba(255, 255, 255, 0.14)',
-      opacity: 1,
+      borderRadius: '12px',
+      border: '1.5px solid rgba(255, 255, 255, 0.50)',
+      opacity: 0.9,
       backdropFilter: 'blur(1.5px)',
       boxShadow: '0 12px 30px rgba(0, 0, 0, 0.22)',
     }
@@ -320,7 +320,7 @@ function OptionCard({
       aria-pressed={selected}
       aria-selected={selected}
       disabled={readOnly}
-      className={`relative overflow-hidden ${compact ? 'rounded-[16px]' : 'rounded-[20px]'} ${ringClass} ${!imageUrl ? hoverClass : ""} transition-all duration-200 ${className ?? ""} ${readOnly ? "cursor-default" : "cursor-pointer"} ${focusClass} ${interactive ? 'hover:-translate-y-0.5 hover:scale-[1.015]' : ''} ${compact ? 'p-0' : 'p-0'} ${textCardBg} backdrop-blur-sm ${fullHeight ? 'h-full w-full' : ''}`}
+      className={`relative overflow-hidden ${compact ? 'rounded-[10px]' : 'rounded-2xl'} ${ringClass} ${!imageUrl ? hoverClass : ""} transition-all duration-200 ${className ?? ""} ${readOnly ? "cursor-default" : "cursor-pointer"} ${focusClass} ${interactive ? 'hover:scale-[1.02]' : ''} ${compact ? 'p-0' : 'p-0'} ${textCardBg} backdrop-blur-sm ${fullHeight ? 'h-full w-full' : ''}`}
       style={{
         WebkitBackdropFilter: 'blur(12px)',
         ...imageCardStyle,
@@ -328,8 +328,8 @@ function OptionCard({
       }}
     >
       {imageUrl ? (
-        <div className={`w-full ${compact ? 'rounded-[15px]' : 'rounded-[19px]'} overflow-hidden ${fullHeight ? 'h-full' : 'aspect-3/4'}`}
-          style={selected ? { borderRadius: '15px' } : { borderRadius: '15px' }}
+        <div className={`w-full ${compact ? 'rounded-[10px]' : 'rounded-2xl'} overflow-hidden ${fullHeight ? 'h-full' : 'aspect-3/4'}`}
+          style={selected ? { borderRadius: '9px' } : { borderRadius: '11px' }}
         >
           <LazyImage
             src={imageUrl}
@@ -339,13 +339,13 @@ function OptionCard({
             placeholder="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Crect width='100%25' height='100%25' fill='%23121212'/%3E%3C/svg%3E"
           />
           {/* Label overlay on image */}
-          <div className="absolute inset-x-0 bottom-0 flex items-end p-3 sm:p-4 bg-linear-to-t from-black/85 via-black/45 to-transparent pointer-events-none">
-            <span className={`max-w-[92%] truncate rounded-full px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] sm:text-[11px] ${selected ? 'bg-[rgba(157,102,255,0.22)] text-white ring-1 ring-[#bda4ff]/40' : 'bg-black/35 text-white/92 ring-1 ring-white/10'}`}>
+          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center p-2 bg-linear-to-t from-black/70 via-black/40 to-transparent pointer-events-none">
+            <span className="px-3 py-1.5 text-[10px] sm:text-xs font-semibold text-white max-w-[90%] truncate">
               {label}
             </span>
           </div>
           {selected && (
-            <span className="absolute right-3 top-3 inline-flex h-8 min-w-8 items-center justify-center rounded-full bg-[rgba(157,102,255,0.95)] px-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-white shadow-[0_10px_20px_rgba(88,52,176,0.35)]">
+            <span className="absolute right-3 top-3 inline-flex h-8 min-w-8 items-center justify-center rounded-full bg-(--sf-purple-light) px-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-white shadow-[0_10px_20px_rgba(88,52,176,0.35)]">
               On
             </span>
           )}
@@ -383,9 +383,8 @@ function ToggleTag({
 }) {
   const selectedStyle = {
     borderRadius: '16px',
-    border: '1px solid rgba(157, 102, 255, 0.8)',
-    background: 'linear-gradient(180deg, rgba(127, 90, 240, 0.2) 0%, rgba(157, 102, 255, 0.1) 100%)',
-    boxShadow: '0 16px 32px rgba(88, 52, 176, 0.16)',
+    border: '1px solid var(--sf-purple-light)',
+    background: 'linear-gradient(126deg, #000 28.96%, rgba(127, 90, 240, 0.1) 262.7%)',
   };
 
   const normalStyle = {
@@ -398,7 +397,7 @@ function ToggleTag({
     <button
       type="button"
       onClick={(e) => { e.stopPropagation(); if (onToggle) onToggle(); }}
-      className={`px-5 py-3 text-sm font-medium transition-all duration-200 backdrop-blur-sm hover:-translate-y-0.5 ${className ?? ''}`}
+      className={`px-5 py-2.5 text-sm font-medium transition-all duration-200 backdrop-blur-sm ${className ?? ''}`}
       aria-pressed={!!active}
       aria-selected={!!active}
       style={{
@@ -406,7 +405,7 @@ function ToggleTag({
         ...(style || {}),
       }}
     >
-      <span className={active ? "text-white" : "text-white/90"}>{label}</span>
+      <span className={active ? "text-(--sf-purple-light)" : "text-white/90"}>{label}</span>
     </button>
   );
 }
@@ -416,21 +415,19 @@ function ProgressDots({ step, total }: { step: number; total: number }) {
   const isDark = theme === "dark";
 
   return (
-    <div className="flex items-center gap-2.5" aria-label="Progress">
+    <div className="flex items-center gap-2" aria-label="Progress">
       {Array.from({ length: total }).map((_, i) => (
         <span
           key={i}
-          className={`rounded-full transition-all duration-200 ${i === step
-            ? "h-2.5 w-8 bg-[#9d66ff]"
-            : i < step
-              ? "h-2.5 w-5 bg-[#7f5af0]"
-              : isDark ? "h-2.5 w-2.5 bg-white/14" : "h-2.5 w-2.5 bg-gray-300"
+          className={`h-2.5 w-2.5 rounded-full transition-all duration-200 ${i <= step
+            ? "bg-(--sf-purple-light)"
+            : isDark ? "bg-white/15" : "bg-gray-300"
             }`}
           aria-current={i === step ? "step" : undefined}
           aria-label={`Step ${i + 1}${i <= step ? " (completed)" : " (upcoming)"}`}
         />
       ))}
-      <span className={`ml-1 text-[11px] font-medium tracking-[0.08em] uppercase ${isDark ? "text-white/55" : "text-gray-600"}`}>{step + 1}/{total}</span>
+      <span className={`ml-2 text-xs font-medium ${isDark ? "text-white/60" : "text-gray-600"}`}>{step + 1}/{total}</span>
     </div>
   );
 }
@@ -537,7 +534,7 @@ function OccupationCard({
             ? 'rgba(255, 255, 255, 0.045)'
             : 'rgba(255, 255, 255, 0.95)',
         border: selected
-          ? '1.5px solid rgba(157, 102, 255, 0.85)'
+          ? '1.5px solid var(--sf-purple-light)'
           : isDark
             ? '1px solid rgba(255, 255, 255, 0.1)'
             : '1px solid rgba(0, 0, 0, 0.1)',
@@ -549,7 +546,7 @@ function OccupationCard({
       {/* Radio button indicator */}
       <div
         className={`shrink-0 w-5 h-5 rounded-full flex items-center justify-center transition-all duration-200 ${selected
-          ? 'bg-[#9d66ff] ring-2 ring-[#9d66ff] ring-offset-2'
+          ? 'bg-(--sf-purple-light) ring-2 ring-(--sf-purple-light) ring-offset-2'
           : isDark
             ? 'bg-transparent ring-1 ring-white/30'
             : 'bg-transparent ring-1 ring-gray-400'
@@ -588,20 +585,20 @@ function RelationshipCard({ label, selected, onClick, compact, readOnly }: { lab
   const cardBase = components.cardBase;
 
   const selectedClass = isDark
-    ? "ring-2 ring-(--hl-gold) bg-(--hl-gold)/20 text-white border-[var(--hl-gold)] shadow-lg"
-    : "ring-2 ring-(--hl-gold) bg-[var(--hl-gold-weak)] text-gray-900 border-[var(--hl-gold)] shadow-[0_0_0_3px_rgba(255,197,77,0.25)]";
+    ? "ring-2 ring-(--sf-purple-light) bg-(--sf-purple)/20 text-white border-[var(--sf-purple-light)] shadow-lg"
+    : "ring-2 ring-(--sf-purple-light) bg-(--sf-purple)/10 text-gray-900 border-[var(--sf-purple-light)] shadow-[0_0_0_3px_rgba(127,90,240,0.25)]";
 
   // Selected inline style to enforce exact requested look (overrides global CSS where needed)
   const selectedStyle: React.CSSProperties = {
     borderRadius: '16px',
-    border: '1px solid var(--secondary, #C09B62)',
-    background: 'var(--gradiant, linear-gradient(126deg, #000 28.96%, rgba(255, 197, 77, 0.00) 262.7%))',
+    border: '1px solid var(--sf-purple-light)',
+    background: 'linear-gradient(126deg, #000 28.96%, rgba(127, 90, 240, 0.0) 262.7%)',
   };
 
-  const baseHover = isDark ? "hover:ring-(--hl-gold)/60" : "hover:ring-(--hl-gold)/60";
+  const baseHover = isDark ? "hover:ring-(--sf-purple-light)/60" : "hover:ring-(--sf-purple-light)/60";
 
   const focusClass =
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-(--hl-gold) " +
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-(--sf-purple-light) " +
     (isDark ? "focus-visible:ring-offset-[#000000]" : "focus-visible:ring-offset-white");
 
   const meta = RELATION_META[label] || { icon: '🤝' };
@@ -630,8 +627,7 @@ function RelationshipCard({ label, selected, onClick, compact, readOnly }: { lab
           </div>
           <div className="text-center">
             <span
-              className={`rounded-xl px-2 py-0.5 text-xs font-medium ${selected ? 'bg-(--hl-gold)' : isDark ? 'bg-white/10 text-white' : 'bg-gray-200 text-gray-700'}`}
-              style={selected ? { color: 'var(--primary, #FFC54D)' } : undefined}
+              className={`rounded-xl px-2 py-0.5 text-xs font-medium ${selected ? 'bg-(--sf-purple-light) text-white' : isDark ? 'bg-white/10 text-white' : 'bg-gray-200 text-gray-700'}`}
             >
               {label}
             </span>
@@ -662,8 +658,7 @@ function RelationshipCard({ label, selected, onClick, compact, readOnly }: { lab
         })()}
       </div>
       <div
-        className={`text-lg font-medium truncate max-w-[12ch] text-center ${!selected ? (isDark ? 'text-white' : 'text-gray-900') : ''}`}
-        style={selected ? { color: 'var(--primary, #FFC54D)' } : undefined}
+        className={`text-lg font-medium truncate max-w-[12ch] text-center ${selected ? 'text-white' : (isDark ? 'text-white' : 'text-gray-900')}`}
       >
         {label}
       </div>

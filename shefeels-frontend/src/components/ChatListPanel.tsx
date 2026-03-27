@@ -94,26 +94,6 @@ export default function ChatListPanel(props: Props) {
               }
               return <div className="p-4 text-sm text-white">No characters found. Create your first AI character to start chatting.</div>;
             }
-
-            return filtered.map((c) => (
-              <button
-                key={c.id}
-                onClick={() => onSelect(c)}
-                className={`w-full text-left px-4 md:px-5 py-3 md:py-3.5 flex items-center gap-3.5 md:gap-4 transition-colors ${isDark ? "hover:bg-white/4" + (selected?.id === c.id ? " bg-white/6" : " bg-transparent") : "hover:bg-gray-100" + (selected?.id === c.id ? " bg-gray-100" : " bg-transparent")
-                  }`}
-              >
-                <AvatarImg hue={c.hue ?? 200} size={isMobile ? 58 : 74} online={c.isOnline} imageUrl={(c as any).imageUrl} />
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between">
-                    <div className={`truncate text-white font-medium text-[20px] leading-7 md:text-[24px] md:leading-8 tracking-tight`}>{c.name}</div>
-                    {token ? (
-                      <div className={`ml-1 shrink-0 text-[12px] md:text-[14px] ${isDark ? 'text-white/35' : 'text-gray-500'}`}>{c.time}</div>
-                    ) : null}
-                  </div>
-                  <div className={`text-[16px] leading-6 md:text-[20px] md:leading-7 truncate tracking-tight ${isDark ? 'text-white/50' : 'text-gray-600'}`}>{c.last}</div>
-                </div>
-              </button>
-            ));
           }
 
           return filtered.map((c) => (

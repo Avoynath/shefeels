@@ -80,18 +80,18 @@ const InfoSplit: React.FC<Props> = ({ gender, style = "realistic" }) => {
         : figmaDefaultSplit;
 
   return (
-    <section className="mx-auto w-full max-w-[1602px] px-4 py-12 sm:px-6 md:px-0 md:py-[50px]">
-      <h2 className="mb-10 text-center text-[30px] font-bold leading-[1.2] text-white md:mb-[50px] md:text-[40px] md:leading-[50px]">
+    <section className="mx-auto w-full max-w-screen-2xl px-3 sm:px-4 md:px-6 py-2">
+      <h2 className="mb-6 text-center text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight text-white">
         {content.heading}
       </h2>
 
-      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[760px_721px] lg:justify-between lg:gap-0">
+      <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-[1fr_380px] md:gap-8">
         <div className="overflow-hidden rounded-[20px]">
           <img
             src={imageSrc}
             alt=""
             aria-hidden="true"
-            className="h-[300px] w-full rounded-[20px] object-cover md:h-[420px] lg:h-[508px]"
+            className="h-[200px] w-full rounded-[20px] object-cover md:h-[320px]"
           />
         </div>
 
@@ -99,14 +99,14 @@ const InfoSplit: React.FC<Props> = ({ gender, style = "realistic" }) => {
           {content.points.map((point, index) => (
             <div
               key={point.title}
-              className={`relative pl-[31px] ${index < content.points.length - 1 ? "mb-[39px] border-b border-dashed border-white/16 pb-[39px]" : ""}`}
+              className={`relative pl-[31px] ${index < content.points.length - 1 ? "mb-5 border-b border-dashed border-white/16 pb-5" : ""}`}
             >
               <div>
                 <span className="absolute left-0 top-[8px] h-[9px] w-[11px] rounded-[2px] bg-white" />
-                <h3 className="text-[22px] font-semibold leading-[30px] tracking-[0.02em] text-white md:text-[26px] md:leading-[32px]">
+                <h3 className="text-lg md:text-xl font-semibold leading-snug tracking-[0.02em] text-white">
                   {point.title}
                 </h3>
-                <p className="mt-[10px] text-[16px] leading-[24px] text-white/70 md:text-[18px] md:leading-[26px]">
+                <p className="mt-2 text-xs md:text-sm leading-relaxed text-white/70">
                   {point.text}
                 </p>
               </div>

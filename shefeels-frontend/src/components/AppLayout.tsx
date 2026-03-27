@@ -64,7 +64,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
   const shouldShowFooter = footerVisibleRoutes.has(location.pathname);
 
   // Fixed header height for consistency across all pages (match Figma header)
-  const HEADER_H = 100; // px
+  const HEADER_H = 74; // px
 
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(() => {
     try {
@@ -718,17 +718,17 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
           })()}
           description={(() => {
             const g = (gender || '').toLowerCase();
-            if (g === 'male') return "Chat with your AI boyfriend free on HoneyLove AI. Enjoy free AI BF chatting with unlimited messages, no filters, 100% fully customizable. Your AI boy is waiting.";
-            if (g === 'trans') return "HoneyLove AI offers the best AI transgender generator. Create custom trans AI girlfriend, women with any personality, look, and voice — no restrictions, unlimited trans chat.";
-            if (g === 'female') return "Talk to AI girlfriend free on HoneyLove AI. Start free AI girl chatting, unlimited messages, unfiltered & no restriction. Sign your AI girlfriend website or app now.";
-            return "Craving for a realistic AI companion? Try interactive chat online, meet AI companions chatbot, and get personalized with the best AI companion website on HoneyLove AI.";
+            if (g === 'male') return "Chat with your AI boyfriend free on SheFeels AI. Enjoy free AI BF chatting with unlimited messages, no filters, 100% fully customizable. Your AI boy is waiting.";
+            if (g === 'trans') return "SheFeels AI offers the best AI transgender generator. Create custom trans AI girlfriend, women with any personality, look, and voice — no restrictions, unlimited trans chat.";
+            if (g === 'female') return "Talk to AI girlfriend free on SheFeels AI. Start free AI girl chatting, unlimited messages, unfiltered & no restriction. Sign your AI girlfriend website or app now.";
+            return "Craving for a realistic AI companion? Try interactive chat online, meet AI companions chatbot, and get personalized with the best AI companion website on SheFeels AI.";
           })()}
           keywords="AI girlfriend, AI boyfriend, AI chat, NSFW AI, AI companion, character AI, virtual girlfriend, virtual boyfriend, AI roleplay, custom AI characters"
           canonical="https://honeylove.ai"
           structuredData={{
             "@context": "https://schema.org",
             "@type": "WebApplication",
-            "name": "HoneyLove AI",
+            "name": "SheFeels AI",
             "description": "AI companion platform for creating and chatting with custom AI characters",
             "url": "https://honeylove.ai",
             "applicationCategory": "Entertainment",
@@ -741,7 +741,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
             },
             "author": {
               "@type": "Organization",
-              "name": "HoneyLove AI"
+              "name": "SheFeels AI"
             }
           }}
         />
@@ -763,13 +763,12 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
       {/* Extend the sidebar divider behind the fixed header without doubling the line below it */}
       <div
         aria-hidden
-        className={`pointer-events-none fixed top-0 z-40 hidden md:block border-l ${isDark ? 'border-[#815CF0]/35' : 'border-[#815CF0]/18'
-          }`}
-        style={{ left: sidebarCollapsed ? '72px' as any : '250px' as any, height: 'var(--header-h)' }}
+        className={`pointer-events-none fixed top-0 z-40 hidden md:block border-l ${isDark ? 'border-[#815CF0]/35' : 'border-[#815CF0]/18'}`}
+        style={{ left: sidebarCollapsed ? '64px' : '240px', height: 'var(--header-h)' }}
       />
 
       <div className={`flex min-h-[calc(100vh-1px)] transition-all duration-300 ${mobilePaddingClass} md:pb-0 ${
-        (sidebarCollapsed ? 'md:pl-[72px]' : 'md:pl-[250px]')
+        (sidebarCollapsed ? 'md:pl-16' : 'md:pl-60')
         }`} style={{ paddingTop: "var(--header-h)" } as React.CSSProperties}>
         <Sidebar
           sidebarOpen={sidebarOpen}
@@ -790,10 +789,10 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
 
               {/* Featured NSFW Chatbot Card - removed from mobile per user request */}
 
-              <main className="mx-auto w-full max-w-[1670px] px-4 sm:px-6 md:px-[34px]">
+              <main className="mx-auto w-full max-w-screen-2xl px-3 sm:px-4 md:px-6">
                 <section className="py-8 md:py-10">
                   <div className="mb-5 flex flex-wrap items-center justify-between gap-3 md:mb-8">
-                    <h2 className="w-full text-[26px] font-bold leading-[1.2] tracking-[-0.02em] text-[#F2F2F7] md:w-auto md:text-[40px] md:leading-[50px]">
+                    <h2 className="w-full text-lg font-bold leading-tight tracking-[-0.01em] text-[#F2F2F7] md:w-auto md:text-xl">
                       AI Character
                     </h2>
 
@@ -954,18 +953,15 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
                           <button
                             type="button"
                             onClick={() => setSortMenuOpen((prev) => !prev)}
-                            className="inline-flex h-[50px] items-center justify-center gap-[10px] rounded-[12px] border px-[26px] py-[11px] text-[20px] font-normal leading-7 text-[#F2F2F7] transition-all duration-200 hover:scale-[1.01] hover:shadow-[0_0_18px_rgba(127,90,240,0.55)]"
+                            className="inline-flex h-8 items-center justify-center gap-2 rounded-full border border-[#7F5AF0]/40 px-4 text-sm font-semibold text-[#F2F2F7] transition-all duration-200 hover:bg-[#7F5AF0]/10 hover:scale-[1.01]"
                             style={{
                               background: 'rgba(0, 0, 0, 0.50)',
-                              borderColor: '#7F5AF0',
-                              borderWidth: '2px',
-                              boxShadow: 'inset 0 0 0 1px rgba(127, 90, 240, 0.28)',
-                              backdropFilter: 'blur(5.0490498542785645px)'
+                              backdropFilter: 'blur(5px)'
                             }}
                             aria-expanded={sortMenuOpen}
                           >
                             <span>Short</span>
-                            <img src={sortMenuIcon} alt="" className="h-[18px] w-[18px] shrink-0" aria-hidden="true" />
+                            <img src={sortMenuIcon} alt="" className="h-4 w-4 shrink-0 opacity-80" aria-hidden="true" />
                           </button>
                           {sortMenuOpen && (
                             <div className="absolute right-0 top-full z-20 mt-2 min-w-37.5 rounded-xl border border-white/20 bg-[#070707]/90 p-2 shadow-[0_8px_20px_rgba(0,0,0,0.6)]">
@@ -991,13 +987,10 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
                         </div>
                         <button
                           onClick={() => navigate('/private-content/select-character')}
-                          className="inline-flex h-[50px] items-center justify-center rounded-[12px] border px-[26px] py-[11px] text-[20px] leading-7 font-normal text-[#F2F2F7] transition-all duration-200 hover:scale-[1.01] hover:shadow-[0_0_18px_rgba(127,90,240,0.55)]"
+                          className="inline-flex h-8 items-center justify-center rounded-full border border-[#7F5AF0]/40 px-4 text-sm font-semibold text-[#F2F2F7] transition-all duration-200 hover:bg-[#7F5AF0]/10 hover:scale-[1.01]"
                           style={{
                             background: 'rgba(0, 0, 0, 0.50)',
-                            borderColor: '#7F5AF0',
-                            borderWidth: '2px',
-                            boxShadow: 'inset 0 0 0 1px rgba(127, 90, 240, 0.28)',
-                            backdropFilter: 'blur(5.0490498542785645px)'
+                            backdropFilter: 'blur(5px)'
                           }}
                         >
                           Private Content

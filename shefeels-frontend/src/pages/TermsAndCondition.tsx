@@ -266,7 +266,7 @@ export default function TermsAndConditions() {
   return (
     <>
       <SEOHead 
-        title="Terms of Service - HoneyLove AI"
+        title="Terms of Service - SheFeels AI"
         description="Read HoneyLove's Terms of Service and understand our legal agreements, user obligations, and service policies for our AI-powered platform."
         keywords="terms of service, terms and conditions, legal agreement, HoneyLove, AI platform, user agreement"
         canonical="/terms-and-conditions"

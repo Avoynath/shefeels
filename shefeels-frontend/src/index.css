@@ -3,7 +3,7 @@
 
 /* Theme variables and responsive design foundation */
 :root {
-  --header-h: 100px;
+  --header-h: 74px;
   --app-font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   font-family: var(--app-font-family);
   line-height: 1.5;
@@ -29,34 +29,40 @@
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   
-  /* Figma design tokens (updated to match HoneyLove UI) */
-  --hl-bg: #0f0e16;
-  --hl-surface: #F4F4F4;
-  --hl-surface-2: #F0F0F0;
-  /* Make component borders subtly golden to match Figma */
-  --hl-border: rgba(0,0,0,0.08);
-  /* brand gold and black, taken from spec */
-  --hl-gold: #C19B4A; /* HoneyLove Gold */
-  --hl-gold-strong: #B78E3F; /* darker gold for depth */
-  --hl-gold-weak: rgba(193,155,74,0.12);
-  --hl-ring: rgba(193,155,74,0.18);
-  /* Centralized brand palette (primary = HoneyLove accent used across the app) */
-  --primary: #FFC54D; /* brighter primary gold used in CTAs */
-  --primary-2: #FFD784; /* lighter primary stop */
-  --primary-3: #FFD98D; /* tertiary primary stop (used in some gradients) */
-  --primary-gradient: linear-gradient(90deg, var(--primary) 0%, var(--primary-2) 100%);
-  /* backwards-compatible (typo used in some components) */
-  --gradiant: linear-gradient(126deg, #000 28.96%, rgba(255, 197, 77, 0.00) 262.7%);
-  /* common neutrals aliased to variables so components can reference them */
+  /* shefeels design tokens */
+  --hl-bg: #09070E;
+  --hl-surface: #120F1D;
+  --hl-surface-2: #1A1629;
+  /* subtle purple borders */
+  --hl-border: rgba(127, 90, 240, 0.15);
+  /* brand purple and pink */
+  --sf-purple: #7F5AF0;
+  --sf-purple-light: #9d66ff;
+  --sf-pink: #e53170;
+  --sf-pink-light: #ff5e91;
+
+  --hl-gold: var(--sf-purple); /* Redirect hl-gold to purple */
+  --hl-gold-strong: #6c47d9;
+  --hl-gold-weak: rgba(127, 90, 240, 0.12);
+  --hl-ring: rgba(127, 90, 240, 0.25);
+
+  /* Centralized shefeels palette */
+  --primary: var(--sf-purple);
+  --primary-2: var(--sf-purple-light);
+  --primary-3: var(--sf-pink);
+  --primary-gradient: linear-gradient(90deg, var(--sf-purple) 0%, var(--sf-pink) 100%);
+  
+  --gradiant: linear-gradient(126deg, #000 28.96%, rgba(127, 90, 240, 0.2) 262.7%);
+  
   --white: #FAFAFA;
   --white-pure: #FFFFFF;
-  --muted-dark: #3a3a3a;
-  --muted-darker: #2b2b2b;
-  --gold-accent: #C89F4E;
-  --muted-2: #B8B8B8;
-  /* requested base colors */
-  --hl-black: #0F0F0F; /* deep neutral black */
-  --hl-grey: #0f0e16;
+  --muted-dark: #1E1B2E;
+  --muted-darker: #151221;
+  --gold-accent: var(--sf-purple-light);
+  --muted-2: #94A3B8;
+
+  --hl-black: #050508;
+  --hl-grey: #120F1D;
 
   /* Light theme surface overrides (kept but explicit) */
   --hl-bg--light: #ffffff;
@@ -182,9 +188,9 @@
 [data-theme="dark"] {
   color-scheme: dark;
   /* requested dark color tokens */
-  --bg-primary: #0f0e16;
-  --bg-secondary: #171422;
-  --bg-tertiary: #221c35;
+  --bg-primary: #000000; /* pure black */
+  --bg-secondary: #121212; /* dark grey */
+  --bg-tertiary: #1a1a1a;
   --text-primary: #f7f7f8;
   --text-secondary: #d1d1d1;
   --text-muted: #9aa4b2;
@@ -199,10 +205,14 @@
   /* Ensure component tokens used throughout the app switch to appropriate dark values.
      Previously --hl-surface and related tokens were left as light values in :root which
      caused cards and inputs to appear light even when the app was in dark mode. */
-  --hl-surface: #171422;
-  --hl-surface-2: #110f1a;
-  --hl-border: rgba(127, 90, 240, 0.24);
-  --hl-ring: rgba(127, 90, 240, 0.28);
+  --header-h: 74px;
+  /* Ensure component tokens used throughout the app switch to appropriate dark values.
+     Previously --hl-surface and related tokens were left as light values in :root which
+     caused cards and inputs to appear light even when the app was in dark mode. */
+  --hl-surface: #0f0f0f;        /* card surface (dark) */
+  --hl-surface-2: #0b0b0b;      /* slightly darker surface for hero/overlays */
+  --hl-border: rgba(255, 255, 255, 0.06);
+  --hl-ring: rgba(127, 90, 240, 0.18);
   --hl-text: var(--text-primary);
   --hl-text-dim: rgba(247,247,248,0.85);
   --hl-text-mute: rgba(247,247,248,0.6);
@@ -249,7 +259,8 @@ html, #root {
 /* Mobile-first responsive design utilities */
 @media (max-width: 640px) {
   :root {
-    --header-h: 72px;
+    /* Keep a slightly shorter header on small screens */
+    --header-h: 60px;
   }
 }
 
@@ -464,14 +475,14 @@ header, aside {
 @media (min-width: 768px) {
   .responsive-grid {
     grid-template-columns: repeat(3, 1fr);
-    --header-h: 64px;
+    gap: 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
   .responsive-grid {
     grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    gap: 1.5rem;
   }
 }
 
