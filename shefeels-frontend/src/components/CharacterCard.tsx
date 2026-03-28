@@ -332,7 +332,7 @@ export default function CharacterCard({
 
             {metaBadgeLabel ? (
               <span
-                className="hidden h-[28px] max-w-full shrink-0 items-center rounded-[6px] bg-[rgba(255,255,255,0.08)] px-2.5 text-[14px] font-normal text-white backdrop-blur-[7.5px] md:inline-flex"
+                className={`${alignActionsSpread ? 'hidden' : 'hidden md:inline-flex'} h-[28px] max-w-full shrink-0 items-center rounded-[6px] bg-[rgba(255,255,255,0.08)] px-2.5 text-[14px] font-normal text-white backdrop-blur-[7.5px]`}
                 style={typographyStyle}
               >
                 {metaBadgeLabel}
@@ -395,7 +395,7 @@ export default function CharacterCard({
               <div className="flex shrink-0 items-center gap-2">
                 {metaBadgeLabel ? (
                   <span
-                    className="inline-flex h-[28px] max-w-full items-center rounded-[6px] bg-[rgba(255,255,255,0.08)] px-2.5 text-[13px] font-normal text-white backdrop-blur-[7.5px] md:hidden"
+                    className={`inline-flex h-[28px] max-w-full items-center rounded-[6px] bg-[rgba(255,255,255,0.08)] px-2.5 text-[13px] font-normal text-white backdrop-blur-[7.5px] ${alignActionsSpread ? '' : 'md:hidden'}`}
                     style={typographyStyle}
                   >
                     {metaBadgeLabel}
