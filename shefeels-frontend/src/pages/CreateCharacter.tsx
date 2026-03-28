@@ -1423,7 +1423,7 @@ export default function CreateCharacter() {
   // On mobile we show a shorter, action-oriented label
   // On mobile we show a shorter, action-oriented label
   const primaryLabel = (() => {
-    if (step === 13) return "Create Character";
+    if (step === 13) return isMobile ? "Create" : "Create Character";
     return "Next";
   })();
 
