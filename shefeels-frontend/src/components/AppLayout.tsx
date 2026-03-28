@@ -9,7 +9,6 @@ import MobileTabBar from "./MobileTabBar";
 import HeroSection from "./HeroSection";
 import CharacterCard from "./CharacterCard";
 import { useNavigate } from "react-router-dom";
-import CreateBanner from "./CreateBanner";
 import { normalizeCharacters } from '../utils/normalizeCharacter';
 import LoadMoreButton from "./LoadMoreButton";
 import InfoSplit from "./InfoSplit";
@@ -1008,11 +1007,6 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
                         <>
                           <div className="mt-2 md:mt-4 responsive-grid">
                             {firstThree.map((ch) => renderCharacterCard(ch))}
-                          </div>
-
-                          {/* Middle banner matching hero width - hidden on mobile */}
-                          <div className="my-8 md:my-12 hidden md:block">
-                            <CreateBanner gender={gender} style={activeFilters.includes('anime') ? 'anime' : 'realistic'} />
                           </div>
 
                           {/* Fourth row */}
