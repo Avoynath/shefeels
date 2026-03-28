@@ -32,9 +32,10 @@ function ChatMessages({
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  // Show presets for GUEST users (not logged in) when no messages exist
-  // This helps with user acquisition by making it easy to start chatting
-  const shouldShowPresets = !token && messages.length === 0 && onSelectPreset;
+  // Show presets when a chat has no messages.
+  // For authenticated users, wait until history loading finishes so we do not
+  // flash starters before the existing conversation is fetched.
+  const shouldShowPresets = messages.length === 0 && onSelectPreset && (!token || !showSkeleton);
 
   return (
     <div className="flex h-full min-h-0 flex-col relative">
@@ -52,6 +53,18 @@ function ChatMessages({
             onScroll={onHistoryScroll}
             isCompactContinuation={isCompactContinuation}
           />
+
+          {shouldShowPresets ? (
+            <div className="absolute inset-0 z-20 flex items-center justify-center bg-(--bg-primary)">
+              <ChatPresets
+                characterId={characterId}
+                characterName={characterName}
+                onSelectPreset={onSelectPreset}
+                isDark={isDark}
+                isMobile={isMobile}
+              />
+            </div>
+          ) : null}
 
           {showSkeleton && (
             <div className="absolute inset-0 z-30 pointer-events-none p-4">
