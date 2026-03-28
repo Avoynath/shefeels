@@ -406,7 +406,7 @@ export const Header: React.FC<Props> = ({
         <div className={`flex h-full w-full min-w-0 items-center justify-between ${useHomepageNavbar ? '' : 'gap-2.5 md:gap-3'} ${isExploreMobile ? 'gap-4' : ''}`}>
           {/* Left side (branding column sized to the sidebar) */}
           {/* Reserve the expanded sidebar width so header doesn't move when the sidebar collapses */}
-          <div className={useHomepageNavbar ? `flex shrink-0 items-center ${isExploreMobile ? 'gap-1.5' : 'gap-2 sm:gap-4'}` : "flex items-center gap-2 sm:gap-4 md:w-60"}>
+          <div className={useHomepageNavbar ? `flex shrink-0 items-center ${isExploreMobile ? 'gap-1.5' : 'gap-2 sm:gap-4 md:w-60'}` : "flex items-center gap-2 sm:gap-4 md:w-60"}>
             {/* Mobile menu - only show hamburger icon on mobile */}
             <button
               className={`md:hidden grid place-items-center transition theme-transition ${isExploreMobile ? '' : compactButton}`}
@@ -452,7 +452,7 @@ export const Header: React.FC<Props> = ({
           </div>
 
           {/* Nav - Hidden on very small screens */}
-          <nav className={`hidden sm:flex h-full flex-1 items-center ${useHomepageNavbar ? 'gap-10 pl-10 lg:gap-12 lg:pl-16' : 'gap-2 lg:gap-3'}`}>
+          <nav className={`hidden sm:flex h-full flex-1 items-center ${useHomepageNavbar ? 'gap-10 lg:gap-12' : 'gap-2 lg:gap-3'}`}>
             {/* NSFW Toggle - show on mobile for explore page */}
             {isExplorePage && (
               <div className="flex items-center gap-2 sm:hidden">
