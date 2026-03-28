@@ -181,9 +181,9 @@ const BREAST = ["Flat", "Small", "Medium", "Large", "XL"];
 const BUTT = ["Small", "Medium", "Large", "Athletic"];
 const DICK_SIZES = ["Small", "Medium", "Large", "Huge"];
 const AGE_VIBES = [
-  { key: "20s", badge: "20-29", title: "In Her 20s", description: "Confident, trendy, playful, and effortlessly flirty.", age: 24 },
-  { key: "30s", badge: "30-39", title: "In Her 30s", description: "Polished, mature, magnetic, and self-assured.", age: 34 },
-  { key: "50s", badge: "50-59", title: "In Her 50s (MILF)", description: "Bold, experienced, seductive, and full of presence.", age: 52 },
+  { key: "20s", badge: "20-29", title: "20s", description: "Confident, trendy, playful, and effortlessly flirty.", age: 24 },
+  { key: "30s", badge: "30-39", title: "30s", description: "Polished, mature, magnetic, and self-assured.", age: 34 },
+  { key: "50s", badge: "50-59", title: "50s (MILF)", description: "Bold, experienced, seductive, and full of presence.", age: 52 },
   { key: "grandma", badge: "60+", title: "Grandma", description: "Seasoned, elegant, teasing, and unmistakably commanding.", age: 65 },
 ] as const;
 // Relationships are provided per-gender via relationshipsForGender
