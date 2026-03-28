@@ -498,7 +498,8 @@ export default function Gallery() {
 						className={`rounded-xl px-4 py-2.5 text-sm font-medium transition-transform hover:scale-[1.01]`}
 						style={galleryActionStyle}
 					>
-						Generate New Image
+						<span className="sm:hidden">Generate</span>
+						<span className="hidden sm:inline">Generate New Image</span>
 					</button>
 
 					<button
@@ -506,7 +507,8 @@ export default function Gallery() {
 						className={`rounded-xl px-4 py-2.5 text-sm font-medium transition-transform hover:scale-[1.01]`}
 						style={galleryActionStyle}
 					>
-						Refresh Gallery
+						<span className="sm:hidden">Refresh</span>
+						<span className="hidden sm:inline">Refresh Gallery</span>
 					</button>
 				</div>
 			</div>
