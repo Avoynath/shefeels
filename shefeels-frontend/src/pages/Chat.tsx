@@ -113,6 +113,12 @@ const normalizeImageUrl = (url?: string | null) => {
   }
 };
 
+const getChatDisplayName = (value?: string | null) => {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+  return raw.split(/\s+/)[0] || raw;
+};
+
 export default function Chat() {
   // Extract URL params for character and pack slugs
   const { characterSlug, packSlug } = useParams<{ characterSlug?: string; packSlug?: string }>();
@@ -425,7 +431,7 @@ export default function Chat() {
       return undefined;
     };
 
-    const name = pickString(selProfile.name, base?.name, base?.username, DEFAULT_PROFILE.name);
+    const name = getChatDisplayName(pickString(selProfile.name, base?.name, base?.username, DEFAULT_PROFILE.name));
     const age = pickNumber(selProfile.age, base?.age, base?.age_in_years, DEFAULT_PROFILE.age) ?? DEFAULT_PROFILE.age;
     const bio = pickString(selProfile.bio, base?.bio, DEFAULT_PROFILE.bio);
     const gallery = (selProfile.gallery as number[]) || (base && (base.gallery as number[])) || DEFAULT_PROFILE.gallery;
@@ -553,14 +559,14 @@ export default function Chat() {
       // set selected chat item using navigated character
       const ch: ChatItem = {
         id: String(navigatedCharacter.id || navigatedCharacter.username || "sel"),
-        name: navigatedCharacter.name || navigatedCharacter.username || "Character",
+        name: getChatDisplayName(navigatedCharacter.name || navigatedCharacter.username || "Character"),
         hue: 200,
         isOnline: true,
         last: "",
         time: "",
         ai: true,
         profile: {
-          name: navigatedCharacter.name,
+          name: getChatDisplayName(navigatedCharacter.name),
         },
       };
       // include username only if an explicit username field is present
@@ -619,7 +625,7 @@ export default function Chat() {
           setFetchedCharacter(existingChar);
           const ch: ChatItem = {
             id: String(existingChar.id),
-            name: existingChar.name || 'Character',
+            name: getChatDisplayName(existingChar.name || 'Character'),
             hue: 200,
             isOnline: true,
             last: '',
@@ -662,7 +668,7 @@ export default function Chat() {
 
           const ch: ChatItem = {
             id: String(charData.id),
-            name: charData.name || charData.username || 'Character',
+            name: getChatDisplayName(charData.name || charData.username || 'Character'),
             hue: 200,
             isOnline: true,
             last: '',
@@ -1079,7 +1085,7 @@ export default function Chat() {
           if (found) {
             const ch: ChatItem = {
               id: String(found.id),
-              name: found.name || found.username || 'Character',
+              name: getChatDisplayName(found.name || found.username || 'Character'),
               hue: 200,
               isOnline: true,
               last: '',
@@ -1131,7 +1137,7 @@ export default function Chat() {
       if (pick) {
         const ch: ChatItem = {
           id: String(pick.id),
-          name: pick.name || pick.username || 'Character',
+          name: getChatDisplayName(pick.name || pick.username || 'Character'),
           hue: 200,
           isOnline: true,
           last: '',
@@ -1303,7 +1309,7 @@ export default function Chat() {
   const normalizedCharacters = useMemo(() => {
     return (characters || []).map((c: any) => ({
       id: String(c.id ?? c.username ?? ""),
-      name: c.name || c.username || "Character",
+      name: getChatDisplayName(c.name || c.username || "Character"),
       bio: c.bio,
       imageUrl: c.image_url_s3,
       ai: c.ai ?? true,
@@ -1315,7 +1321,7 @@ export default function Chat() {
   const normalizedUserCharacters = useMemo(() => {
     return (userCharacters || []).map((c: any) => ({
       id: String(c.id ?? c.username ?? ""),
-      name: c.name || c.username || "Character",
+      name: getChatDisplayName(c.name || c.username || "Character"),
       bio: c.bio,
       imageUrl: c.image_url_s3,
       ai: true,
@@ -1375,7 +1381,7 @@ export default function Chat() {
         const time = timeRaw ? formatMessageTime(new Date(timeRaw)) : "";
         return {
           id,
-          name: c.name || c.username || "Character",
+          name: getChatDisplayName(c.name || c.username || "Character"),
           hue: 200,
           isOnline: true,
           last,
@@ -1676,7 +1682,7 @@ export default function Chat() {
         try {
           const ch: ChatItem = {
             id: String(pendingCharacterId),
-            name: selected?.name || 'Character',
+            name: getChatDisplayName(selected?.name || 'Character'),
             hue: 200,
             isOnline: true,
             last: '',
@@ -2059,7 +2065,7 @@ export default function Chat() {
 
       const ch: ChatItem = {
         id: c.id,
-        name: c.name,
+        name: getChatDisplayName(c.name),
         hue: c.hue ?? 200,
         isOnline: c.isOnline,
         last: c.last,
