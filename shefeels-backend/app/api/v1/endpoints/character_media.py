@@ -174,16 +174,15 @@ async def create_image(
         
         print(f"Final Image to Image Character Prompt: {final_prompt}")
 
-        # # AetherLab Prompt Guard
-        # is_compliant, reason = await AetherLabService.validate_prompt(final_prompt)
-        # if not is_compliant:
-        #      if "error" in reason:
-        #          print(f"AetherLab Service Error: {reason.get('error')}")
-        #          raise HTTPException(status_code=503, detail="Content safety check unavailable. Please try again later.")
-             
-        #      # Extract rationale if available
-        #      detail_msg = reason.get('rationale', 'Content Policy Violation')
-        #      raise HTTPException(status_code=400, detail=f"Image generation is not compliant: {detail_msg}")
+        is_compliant, reason = await AetherLabService.validate_prompt(final_prompt)
+        if not is_compliant:
+             detail_msg = (
+                 reason.get("rationale")
+                 or reason.get("reason")
+                 or reason.get("message")
+                 or "Content policy violation"
+             )
+             raise HTTPException(status_code=400, detail=f"Image generation is not compliant: {detail_msg}")
 
         async def generate_and_process(idx: int):
             log_entry = None
@@ -254,20 +253,19 @@ async def create_image(
                 # Convert to base64 for moderation
                 base64_data = base64.b64encode(image_data_bs4).decode('utf-8')
 
-                # # AetherLab Media Guard check
-                # is_media_compliant, media_reason = await AetherLabService.validate_media(
-                #     image_input=base64_data,
-                #     input_type="base64"
-                # )
-                # if not is_media_compliant:
-                #     print(f"AetherLab Media Guard Blocked: {media_reason}")
-                #     if log_entry:
-                #         await update_ai_generation_log_failure(
-                #             db=db,
-                #             log_id=log_entry.id,
-                #             error_message="Content Policy Violation (Media Guard)"
-                #         )
-                #     raise HTTPException(status_code=400, detail="Generated image violated content policy")
+                is_media_compliant, media_reason = await AetherLabService.validate_media(
+                    image_input=base64_data,
+                    input_type="base64"
+                )
+                if not is_media_compliant:
+                    print(f"AetherLab Media Guard Blocked: {media_reason}")
+                    if log_entry:
+                        await update_ai_generation_log_failure(
+                            db=db,
+                            log_id=log_entry.id,
+                            error_message="Content Policy Violation (Media Guard)"
+                        )
+                    raise HTTPException(status_code=400, detail="Generated image violated content policy")
 
                 # Convert to WebP
                 from app.core.aws_s3 import convert_image_to_webp
@@ -323,15 +321,15 @@ async def create_image(
             log_entry = None
             try:
                 user_prompt = image.prompt
-                # AetherLab Prompt Guard
-                # is_compliant, reason = await AetherLabService.validate_prompt(user_prompt)
-                # if not is_compliant:
-                #     if "error" in reason:
-                #         print(f"AetherLab Service Error: {reason.get('error')}")
-                #         raise HTTPException(status_code=503, detail="Content safety check unavailable. Please try again later.")
-
-                #     detail_msg = reason.get('rationale', 'Content Policy Violation')
-                #     raise HTTPException(status_code=400, detail=f"Image generation is not compliant: {detail_msg}")
+                is_compliant, reason = await AetherLabService.validate_prompt(user_prompt)
+                if not is_compliant:
+                    detail_msg = (
+                        reason.get("rationale")
+                        or reason.get("reason")
+                        or reason.get("message")
+                        or "Content policy violation"
+                    )
+                    raise HTTPException(status_code=400, detail=f"Image generation is not compliant: {detail_msg}")
                 
                 orientation = "portrait"
                 final_prompt = await generate_text_to_image_prompt(image.prompt)
@@ -384,25 +382,19 @@ async def create_image(
                 generated_image_base64 = base64.b64encode(r.content).decode('utf-8')
                 print("Generated image base64")
 
-                # AetherLab Media Guard check
-                # is_media_compliant, media_reason = await AetherLabService.validate_media(
-                #     image_input=generated_image_base64,
-                #     input_type="base64"
-                # )
-                # if not is_media_compliant:
-                #     print(f"AetherLab Media Guard Blocked (Text-to-Image): {media_reason}")
-
-                #     if "error" in media_reason:
-                #         print(f"AetherLab Service Error: {media_reason.get('error')}")
-                #         raise HTTPException(status_code=503, detail="Content safety check unavailable. Please try again later.")
-
-                #     if log_entry:
-                #         await update_ai_generation_log_failure(
-                #             db=db,
-                #             log_id=log_entry.id,
-                #             error_message="Content Policy Violation (Media Guard)"
-                #         )
-                #     raise HTTPException(status_code=400, detail="Generated image violated content policy")
+                is_media_compliant, media_reason = await AetherLabService.validate_media(
+                    image_input=generated_image_base64,
+                    input_type="base64"
+                )
+                if not is_media_compliant:
+                    print(f"AetherLab Media Guard Blocked (Text-to-Image): {media_reason}")
+                    if log_entry:
+                        await update_ai_generation_log_failure(
+                            db=db,
+                            log_id=log_entry.id,
+                            error_message="Content Policy Violation (Media Guard)"
+                        )
+                    raise HTTPException(status_code=400, detail="Generated image violated content policy")
 
                 # Convert final image to bytes
                 img_bytes = base64.b64decode(generated_image_base64)

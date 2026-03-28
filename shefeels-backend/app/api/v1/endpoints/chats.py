@@ -114,14 +114,15 @@ async def generate_and_save_chat_image(
         
         if not prompt_enhanced_str:
              prompt_enhanced_str = base_character_prompt + ", " + user_query
-        
-        # AetherLab Prompt Guard
-        # AetherLab Prompt Guard
-        # is_compliant, reason = await AetherLabService.validate_prompt(user_prompt=user_query)
-        # if not is_compliant:
-        #     print(f"AetherLab Prompt Guard Blocked: {reason}")
-        #     await _mark_failed("image_prompt_aetherlab_blocked")
-        #     return
+
+        is_compliant, reason = await AetherLabService.validate_prompt(
+            user_prompt=prompt_enhanced_str,
+            conversation_history=messages_for_prompt,
+        )
+        if not is_compliant:
+            print(f"AetherLab Prompt Guard Blocked: {reason}")
+            await _mark_failed("image_prompt_aetherlab_blocked")
+            return
 
         if character_style.lower() == "realistic":
             ai_model = "fluxnsfw"
@@ -203,48 +204,44 @@ async def generate_and_save_chat_image(
             # Convert to base64 for Media Guard
             final_image_base64 = base64.b64encode(image_data_bytes).decode('utf-8')
 
-            # AetherLab Media Guard
-            # Validate the final image (either swapped or original generated)
-            # is_media_compliant, media_reason = await AetherLabService.validate_media(
-            #     image_input=final_image_base64,
-            #     input_type="base64"
-            # )
+            is_media_compliant, media_reason = await AetherLabService.validate_media(
+                image_input=final_image_base64,
+                input_type="base64"
+            )
             
-            # if not is_media_compliant:
-            #     print(f"AetherLab Media Guard Blocked: {media_reason}")
+            if not is_media_compliant:
+                print(f"AetherLab Media Guard Blocked: {media_reason}")
                 
-            #     await image_job_store.update_job(
-            #         job_id,
-            #         status=ImageJobStatus.failed,
-            #         error="content_policy_violation" 
-            #     )
+                await image_job_store.update_job(
+                    job_id,
+                    status=ImageJobStatus.failed,
+                    error="content_policy_violation"
+                )
                 
-            #     # Update Message to show violation
-            #     msg_res = await db.execute(select(ChatMessage).where(ChatMessage.id == message_id))
-            #     message = msg_res.scalar_one_or_none()
-            #     if message:
-            #         message.is_media_available = False
-            #         message.media_type = "image_violation"
-            #         db.add(message)
-            #         await db.commit()
+                msg_res = await db.execute(select(ChatMessage).where(ChatMessage.id == message_id))
+                message = msg_res.scalar_one_or_none()
+                if message:
+                    message.is_media_available = False
+                    message.media_type = "image_violation"
+                    db.add(message)
+                    await db.commit()
                     
-            #         # Redis Notify
-            #         try:
-            #             client = await redis_cache.get_redis_client()
-            #             if client:
-            #                 msg_payload = {
-            #                     "type": "message_update",
-            #                     "message_id": message.id,
-            #                     "character_id": str(character_id),
-            #                     "s3_url_media": None,
-            #                     "media_type": "image_violation",
-            #                     "is_media_available": False
-            #                 }
-            #                 await client.publish(f"chat_updates:{user_id}", json.dumps(msg_payload))
-            #         except Exception as e:
-            #             print(f"REDIS: Failed to publish violation update for user {user_id}: {e}")
+                    try:
+                        client = await redis_cache.get_redis_client()
+                        if client:
+                            msg_payload = {
+                                "type": "message_update",
+                                "message_id": message.id,
+                                "character_id": str(character_id),
+                                "s3_url_media": None,
+                                "media_type": "image_violation",
+                                "is_media_available": False
+                            }
+                            await client.publish(f"chat_updates:{user_id}", json.dumps(msg_payload))
+                    except Exception as e:
+                        print(f"REDIS: Failed to publish violation update for user {user_id}: {e}")
                 
-            #     return
+                return
 
             # Convert and Upload
             img_bytes = await asyncio.to_thread(base64.b64decode, final_image_base64)
@@ -349,6 +346,19 @@ def _build_image_context(
     ctx_messages.append({"role": "user", "content": user_query})
     ctx_messages.append({"role": "assistant", "content": chat_output})
     return ctx_messages
+
+
+def _build_guardrail_history(
+    last_messages: list[ChatMessage],
+) -> list[dict[str, str]]:
+    """Serialize prior turns for AetherLab context."""
+    history: list[dict[str, str]] = []
+    for msg in last_messages:
+        if msg.user_query:
+            history.append({"role": "user", "content": msg.user_query})
+        if msg.ai_message:
+            history.append({"role": "assistant", "content": msg.ai_message})
+    return history
 
 
 async def generate_chat_text(
@@ -900,6 +910,19 @@ async def start_chat(
     print("user query : ", chat.user_query)
     #print(template_prompt)
     messages = _build_chat_messages(template_prompt, last_messages, chat.user_query)
+    guardrail_history = _build_guardrail_history(last_messages)
+    is_prompt_compliant, prompt_reason = await AetherLabService.validate_prompt(
+        user_prompt=chat.user_query,
+        conversation_history=guardrail_history,
+    )
+    if not is_prompt_compliant:
+        detail_msg = (
+            prompt_reason.get("rationale")
+            or prompt_reason.get("reason")
+            or prompt_reason.get("message")
+            or "Message blocked by content policy"
+        )
+        raise HTTPException(status_code=400, detail=detail_msg)
     token_count = await approximate_token_count(messages)
     chat_output, wants_image = await generate_chat_text(messages)
     # chat_output, is_image_request = (

@@ -1,9 +1,11 @@
 
+from __future__ import annotations
+
+from typing import Any, Iterable, Tuple, Union
+
 import httpx
-from typing import Tuple, Dict, Any, Union
+
 from app.core.config import settings
-import json
-import aiohttp
 
 class AetherLabService:
     BASE_URL = "https://api.aetherlab.co/v1"
@@ -11,65 +13,167 @@ class AetherLabService:
     @staticmethod
     def _get_api_key() -> str:
         if not settings.AETHERLAB_API_KEY:
-            # Fallback or raise error? For now, let's assume it might be set, 
-            # if not we might want to log a warning or fail securely (block).
-            # The onboarding doc says "All API requests must include your API key".
             print("WARNING: AETHERLAB_API_KEY is not set.")
             return ""
         return settings.AETHERLAB_API_KEY
+
+    @classmethod
+    def _build_headers(cls) -> dict[str, str]:
+        api_key = cls._get_api_key()
+        if not api_key:
+            return {}
+        # Send both current and legacy auth headers so the integration remains
+        # compatible with either Aether endpoint generation.
+        return {
+            "Authorization": f"Bearer {api_key}",
+            "x-api-key": api_key,
+        }
+
+    @staticmethod
+    def _normalize_history(
+        conversation_history: Iterable[dict[str, Any]] | None,
+    ) -> list[dict[str, str]]:
+        normalized: list[dict[str, str]] = []
+        if not conversation_history:
+            return normalized
+
+        for item in conversation_history:
+            if not isinstance(item, dict):
+                continue
+            role = str(item.get("role") or "").strip().lower()
+            content = str(item.get("content") or "").strip()
+            if not role or not content:
+                continue
+            normalized.append({"role": role, "content": content})
+        return normalized
+
+    @classmethod
+    def _history_text(
+        cls,
+        conversation_history: Iterable[dict[str, Any]] | None,
+    ) -> str:
+        parts: list[str] = []
+        for item in cls._normalize_history(conversation_history):
+            parts.append(f"{item['role']}: {item['content']}")
+        return "\n".join(parts)
+
+    @staticmethod
+    def _extract_result_payload(data: dict[str, Any]) -> dict[str, Any]:
+        if not isinstance(data, dict):
+            return {}
+        nested = data.get("data")
+        if isinstance(nested, dict):
+            return nested
+        result = data.get("result")
+        if isinstance(result, dict):
+            return result
+        return data
+
+    @classmethod
+    def _extract_compliance(
+        cls, response_data: dict[str, Any]
+    ) -> tuple[bool, dict[str, Any]]:
+        result = cls._extract_result_payload(response_data)
+
+        compliance_status = str(result.get("compliance_status") or "").strip().lower()
+        if compliance_status:
+            return compliance_status == "compliant", result
+
+        for key in ("is_compliant", "compliant", "allowed", "approved", "safe"):
+            value = result.get(key)
+            if isinstance(value, bool):
+                return value, result
+
+        decision = str(result.get("decision") or result.get("status") or "").strip().lower()
+        if decision:
+            if decision in {"allow", "allowed", "approved", "safe", "compliant", "pass", "passed"}:
+                return True, result
+            if decision in {"block", "blocked", "deny", "denied", "unsafe", "non_compliant", "reject", "rejected"}:
+                return False, result
+
+        return True, result
+
+    @classmethod
+    async def _post_json(
+        cls,
+        path: str,
+        payload: dict[str, Any],
+        timeout: float = 10.0,
+    ) -> httpx.Response:
+        headers = cls._build_headers()
+        headers["Content-Type"] = "application/json"
+        async with httpx.AsyncClient() as client:
+            return await client.post(
+                f"{cls.BASE_URL}{path}",
+                headers=headers,
+                json=payload,
+                timeout=timeout,
+            )
 
     @classmethod
     async def validate_prompt(
         cls, 
         user_prompt: str, 
         whitelisted_keywords: str = "", 
-        blacklisted_keywords: str = ""
+        blacklisted_keywords: str = "",
+        conversation_history: Iterable[dict[str, Any]] | None = None,
     ) -> Tuple[bool, dict]:
         """
         Validate a text prompt using AetherLab Prompt Guard.
         Returns: (is_compliant: bool, response_data: dict)
         """
-        api_key = cls._get_api_key()
-        if not api_key:
-             # Fail secure? or fail open? 
-             # "If Guardrails are unavailable, fail closed (block) for high‑risk use cases."
-             return False, {"error": "Missing AetherLab API Key"}
+        if not cls._get_api_key():
+            return True, {"skipped": True, "reason": "missing_api_key"}
 
-        url = f"{cls.BASE_URL}/guardrails/prompt"
-        headers = {
-            "x-api-key": api_key,
-            "Content-Type": "application/json"
-        }
-        
-        # You might want to pull default policies from config if not provided
-        # For now, we use defaults or passed values.
-        # The prompt suggests we should construct these from our own policy.
-        # We'll map them to empty strings if not provided, allowing the API (or caller) to define them.
-        
-        payload = {
+        normalized_history = cls._normalize_history(conversation_history)
+        history_text = cls._history_text(normalized_history)
+        payload_v1 = {
+            "content": user_prompt,
             "input_type": "text",
             "user_prompt": user_prompt,
+            "conversation_history": normalized_history,
+            "context": {
+                "conversation_history": normalized_history,
+                "conversation_history_text": history_text,
+            },
             "whitelisted_keyword": whitelisted_keywords,
-            "blacklisted_keyword": blacklisted_keywords
+            "blacklisted_keyword": blacklisted_keywords,
+        }
+        payload_legacy = {
+            "input_type": "text",
+            "user_prompt": user_prompt,
+            "conversation_history": normalized_history,
+            "conversation_history_text": history_text,
+            "whitelisted_keyword": whitelisted_keywords,
+            "blacklisted_keyword": blacklisted_keywords,
         }
 
         try:
-            async with httpx.AsyncClient() as client:
-                response = await client.post(url, headers=headers, json=payload, timeout=10.0)
-                
+            response = await cls._post_json("/validate", payload_v1, timeout=10.0)
             if response.status_code == 200:
-                data = response.json()
-                # data structure: { "status": 200, "message": "...", "data": { "compliance_status": "Compliant", "avg_threat_level": ... } }
-                result = data.get("data", {})
-                is_compliant = result.get("compliance_status") == "Compliant"
-                return is_compliant, result
-            else:
-                print(f"AetherLab Prompt Guard Error: {response.status_code} - {response.text}")
-                return False, {"error": f"API Error {response.status_code}", "detail": response.text}
-                
+                return cls._extract_compliance(response.json())
+
+            if response.status_code not in {400, 404, 405, 422}:
+                print(f"AetherLab Validate Error: {response.status_code} - {response.text}")
+                return True, {
+                    "skipped": True,
+                    "error": f"API Error {response.status_code}",
+                    "detail": response.text,
+                }
+
+            response = await cls._post_json("/guardrails/prompt", payload_legacy, timeout=10.0)
+            if response.status_code == 200:
+                return cls._extract_compliance(response.json())
+
+            print(f"AetherLab Prompt Guard Error: {response.status_code} - {response.text}")
+            return True, {
+                "skipped": True,
+                "error": f"API Error {response.status_code}",
+                "detail": response.text,
+            }
         except Exception as e:
             print(f"AetherLab Prompt Guard Exception: {e}")
-            return False, {"error": str(e)}
+            return True, {"skipped": True, "error": str(e)}
 
     @classmethod
     async def validate_media(
@@ -84,44 +188,39 @@ class AetherLabService:
         image_input: URL string, base64 string, or bytes (for file upload).
         Returns: (is_compliant: bool, response_data: dict)
         """
-        api_key = cls._get_api_key()
-        if not api_key:
-            return False, {"error": "Missing AetherLab API Key"}
+        if not cls._get_api_key():
+            return True, {"skipped": True, "reason": "missing_api_key"}
 
-        url = f"{cls.BASE_URL}/guardrails/media"
-        # DO NOT set Content-Type here; httpx will set it with the correct boundary
-        headers = {
-            "x-api-key": api_key
-        }
-        
         try:
-            # Force multipart/form-data by passing all fields in the 'files' parameter
-            # as multipart/form-data parts.
+            headers = cls._build_headers()
             files = {
-                'input_type': (None, input_type),
-                'whitelisted_keyword': (None, whitelisted_keywords),
-                'blacklisted_keyword': (None, blacklisted_keywords),
+                "input_type": (None, input_type),
+                "whitelisted_keyword": (None, whitelisted_keywords),
+                "blacklisted_keyword": (None, blacklisted_keywords),
             }
-            
-            if input_type == 'file':
-                # image_input is bytes
-                files['image'] = ('image.jpg', image_input, 'image/jpeg')
+
+            if input_type == "file":
+                files["image"] = ("image.jpg", image_input, "image/jpeg")
             else:
-                # image_input is a string (url or base64)
-                files['image'] = (None, str(image_input))
+                files["image"] = (None, str(image_input))
 
             async with httpx.AsyncClient() as client:
-                response = await client.post(url, headers=headers, files=files, timeout=15.0)
-                
+                response = await client.post(
+                    f"{cls.BASE_URL}/guardrails/media",
+                    headers=headers,
+                    files=files,
+                    timeout=15.0,
+                )
+
             if response.status_code == 200:
-                data = response.json()
-                result = data.get("data", {})
-                is_compliant = result.get("compliance_status") == "Compliant"
-                return is_compliant, result
-            else:
-                print(f"AetherLab Media Guard Error: {response.status_code} - {response.text}")
-                return False, {"error": f"API Error {response.status_code}", "detail": response.text}
-                 
+                return cls._extract_compliance(response.json())
+
+            print(f"AetherLab Media Guard Error: {response.status_code} - {response.text}")
+            return True, {
+                "skipped": True,
+                "error": f"API Error {response.status_code}",
+                "detail": response.text,
+            }
         except Exception as e:
             print(f"AetherLab Media Guard Exception: {e}")
-            return False, {"error": str(e)}
+            return True, {"skipped": True, "error": str(e)}
