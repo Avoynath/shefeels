@@ -349,6 +349,8 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
     const isLiking = !!likingMap[charId];
     const handleLike = charId ? () => handleLikeCharacter(charId) : undefined;
     const resolvedKey = keyOverride ?? (charId || String(character?.id ?? character?.name ?? Math.random()));
+    const rawDisplayName = String(character?.name || character?.username || '').trim();
+    const firstNameOnly = rawDisplayName.split(/\s+/)[0] || rawDisplayName;
 
     // Check if we're on the homepage-style paths (including gender-specific routes)
     const isHomepagePath = location.pathname === '/' ||
@@ -359,7 +361,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
     return (
       <CharacterCard
         key={resolvedKey}
-        name={character.name || character.username}
+        name={isHomepagePath ? firstNameOnly : rawDisplayName}
         age={character.age}
         img={character.webp_image_url_s3 || character.image_url_s3}
         gif={character.gif_url_s3}
