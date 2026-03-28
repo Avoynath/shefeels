@@ -180,6 +180,12 @@ const MALE_BODY_TYPES = ["Athletic", "Medium", "Muscular", "Slim"];
 const BREAST = ["Flat", "Small", "Medium", "Large", "XL"];
 const BUTT = ["Small", "Medium", "Large", "Athletic"];
 const DICK_SIZES = ["Small", "Medium", "Large", "Huge"];
+const AGE_VIBES = [
+  { key: "20s", badge: "20-29", title: "In Her 20s", description: "Confident, trendy, playful, and effortlessly flirty.", age: 24 },
+  { key: "30s", badge: "30-39", title: "In Her 30s", description: "Polished, mature, magnetic, and self-assured.", age: 34 },
+  { key: "50s", badge: "50-59", title: "In Her 50s (MILF)", description: "Bold, experienced, seductive, and full of presence.", age: 52 },
+  { key: "grandma", badge: "60+", title: "Grandma", description: "Seasoned, elegant, teasing, and unmistakably commanding.", age: 65 },
+] as const;
 // Relationships are provided per-gender via relationshipsForGender
 const FEATURES = [
   "Pubic Hair",
@@ -689,7 +695,7 @@ export default function CreateCharacter() {
   const [step, setStep] = useState<number>(() => (
     typeof initialDraft?.step === 'number' ? initialDraft.step : 0
   ));
-  const totalSteps = 13;
+  const totalSteps = 14;
   const [form, setForm] = useState<Form>(() => {
     if (initialDraft?.form && typeof initialDraft.form === 'object') {
       return { ...defaultForm, ...(initialDraft.form as Partial<Form>) };
@@ -899,25 +905,26 @@ export default function CreateCharacter() {
 
   const canNext = useMemo(() => {
     if (step === 0) return !!form.style;
-    if (step === 1) return !!form.ethnicity && form.age >= 18;
-    if (step === 2) return !!form.eyeColor;
-    if (step === 3) return !!form.hairStyle;
-    if (step === 4) return !!form.hairColor;
-    if (step === 5) return !!form.bodyType;
-    if (step === 6) {
+    if (step === 1) return !!form.ethnicity;
+    if (step === 2) return form.age >= 18;
+    if (step === 3) return !!form.eyeColor;
+    if (step === 4) return !!form.hairStyle;
+    if (step === 5) return !!form.hairColor;
+    if (step === 6) return !!form.bodyType;
+    if (step === 7) {
       if (gender === 'Male') return !!form.dickSize;
       return !!form.breastSize;
     }
-    if (step === 7) {
+    if (step === 8) {
       if (gender === 'Male') return true;
       if (gender === 'Trans') return !!form.buttSize && !!form.dickSize;
       return !!form.buttSize;
     }
-    if (step === 8) return !!form.relationship;
-    if (step === 9) return Array.isArray(form.clothing) && form.clothing.length > 0;
-    if (step === 10) return Array.isArray(form.background) && form.background.length > 0;
-    if (step === 11) return true; // Special features are optional
-    if (step === 12) {
+    if (step === 9) return !!form.relationship;
+    if (step === 10) return Array.isArray(form.clothing) && form.clothing.length > 0;
+    if (step === 11) return Array.isArray(form.background) && form.background.length > 0;
+    if (step === 12) return true; // Special features are optional
+    if (step === 13) {
       const onlyfansValid = socialValidation(form.onlyfans, 'onlyfans').valid;
       const fanvueValid = socialValidation(form.fanvue, 'fanvue').valid;
       const tiktokValid = socialValidation(form.tiktok, 'tiktok').valid;
@@ -1249,30 +1256,32 @@ export default function CreateCharacter() {
       case 0:
         return "Select a style (Realistic or Anime) to continue.";
       case 1:
-        return "Pick an ethnicity and make sure age is 18+.";
+        return "Pick an ethnicity.";
       case 2:
-        return "Choose an eye color.";
+        return "Pick an age vibe.";
       case 3:
-        return "Choose a hair style.";
+        return "Choose an eye color.";
       case 4:
-        return "Choose a hair color.";
+        return "Choose a hair style.";
       case 5:
-        return "Choose a body type.";
+        return "Choose a hair color.";
       case 6:
-        return gender === 'Male' ? "Choose a dick size." : "Choose a breast size.";
+        return "Choose a body type.";
       case 7:
+        return gender === 'Male' ? "Choose a dick size." : "Choose a breast size.";
+      case 8:
         if (gender === 'Trans') return "Choose a butt size and a dick size.";
         return "Choose a butt size.";
-      case 8:
-        return "Choose a relationship.";
       case 9:
+        return "Choose a relationship.";
+      case 10:
         return "Choose at least one outfit.";
-      case 10: {
+      case 11: {
         return "Choose at least one background.";
       }
-      case 11:
+      case 12:
         return "Choose optional special features to continue.";
-      case 12: {
+      case 13: {
         if (!validName(form.name)) return "Enter a valid name (at least 2 characters).";
         return "";
       }
@@ -1323,14 +1332,14 @@ export default function CreateCharacter() {
 
   const next = () => setStep((s) => {
     let nextStep = Math.min(totalSteps - 1, s + 1);
-    // Male flow skips step 7 (butt-size page).
-    if (gender === 'Male' && nextStep === 7) nextStep = Math.min(totalSteps - 1, nextStep + 1);
+    // Male flow skips butt-size page.
+    if (gender === 'Male' && nextStep === 8) nextStep = Math.min(totalSteps - 1, nextStep + 1);
     return nextStep;
   });
   const prev = () => setStep((s) => {
     let prevStep = Math.max(0, s - 1);
-    // Male flow skips step 7 (butt-size page).
-    if (gender === 'Male' && prevStep === 7) prevStep = Math.max(0, prevStep - 1);
+    // Male flow skips butt-size page.
+    if (gender === 'Male' && prevStep === 8) prevStep = Math.max(0, prevStep - 1);
     return prevStep;
   });
 
@@ -1345,9 +1354,9 @@ export default function CreateCharacter() {
     }
   }, [step, isMobile]);
 
-  // Auto-generate a name when user enters the final step (step 12)
+  // Auto-generate a name when user enters the final step.
   useEffect(() => {
-    if (step === 12 && !form.name && !isGeneratingMetadata) {
+    if (step === 13 && !form.name && !isGeneratingMetadata) {
       const femaleNames = ["Maha", "Simran", "Priya", "Emily", "Sarah", "Anna", "Chloe", "Mia", "Zoe", "Lily", "Aisha", "Maria", "Luna", "Sophia", "Ava", "Isla", "Layla", "Nora", "Aria", "Leah"];
       const maleNames = ["James", "Alex", "Leo", "Noah", "Liam", "Kai", "Lucas", "Ryan", "Jake", "Ethan", "Max", "Ravi", "Adrian", "Marcus", "Theo"];
       const names = gender === 'Male' ? maleNames : femaleNames;
@@ -1358,10 +1367,10 @@ export default function CreateCharacter() {
 
   // Trigger early metadata generation when reaching Occupation and Summary if missing
   useEffect(() => {
-    const isStep12MissingBio = step === 12 && !form.bio && !isGeneratingMetadata && user;
-    const isStep8FirstTrigger = step === 8 && !form.name && !isGeneratingMetadata && user;
+    const isStep13MissingBio = step === 13 && !form.bio && !isGeneratingMetadata && user;
+    const isStep9FirstTrigger = step === 9 && !form.name && !isGeneratingMetadata && user;
     
-    if (isStep12MissingBio || isStep8FirstTrigger) {
+    if (isStep13MissingBio || isStep9FirstTrigger) {
       preGenerateMetadata();
     }
   }, [step, user, form.bio]);
@@ -1414,13 +1423,13 @@ export default function CreateCharacter() {
   // On mobile we show a shorter, action-oriented label
   // On mobile we show a shorter, action-oriented label
   const primaryLabel = (() => {
-    if (step === 12) return "Create Character";
+    if (step === 13) return "Create Character";
     return "Next";
   })();
 
   const handlePrimary = () => {
     if (!canNext) {
-      if (step === 12) {
+      if (step === 13) {
         // Show validation popup for the final step
         showError("Validation Error", stepRequirementHint || "Please check your inputs.");
       }
@@ -1428,8 +1437,8 @@ export default function CreateCharacter() {
       return;
     }
 
-    // Steps 0-11 just go to the next step
-    if (step < 12) {
+    // Non-final steps just go to the next step
+    if (step < 13) {
       next();
       return;
     }
@@ -1700,7 +1709,7 @@ export default function CreateCharacter() {
             </div>
           )}
 
-          {/* Step 1: Ethnicity + Age */}
+          {/* Step 1: Ethnicity */}
           {step === 1 && (
             <div>
               <h2 className={subheading} style={{ color: 'var(--primary)' }}>Ethnicity</h2>
@@ -1720,30 +1729,95 @@ export default function CreateCharacter() {
                   />
                 ))}
               </div>
-
-              <Section title="Age">
-                <div className="flex items-center gap-4">
-                  <span className={isDark ? "text-white/70" : "text-gray-600"}>18+</span>
-                  <input
-                    type="range"
-                    min={18}
-                    max={60}
-                    value={form.age}
-                    onChange={(e) => setForm({ ...form, age: Number(e.target.value) })}
-                    className="w-full accent-(--sf-purple-light)"
-                  />
-                  <span className={isDark ? "text-white/70" : "text-gray-600"}>60</span>
-                  <div className={`shrink-0 h-10 min-w-10 flex items-center justify-center rounded-xl font-bold ${isDark ? 'bg-white/10 text-white' : 'bg-gray-100 text-black'}`}>
-                    {form.age}
-                  </div>
-                </div>
-              </Section>
-
             </div>
           )}
 
-          {/* Step 2: Eye Color */}
+          {/* Step 2: Age */}
           {step === 2 && (
+            <div>
+              <div className="text-center">
+                <h2 className={subheading} style={{ color: 'var(--primary)' }}>Choose Age</h2>
+                <p className={`mt-2 text-sm sm:text-base ${isDark ? "text-white/60" : "text-gray-600"}`}>
+                  Pick the age vibe that fits your character best.
+                </p>
+              </div>
+
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                {AGE_VIBES.map((option) => {
+                  const active = form.age === option.age;
+                  return (
+                    <button
+                      key={option.key}
+                      type="button"
+                      onClick={() => {
+                        setForm({ ...form, age: option.age });
+                        setTimeout(next, 0);
+                      }}
+                      aria-pressed={active}
+                      className={`relative rounded-[24px] p-6 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-(--sf-purple-light) ${
+                        active ? "scale-[1.01]" : "hover:translate-y-[-2px]"
+                      } ${isDark ? "bg-white/[0.045]" : "bg-gray-50"}`}
+                      style={{
+                        border: active
+                          ? "1.5px solid var(--sf-purple-light)"
+                          : isDark
+                            ? "1px solid rgba(255,255,255,0.10)"
+                            : "1px solid rgba(0,0,0,0.10)",
+                        boxShadow: active
+                          ? "0 18px 38px rgba(127, 90, 240, 0.18), inset 0 1px 0 rgba(255,255,255,0.04)"
+                          : "0 10px 24px rgba(0,0,0,0.10)",
+                      }}
+                    >
+                      <div className="mb-8 flex items-start justify-between gap-3">
+                        <span
+                          className="inline-flex rounded-full px-4 py-1.5 text-xs font-bold tracking-[0.12em] uppercase"
+                          style={{
+                            background: active ? "rgba(127, 90, 240, 0.18)" : (isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"),
+                            color: active ? "var(--sf-purple-light)" : (isDark ? "rgba(255,255,255,0.78)" : "#4b5563"),
+                          }}
+                        >
+                          {option.badge}
+                        </span>
+                        <span
+                          className="mt-0.5 h-7 w-7 rounded-full"
+                          style={{
+                            border: active
+                              ? "1.5px solid var(--sf-purple-light)"
+                              : isDark
+                                ? "1px solid rgba(255,255,255,0.22)"
+                                : "1px solid rgba(0,0,0,0.18)",
+                            background: active ? "rgba(127, 90, 240, 0.18)" : "transparent",
+                            boxShadow: active ? "inset 0 0 0 5px var(--sf-purple-light)" : "none",
+                          }}
+                        />
+                      </div>
+                      <div className={`text-3xl font-semibold leading-none ${isDark ? "text-white" : "text-gray-900"}`}>
+                        {option.title}
+                      </div>
+                      <p className={`mt-5 max-w-[22ch] text-base leading-8 ${isDark ? "text-white/68" : "text-gray-600"}`}>
+                        {option.description}
+                      </p>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="mt-6 text-center">
+                <span
+                  className="inline-block rounded-md px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em]"
+                  style={{
+                    background: "rgba(127, 90, 240, 0.12)",
+                    color: "var(--sf-purple-light)",
+                  }}
+                >
+                  This shapes the final look and vibe of your character
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Eye Color */}
+          {step === 3 && (
             <div>
               <h2 className={subheading} style={{ color: 'var(--primary)' }}>Eye Color</h2>
               <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8">
@@ -1763,8 +1837,8 @@ export default function CreateCharacter() {
             </div>
           )}
 
-          {/* Step 3: Hair Style */}
-          {step === 3 && (
+          {/* Step 4: Hair Style */}
+          {step === 4 && (
             <div>
               <h2 className={subheading} style={{ color: 'var(--primary)' }}>Hair Style</h2>
               <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-6">
@@ -1778,8 +1852,8 @@ export default function CreateCharacter() {
             </div>
           )}
 
-          {/* Step 4: Hair Color */}
-          {step === 4 && (
+          {/* Step 5: Hair Color */}
+          {step === 5 && (
             <div>
               <h2 className={subheading} style={{ color: 'var(--primary)' }}>Hair Color</h2>
               <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-6">
@@ -1793,8 +1867,8 @@ export default function CreateCharacter() {
             </div>
           )}
 
-          {/* Step 5: Body Type */}
-          {step === 5 && (
+          {/* Step 6: Body Type */}
+          {step === 6 && (
             <div>
               <h2 className={subheading} style={{ color: 'var(--primary)' }}>Body Type</h2>
               <div className={`mt-6 grid grid-cols-2 sm:grid-cols-3 ${gender === 'Male' ? 'lg:grid-cols-4' : 'lg:grid-cols-5'} gap-6 sm:gap-6`}>
@@ -1808,8 +1882,8 @@ export default function CreateCharacter() {
             </div>
           )}
 
-          {/* Step 6: Breast Size / Dick Size */}
-          {step === 6 && (
+          {/* Step 7: Breast Size / Dick Size */}
+          {step === 7 && (
             <div>
               {gender === 'Male' ? (
                 <>
@@ -1856,8 +1930,8 @@ export default function CreateCharacter() {
             </div>
           )}
 
-          {/* Step 7: Butt Size (and Dick Size for Trans) */}
-          {step === 7 && (
+          {/* Step 8: Butt Size (and Dick Size for Trans) */}
+          {step === 8 && (
             <div>
               {gender !== 'Male' && (
                 <>
@@ -1898,8 +1972,8 @@ export default function CreateCharacter() {
             </div>
           )}
 
-          {/* Step 8: Occupation (Relationship) */}
-          {step === 8 && (
+          {/* Step 9: Occupation (Relationship) */}
+          {step === 9 && (
             <div>
               <h2 className="text-center text-xl font-semibold text-(--primary)" style={{ color: 'var(--primary)' }}>Occupation</h2>
               <p className="text-center text-sm text-white/60 mt-2 mb-6">Select your character's profession</p>
@@ -1916,8 +1990,8 @@ export default function CreateCharacter() {
             </div>
           )}
 
-          {/* Step 9: Clothing */}
-          {step === 9 && (
+          {/* Step 10: Clothing */}
+          {step === 10 && (
             <div className="space-y-4">
               <div className="text-center mb-6">
                 <h2 className={subheading} style={{ color: 'var(--primary)' }}>Outfit</h2>
@@ -1946,8 +2020,8 @@ export default function CreateCharacter() {
             </div>
           )}
 
-          {/* Step 10: Background */}
-          {step === 10 && (
+          {/* Step 11: Background */}
+          {step === 11 && (
             <div className="space-y-4">
               <div className="text-center mb-6">
                 <h2 className={subheading} style={{ color: 'var(--primary)' }}>Background</h2>
@@ -1976,8 +2050,8 @@ export default function CreateCharacter() {
             </div>
           )}
 
-          {/* Step 11: Special Features */}
-          {step === 11 && (
+          {/* Step 12: Special Features */}
+          {step === 12 && (
             <div>
               <h2 className={subheading} style={{ color: 'var(--primary)' }}>Features</h2>
               <p className="text-center text-sm text-white/60 mt-2 mb-6">Select optional special features for your character</p>
@@ -2007,7 +2081,7 @@ export default function CreateCharacter() {
             </div>
           )}
 
-          {step === 12 && (() => {
+          {step === 13 && (() => {
             return (
             <div>
               {/* Keyframes for pulsating blur animation */}

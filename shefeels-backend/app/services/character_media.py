@@ -258,6 +258,26 @@ async def generate_character_prompt(
                  For chat images, this can be dynamic based on the prompt
     """
 
+    def _age_vibe_phrase(age_value: int | None, gender_value: str | None) -> str | None:
+        if not age_value:
+            return None
+        gender_norm = (gender_value or "").strip().lower()
+        pronoun = "their"
+        if gender_norm == "female":
+            pronoun = "her"
+        elif gender_norm == "male":
+            pronoun = "his"
+
+        if 20 <= age_value <= 29:
+            return f"in {pronoun} 20s"
+        if 30 <= age_value <= 39:
+            return f"in {pronoun} 30s"
+        if 50 <= age_value <= 59:
+            return f"in {pronoun} 50s"
+        if age_value >= 60:
+            return "grandma" if gender_norm == "female" else f"in {pronoun} 60s"
+        return None
+
     # Build input string for LLM
     tags = []
 
@@ -287,6 +307,9 @@ async def generate_character_prompt(
     # Age
     if age:
         tags.append(f"{age} year old,-age")
+        age_vibe = _age_vibe_phrase(age, gender)
+        if age_vibe:
+            tags.append(age_vibe)
 
     # Ethnicity
     if ethnicity:
