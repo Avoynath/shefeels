@@ -8,7 +8,7 @@ import socialX from "../assets/figma/home/footer/social-x.svg";
 import dmcaBadge from "../assets/figma/home/footer/dmca.png";
 import paymentBank from "../assets/figma/home/footer/payment-bank.svg";
 import paymentAmex from "../assets/figma/home/footer/payment-amex.svg";
-import paymentCard from "../assets/figma/home/footer/payment-card.png";
+import paymentCard from "../assets/figma/home/footer/payment-fourth.svg";
 
 const SiteFooter: React.FC<{ gender?: string }> = ({ gender }) => {
   const { theme } = useTheme();
@@ -87,18 +87,18 @@ const SiteFooter: React.FC<{ gender?: string }> = ({ gender }) => {
             <Link to="/cookies-notice" className="hover:underline">Cookies</Link>
             <Link to="/dmca-policy" className="hover:underline">DMCA</Link>
           </div>
-          <div className={`flex gap-3 ${isDark ? "text-white/60" : "text-gray-500"}`}>
-            <span className="w-6 h-6 block">
-              <img src={dmcaBadge} alt="DMCA" className="w-6 h-6 rounded object-cover" />
+          <div className="flex items-center gap-4">
+            <span className="block h-10 w-[108px] shrink-0">
+              <img src={dmcaBadge} alt="DMCA" className="h-full w-full rounded-[8px] object-contain" />
             </span>
-            <span className="w-6 h-6 block">
-              <img src={paymentBank} alt="Bank" className="w-6 h-6" />
+            <span className="block h-10 w-[58px] shrink-0">
+              <img src={paymentBank} alt="Bank" className="h-full w-full object-contain" />
             </span>
-            <span className="w-6 h-6 block">
-              <img src={paymentAmex} alt="Amex" className="w-6 h-6" />
+            <span className="block h-10 w-[64px] shrink-0">
+              <img src={paymentAmex} alt="Amex" className="h-full w-full object-contain" />
             </span>
-            <span className="w-6 h-6 block">
-              <img src={paymentCard} alt="Card" className="w-6 h-6 rounded object-cover" />
+            <span className="block h-10 w-[58px] shrink-0">
+              <img src={paymentCard} alt="Card" className="h-full w-full object-contain" />
             </span>
           </div>
         </div>
