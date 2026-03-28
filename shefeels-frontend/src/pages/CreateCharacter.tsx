@@ -1737,12 +1737,12 @@ export default function CreateCharacter() {
             <div>
               <div className="text-center">
                 <h2 className={subheading} style={{ color: 'var(--primary)' }}>Choose Age</h2>
-                <p className={`mt-2 text-sm sm:text-base ${isDark ? "text-white/60" : "text-gray-600"}`}>
+                <p className={`mt-2 text-xs sm:text-sm ${isDark ? "text-white/60" : "text-gray-600"}`}>
                   Pick the age vibe that fits your character best.
                 </p>
               </div>
 
-              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 {AGE_VIBES.map((option) => {
                   const active = form.age === option.age;
                   return (
@@ -1754,7 +1754,7 @@ export default function CreateCharacter() {
                         setTimeout(next, 0);
                       }}
                       aria-pressed={active}
-                      className={`relative rounded-[24px] p-6 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-(--sf-purple-light) ${
+                      className={`relative rounded-[20px] p-5 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-(--sf-purple-light) ${
                         active ? "scale-[1.01]" : "hover:translate-y-[-2px]"
                       } ${isDark ? "bg-white/[0.045]" : "bg-gray-50"}`}
                       style={{
@@ -1768,9 +1768,9 @@ export default function CreateCharacter() {
                           : "0 10px 24px rgba(0,0,0,0.10)",
                       }}
                     >
-                      <div className="mb-8 flex items-start justify-between gap-3">
+                      <div className="mb-6 flex items-start justify-between gap-3">
                         <span
-                          className="inline-flex rounded-full px-4 py-1.5 text-xs font-bold tracking-[0.12em] uppercase"
+                          className="inline-flex rounded-full px-3 py-1 text-[11px] font-bold tracking-[0.1em] uppercase"
                           style={{
                             background: active ? "rgba(127, 90, 240, 0.18)" : (isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"),
                             color: active ? "var(--sf-purple-light)" : (isDark ? "rgba(255,255,255,0.78)" : "#4b5563"),
@@ -1791,27 +1791,15 @@ export default function CreateCharacter() {
                           }}
                         />
                       </div>
-                      <div className={`text-3xl font-semibold leading-none ${isDark ? "text-white" : "text-gray-900"}`}>
+                      <div className={`text-xl sm:text-2xl font-semibold leading-tight ${isDark ? "text-white" : "text-gray-900"}`}>
                         {option.title}
                       </div>
-                      <p className={`mt-5 max-w-[22ch] text-base leading-8 ${isDark ? "text-white/68" : "text-gray-600"}`}>
+                      <p className={`mt-3 max-w-[24ch] text-sm sm:text-[15px] leading-6 ${isDark ? "text-white/68" : "text-gray-600"}`}>
                         {option.description}
                       </p>
                     </button>
                   );
                 })}
-              </div>
-
-              <div className="mt-6 text-center">
-                <span
-                  className="inline-block rounded-md px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em]"
-                  style={{
-                    background: "rgba(127, 90, 240, 0.12)",
-                    color: "var(--sf-purple-light)",
-                  }}
-                >
-                  This shapes the final look and vibe of your character
-                </span>
               </div>
             </div>
           )}
