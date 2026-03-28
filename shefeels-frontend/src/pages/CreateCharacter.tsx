@@ -1436,7 +1436,7 @@ export default function CreateCharacter() {
 
     // Step 12 is the final save step
     // If not logged in, redirect to login and return to this page
-    if (!user) {
+    if (!token) {
       // preserve current location so login can return here
       try {
         sessionStorage.setItem('hl_create_character_draft', JSON.stringify({ form, gender, step }));
@@ -1542,6 +1542,14 @@ export default function CreateCharacter() {
           navigate(isSubscriptionIssue ? '/premium' : '/buy-tokens', {
             state: { from: location, reason: 'create-character' },
           });
+          return;
+        }
+
+        if (res.status === 401) {
+          try {
+            sessionStorage.setItem('hl_create_character_draft', JSON.stringify({ form, gender, step }));
+          } catch {}
+          navigate('/login', { state: { from: location } });
           return;
         }
 

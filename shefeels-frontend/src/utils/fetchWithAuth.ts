@@ -12,7 +12,7 @@ export default async function fetchWithAuth(input: RequestInfo, init?: RequestIn
   try {
     const headers = new Headers((init && init.headers) as HeadersInit | undefined);
     if (typeof window !== 'undefined') {
-      const possibleKeys = ['hl_token', 'access_token', 'token', 'auth_token'];
+      const possibleKeys = ['sf_token', 'hl_token', 'access_token', 'token', 'auth_token', 'pornily:auth:token', 'pornily:auth:access_token'];
       let token: string | null = null;
       for (const k of possibleKeys) {
         try { token = window.localStorage.getItem(k); } catch (e) { token = null; }

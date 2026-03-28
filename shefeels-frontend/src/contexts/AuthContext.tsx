@@ -26,6 +26,27 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+function getStoredAccessToken(): string | null {
+  try {
+    const keys = [
+      "sf_token",
+      "hl_token",
+      "access_token",
+      "token",
+      "auth_token",
+      "pornily:auth:token",
+      "pornily:auth:access_token",
+    ];
+    for (const key of keys) {
+      const value = localStorage.getItem(key);
+      if (value && typeof value === "string" && value.trim()) {
+        return value.trim();
+      }
+    }
+  } catch {}
+  return null;
+}
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User>(() => {
@@ -36,7 +57,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return null;
     }
   });
-  const [token, setToken] = useState<string | null>(() => localStorage.getItem("sf_token"));
+  const [token, setToken] = useState<string | null>(() => getStoredAccessToken());
   const isAuthenticated = useMemo(() => Boolean(token), [token]);
 
   // ensure api client knows about token
@@ -194,8 +215,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     try {
-      if (token) localStorage.setItem("sf_token", token);
-      else localStorage.removeItem("sf_token");
+      const keys = [
+        "sf_token",
+        "hl_token",
+        "access_token",
+        "pornily:auth:token",
+        "pornily:auth:access_token",
+      ];
+      if (token) {
+        for (const key of keys) localStorage.setItem(key, token);
+      } else {
+        for (const key of keys) localStorage.removeItem(key);
+      }
     } catch {}
   }, [token]);
 
@@ -211,6 +242,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
     try {
       localStorage.removeItem("sf_token");
+      localStorage.removeItem("hl_token");
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("pornily:auth:token");
+      localStorage.removeItem("pornily:auth:access_token");
       localStorage.removeItem("sf_user");
     } catch {}
     navigate("/");
