@@ -608,6 +608,25 @@ export default function GenerateImage() {
     image: null,
     video: null,
   });
+
+  const MobileGenderPills = ({ value, onChange }: { value: string; onChange: (g: string) => void }) => (
+    <div className="mb-3 flex items-center gap-2 sm:hidden">
+      {[{ id: 'Female', label: 'Girl' }, { id: 'Male', label: 'Guys' }, { id: 'Trans', label: 'Trans' }].map(({ id, label }) => {
+        const selected = id === value;
+        return (
+          <button
+            key={id}
+            type="button"
+            onClick={() => { onChange(id); try { genderService.setGender(id); } catch { } }}
+            className={`min-w-18 px-5 py-1 text-sm font-medium transition-all ${selected ? 'ring-[1px] ring-(--hl-gold) shadow-[0_0_0_1px_rgb(255,197,77),0_8px_24px_rgba(255,197,77,0.35)]' : ''} text-white/90`}
+            style={selected ? { borderRadius: 50, border: '1px solid var(--secondary, #C09B62)', background: 'rgba(192, 155, 98, 0.18)' } : { borderRadius: 50, background: 'rgba(255, 255, 255, 0.10)' }}
+          >
+            {label}
+          </button>
+        );
+      })}
+    </div>
+  );
   const [negOpen, setNegOpen] = useState(false);
 
   // Helper function to format category keys into human-readable labels
@@ -1143,6 +1162,8 @@ export default function GenerateImage() {
     <div className={pageShellClass}>
       {/* primary container (no secondary wrapper) */}
       <div className={`flex flex-col min-h-[60vh]`}>
+        <MobileGenderPills value={gender} onChange={setGender} />
+
         {/* Title + mirrored right heading to match Figma desktop composition */}
         <div className="grid grid-cols-1 gap-6 px-1 lg:px-0 xl:grid-cols-[minmax(0,400px)_minmax(1fr)] xl:gap-8">
           <div className="flex items-center gap-3">

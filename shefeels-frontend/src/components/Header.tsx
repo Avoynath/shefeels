@@ -299,6 +299,8 @@ export const Header: React.FC<Props> = ({
   // Determine if gender toggle should be shown
   const isExplorePage = currentPath === '/' || currentPath === '/ai-girlfriend' || currentPath === '/ai-boyfriend' || currentPath === '/ai-transgender';
   const isCreateCharacterPage = currentPath === '/create-character';
+  const isGenerateImagePage = currentPath === '/generate-image';
+  const useCreateStyleGenderSelector = isCreateCharacterPage || isGenerateImagePage;
   const useHomepageNavbar = isExplorePage;
   const isExploreMobile = isExplorePage && isMobileViewport;
   // Style toggle visibility and the My AI flag are currently unused because the style
@@ -475,9 +477,9 @@ export const Header: React.FC<Props> = ({
             )}
 
             {/* Gender toggle - show only on explore and create-character pages */}
-            {(isExplorePage || isCreateCharacterPage) && (
+            {(isExplorePage || useCreateStyleGenderSelector) && (
               <>
-                {isCreateCharacterPage ? (
+                {useCreateStyleGenderSelector ? (
                   /* Create Character: Pill-style gender selector — selected pill uses dropdown style from Explore + gold ring */
                   <div className="flex items-center gap-2">
                     {GENDERS.map(({ id, label }) => {
